@@ -142,20 +142,4 @@
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
-  
-/* Custom Subtitle Logic for Prose */  
-.prose blockquote { border: 0 !important; padding: 0 !important; margin-top: -4rem !important; }  
-.prose blockquote p { text-align: center !important; font-size: 0.7rem !important; line-height: normal !important; margin-top: 0 !important; margin-bottom: 0 !important; opacity: 1 !important; font-weight: 700 !important; letter-spacing: 0.4em !important; text-transform: uppercase !important; color: hsl(var(--foreground)) !important; } 
 
-/* Automatic Subtitles for Paragraphs immediately following images */
-.prose p:has(img) + p {
-  text-align: center;
-  font-size: 0.7rem;
-  line-height: normal;
-  margin-top: -4rem !important;
-  opacity: 0.8 !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: hsl(var(--foreground));
-}

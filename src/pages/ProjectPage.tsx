@@ -186,13 +186,6 @@ export default function ProjectPage() {
                     p: ({ children }) => <p className="mb-12 text-2xl md:text-3xl leading-relaxed opacity-100">{children}</p>,
                     h1: ({ children }) => <h3 className="text-5xl font-serif mb-12 mt-24 uppercase tracking-tighter">{children}</h3>,
                     h2: ({ children }) => <h3 className="text-4xl font-serif mb-8 mt-16 italic">{children}</h3>,
-                    blockquote: ({ children }) => (
-                      <div className="text-center mt-[-6rem] mb-24 opacity-60">
-                        <div className="text-[10px] md:text-xs uppercase tracking-[0.4em] font-bold border-t border-foreground/10 pt-6 px-12 inline-block max-w-3xl leading-relaxed">
-                          {children}
-                        </div>
-                      </div>
-                    ),
                   }}
                 >
                   {project.brandDescription}
