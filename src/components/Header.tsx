@@ -1,6 +1,8 @@
 import { ModeToggle } from "./ModeToggle";
 import { useMode } from "@/contexts/ModeContext";
-import { Menu } from "lucide-react";
+import { useBooking } from "@/contexts/BookingContext";
+import { Logo } from "./Logo";
+import { Menu, Calendar } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Sheet,
@@ -10,6 +12,7 @@ import {
 
 export function Header() {
   const { mode } = useMode();
+  const { openBookingModal } = useBooking();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,6 +24,10 @@ export function Header() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {
     e.preventDefault();
+    if (id === "contact") {
+      openBookingModal();
+      return;
+    }
     if (location.pathname !== "/") {
       navigate(href);
     } else {
@@ -37,12 +44,11 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm transition-mode">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-xl font-medium tracking-tight hover:opacity-70 transition-opacity">
-            {mode === "studio" ? (
-              <span className="italic">TheChet&Co</span>
-            ) : (
-              <span>Chetna Pattnaik</span>
-            )}
+          <Link to="/" className="flex items-center gap-3 group hover:opacity-80 transition-opacity">
+            <Logo className="h-10 w-auto text-foreground transition-colors" />
+            <span className="text-sm tracking-widest uppercase font-serif hidden sm:inline-block border-l border-foreground/20 pl-3 opacity-80">
+              {mode === "studio" ? "TheChet&Co" : "Chetna Pattnaik"}
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8 text-sm tracking-wide">
@@ -59,6 +65,13 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-4">
+            <button
+              onClick={openBookingModal}
+              className="hidden sm:flex items-center gap-2 text-xs uppercase tracking-widest px-4 py-2 border border-foreground/30 hover:bg-foreground hover:text-background transition-all"
+            >
+              <Calendar className="w-3.5 h-3.5" /> Book Call
+            </button>
+
             <ModeToggle />
             
             <div className="md:hidden">

@@ -23,4 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+.vercel_backup
+*.py
 .env*.local

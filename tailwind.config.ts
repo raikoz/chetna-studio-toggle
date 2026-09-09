@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ["Playfair Display", "Georgia", "serif"],
+        serif: ["Reckless", "Argent", "Argent CF", "Cormorant Garamond", "Playfair Display", "Georgia", "serif"],
+        sauvage: ["Sauvage", "Sauvage Display", "Alex Brush", "Playfair Display", "cursive", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -11,11 +11,13 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ReactMarkdown from "react-markdown";
+import { extractInstagramUrls } from "@/lib/instagram";
+import { InstagramReelGrid } from "@/components/InstagramReelGrid";
+import { ArrowLeft } from "lucide-react";
 
 export default function ProjectPage() {
   const { id } = useParams();
   const [project, setProject] = useState<any>(null);
-  const [similarWorks, setSimilarWorks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,17 +31,6 @@ export default function ProjectPage() {
           const entry = await client.getEntry(id);
           console.log('DEBUG: Project data received:', entry.fields);
           setProject(entry.fields);
-          
-          try {
-            const others = await client.getEntries({
-              content_type: 'clientWork',
-              limit: 3,
-              'sys.id[ne]': id
-            });
-            setSimilarWorks(others.items.map(item => ({ id: item.sys.id, ...item.fields })));
-          } catch (e) {
-            console.error("Error fetching similar works:", e);
-          }
         } else {
           setProject({
             brandName: id?.replace(/-/g, " ") || "Showcase Brand",
@@ -67,30 +58,37 @@ export default function ProjectPage() {
     m.fields?.file?.contentType?.startsWith("image/")
   ) || [];
 
-  const igLinksStr = JSON.stringify(project?.igLinks || {});
-  const igUrlMatches = igLinksStr.match(/(https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+)/g) || [];
-  const igUrls = [...new Set(igUrlMatches)];
+  const igUrls = extractInstagramUrls(project);
 
   return (
-    <main className="min-h-screen bg-background text-foreground transition-mode overflow-x-hidden selection:bg-foreground selection:text-background">
+    <main className="min-h-screen bg-background text-foreground transition-mode overflow-x-hidden selection:bg-foreground selection:text-background relative">
       <Header />
       
+      {/* Floating Back Button for Entry Pages */}
+      <Link 
+        to="/" 
+        className="fixed bottom-8 left-8 z-50 px-5 py-3 rounded-full bg-foreground text-background border border-foreground/20 text-xs tracking-[0.2em] font-bold uppercase hover:scale-105 shadow-2xl transition-all flex items-center gap-2 group backdrop-blur-md opacity-90 hover:opacity-100"
+      >
+        <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+        <span>Back to Home</span>
+      </Link>
+      
       <div className="container mx-auto px-6 pt-40 pb-32">
-        {/* Breadcrumb / Back Navigation */}
+        {/* Breadcrumb Navigation */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-24 space-y-8 md:space-y-0">
           <Link 
-            to="/#work" 
+            to="/" 
             className="group flex items-center space-x-4 text-[12px] uppercase tracking-[0.6em] opacity-40 hover:opacity-100 transition-all font-bold"
           >
             <span className="transition-transform group-hover:-translate-x-2">←</span>
             <span>Return to Portfolio</span>
           </Link>
           <div className="h-px flex-grow mx-12 bg-foreground/5 hidden md:block"></div>
-          <p className="text-[12px] uppercase tracking-[0.6em] opacity-40 font-bold">Selected Case · 01</p>
+          <p className="text-[12px] uppercase tracking-[0.6em] opacity-40 font-bold">Selected Case</p>
         </div>
 
         {/* Hero Section - Massive Title */}
-        <section className="mb-40">
+        <section className="mb-24">
           <div className="max-w-[1400px] mx-auto">
             <p className="text-lg md:text-xl uppercase tracking-[0.8em] mb-12 opacity-80 font-medium italic">
               Project Showcase
@@ -98,20 +96,11 @@ export default function ProjectPage() {
             <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-serif leading-[0.9] tracking-tighter mb-16 animate-fade-in uppercase text-center lg:text-left">
               {project.brandName}
             </h1>
-            {/* Scope of Work Banner */}
-            <div className="flex flex-wrap gap-x-6 gap-y-4 mb-20 opacity-80 border-y border-foreground/10 py-8 justify-center lg:justify-start items-center">
-               {(project.scope || ["Branding", "Strategy", "Creative Direction"]).map((tag: string, index: number) => (
-                 <div key={index} className="flex items-center gap-x-6">
-                   {index > 0 && <span className="opacity-40 text-lg leading-none">•</span>}
-                   <span className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold">{tag}</span>
-                 </div>
-               ))}
-            </div>
           </div>
 
           {/* Large Hero Image / Carousel - Top visuals */}
           {images.length > 0 && (
-            <div className="relative group overflow-hidden mb-40">
+            <div className="relative group overflow-hidden mb-16">
               <Carousel className="w-full">
                 <CarouselContent>
                   {images.map((img: any, idx: number) => (
@@ -146,12 +135,24 @@ export default function ProjectPage() {
               </div>
             </div>
           )}
+
+          {/* Scope of Work Banner - Placed AFTER Brand Media thumbnail image */}
+          <div className="max-w-[1400px] mx-auto">
+            <div className="flex flex-wrap gap-x-6 gap-y-4 my-16 opacity-80 border-y border-foreground/10 py-8 justify-center lg:justify-start items-center">
+              <span className="text-xs uppercase tracking-[0.4em] opacity-40 font-mono mr-2">Scope of Work:</span>
+              {(project.scope || ["Branding", "Strategy", "Creative Direction"]).map((tag: string, index: number) => (
+                <div key={index} className="flex items-center gap-x-6">
+                  {index > 0 && <span className="opacity-40 text-lg leading-none">•</span>}
+                  <span className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold">{tag}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* Article Section */}
         <section className="max-w-[1400px] mx-auto">
           <div className="mb-40 max-w-5xl mx-auto">
-            {/* The Content */}
             <div>
               <div className="pb-8 mb-12 border-b border-foreground/10 text-center">
                 <h2 className="text-4xl md:text-5xl font-serif italic mb-4 tracking-tight">The Evolution</h2>
@@ -175,82 +176,17 @@ export default function ProjectPage() {
                 </ReactMarkdown>
               </div>
             </div>
-
-            {/* Sticky Sidebar has been removed. Content is centered above. */}
           </div>
 
-          {/* IG Reels Gallery - Auto Scrolling Marquee */}
+          {/* IG Reels Section: Fixed 1x3 Grid taking first 3 IGLinks without scrolling */}
           {igUrls.length > 0 && (
             <div className="mt-40 pt-24 border-t border-foreground/10 overflow-hidden">
-              <div className="mb-16 text-center">
+              <div className="mb-12 text-center">
                 <h2 className="text-5xl md:text-6xl font-serif italic mb-6 tracking-tight">Social Storytelling</h2>
-                <p className="text-[12px] uppercase tracking-[0.6em] opacity-60 font-bold">Creative Direction • Production • Digital Context</p>
+                <p className="text-[12px] uppercase tracking-[0.6em] opacity-60 font-bold">Creative Direction • Live Reels • Hover to Pause</p>
               </div>
               
-              <div className="relative flex overflow-hidden group">
-                <div className="flex animate-marquee whitespace-nowrap pause-on-hover gap-8 py-10">
-                  {/* Two identical sets for seamless loop */}
-                  {[1, 2].map((set) => (
-                    <div key={set} className="flex gap-8 flex-none">
-                      {igUrls.map((url, idx) => {
-                        const reelId = url.split("/reel/")[1]?.split("/")[0] || url.split("/p/")[1]?.split("/")[0];
-                        // Using a simple thumbnail strategy that links to Instagram's media endpoint
-                        const thumbnailUrl = `https://www.instagram.com/reels/${reelId}/thumbnail/`;
-                        
-                        return (
-                          <a 
-                            key={`${set}-${idx}`} 
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-none w-[260px] md:w-[300px] relative overflow-hidden rounded-[2.5rem] bg-foreground/5 p-4 transition-all duration-500 border border-foreground/5 flex flex-col items-center group/reel hover:border-foreground/20"
-                          >
-                            {/* Visual Layer */}
-                            <div className="relative w-full aspect-[9/16] bg-black rounded-[1.8rem] overflow-hidden">
-                              <img 
-                                src={thumbnailUrl}
-                                alt="Reel Thumbnail"
-                                className="w-full h-full object-cover opacity-80 group-hover/reel:opacity-100 transition-opacity duration-500"
-                                onError={(e) => {
-                                  // Fallback if Instagram thumbnail endpoint fails
-                                  (e.target as HTMLImageElement).src = "https://images.weserv.nl/?url=" + encodeURIComponent(url + "media/?size=l");
-                                }}
-                              />
-                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/reel:opacity-100 transition-opacity bg-background/20 backdrop-blur-[2px]">
-                                <span className="text-[10px] uppercase tracking-widest font-bold px-4 py-2 border border-foreground/20 bg-background/40">View on IG</span>
-                              </div>
-                            </div>
-                          </a>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Similar Works */}
-          {similarWorks && similarWorks.length > 0 && (
-            <div className="mt-40 pt-24 pb-20 border-t border-foreground/10">
-              <h2 className="text-5xl md:text-6xl font-serif mb-16 italic tracking-tight text-center">Similar Cases</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
-                {similarWorks.slice(0, 2).map((work: any, idx: number) => (
-                  <Link 
-                    key={idx} 
-                    to={`/project/${work.id}`} 
-                    className="group block border border-foreground/10 p-12 md:p-16 rounded-[2rem] bg-foreground/[0.02] hover:bg-foreground hover:text-background transition-colors duration-500 relative overflow-hidden"
-                  >
-                    <div className="flex justify-between items-start mb-16">
-                      <span className="w-12 h-12 flex items-center justify-center border border-current rounded-full text-xl group-hover:bg-background group-hover:text-foreground transition-colors duration-500">✦</span>
-                      <span className="text-sm uppercase tracking-[0.4em] font-bold opacity-50 group-hover:opacity-80 text-right max-w-[60%] line-clamp-2">
-                        {(work.scope && work.scope[0]) || "Showcase Work"}
-                      </span>
-                    </div>
-                    <h3 className="text-4xl md:text-5xl font-serif uppercase tracking-tighter mb-4">{work.brandName}</h3>
-                  </Link>
-                ))}
-              </div>
+              <InstagramReelGrid urls={igUrls} />
             </div>
           )}
         </section>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Italiana&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,65 +6,65 @@
 
 @layer base {
   :root {
-    /* TheChet&Co Mode - Red Background */
-    --crimson: 1 100% 25%;
-    --crimson-dark: 1 100% 20%;
+    /* TheChet&Co Mode - Blood Dark Red Background */
+    --crimson: 0 93% 12%;
+    --crimson-dark: 0 93% 8%;
     --pure-white: 0 0% 100%;
     --off-white: 0 0% 98%;
     
     /* Default: Personal Mode (White BG, Red Text) */
     --background: 0 0% 100%;
-    --foreground: 1 100% 25%;
+    --foreground: 0 93% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 1 100% 25%;
+    --card-foreground: 0 93% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 1 100% 25%;
+    --popover-foreground: 0 93% 12%;
 
-    --primary: 1 100% 25%;
+    --primary: 0 93% 12%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 96%;
-    --secondary-foreground: 1 100% 25%;
+    --secondary-foreground: 0 93% 12%;
 
     --muted: 0 0% 96%;
-    --muted-foreground: 1 100% 20%;
+    --muted-foreground: 0 93% 8%;
 
-    --accent: 1 100% 95%;
-    --accent-foreground: 1 100% 25%;
+    --accent: 0 93% 95%;
+    --accent-foreground: 0 93% 12%;
 
-    --destructive: 1 100% 25%;
+    --destructive: 0 93% 12%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 1 100% 90%;
-    --input: 1 100% 90%;
-    --ring: 1 100% 25%;
+    --border: 0 93% 90%;
+    --input: 0 93% 90%;
+    --ring: 0 93% 12%;
 
     --radius: 0rem;
   }
 
   /* TheChet&Co Mode - Inverted */
   .mode-studio {
-    --background: 1 100% 25%;
+    --background: 0 93% 12%;
     --foreground: 0 0% 100%;
 
-    --card: 1 100% 20%;
+    --card: 0 93% 8%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 1 100% 20%;
+    --popover: 0 93% 8%;
     --popover-foreground: 0 0% 100%;
 
     --primary: 0 0% 100%;
-    --primary-foreground: 1 100% 25%;
+    --primary-foreground: 0 93% 12%;
 
-    --secondary: 1 100% 20%;
+    --secondary: 0 93% 8%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 1 100% 20%;
+    --muted: 0 93% 8%;
     --muted-foreground: 0 0% 90%;
 
-    --accent: 1 100% 45%;
+    --accent: 0 93% 20%;
     --accent-foreground: 0 0% 100%;
 
     --border: 0 0% 100% / 0.2;
