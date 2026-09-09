@@ -71,23 +71,6 @@ export default function ProjectPage() {
   const igUrlMatches = igLinksStr.match(/(https:\/\/www\.instagram\.com\/reel\/[a-zA-Z0-9_-]+)/g) || [];
   const igUrls = [...new Set(igUrlMatches)];
 
-  // Static mapping for Gunjan project reels (Fresh links from subagent extraction)
-  const gunjanMp4Links: Record<string, string> = {
-    "C_SSalBvkrB": "https://scontent-lax3-1.cdninstagram.com/o1/v/t2/f2/m367/AQMlaLQuuy1CkUb7e74B4iT6n62K4z5AvPDu3L47hO6S0Ti9V3Om0qB3ZN-6vKbPHTCfJLFoBCXrIlifIYK8i13EDOWvdkCfvcOO228.mp4?_nc_cat=104&_nc_sid=5e9851&_nc_ht=scontent-lax3-1.cdninstagram.com&_nc_ohc=7Cqim1M6n_0Q7kNvwEmOhcy&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MzM1ODkzMzA5NDQxMTAxNywiYXNzZXRfYWdlX2RheXMiOjU3MywidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjksInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=fb415b7b6281881a&_nc_vs=HBksFQIYQGlnX2VwaGVtZXJhbC85MDQ1QTIzM0UxNjY5ODcwODU4RjMwMDBDMTk4RTZCRF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYRmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC84NTMzNzQzMTY3MjkzMTRfMzUyNDM0OTEyNzQwMzU4Mzc2NS5tcDQVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmkqzV3tG79wsVAigCQzMsF0AiAAAAAAAAGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=_Ox9bzM_EOuxXLXSZdossw&_nc_zt=28&_nc_ss=7a32e&oh=00_AfzGhaGqRoE5tmYH7Nj9KQRSJw0eO-dYe3Wx_oUjx_nRGg&oe=69CAF825",
-    "C_IgpqivgwF": "https://scontent-lga3-1.cdninstagram.com/o1/v/t2/f2/m367/AQM-BsJAoDfLbMv8E1clPlVgjZFR14EsHP38nJ83VhR5DvL3hgvwLLbPO28Le4C6KNp_y95sDvU8STkDk5jrGfIHSILcKRKqfDEa4pA.mp4?_nc_cat=103&_nc_sid=5e9851&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_ohc=A9bnosPn__kQ7kNvwGbrULF&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NzYzODIxMjA1OTYxODE2MywiYXNzZXRfYWdlX2RheXMiOjU3NywidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjEwLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=c8e08b0f1f8172e5&_nc_vs=HBksFQIYQGlnX2VwaGVtZXJhbC82RDQxODg4QTc2NEU2QkY5RTJFNThGRjQ3NUVENkM5NV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYRmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC80OTMxMzM4ODAxNDI0MzBfODc3NjQ2NTQzNDg4Mzc2OTM4OC5tcDQVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAm5u3CyLq6kRsVAigCQzMsF0AlJul41P30GBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=v2U-CsVc4v8GBnIIIkcukQ&_nc_zt=28&_nc_ss=7a32e&oh=00_AfwiMV_1_k2OTDpwlGMdyd3RORtHRWW4yqKRmJmmSDCtdw&oe=69CAE710",
-    "C_Vt-FkvtUW": "https://scontent-ord5-1.cdninstagram.com/o1/v/t2/f2/m367/AQNCrpCamtZ22cZyE6uYspKZW-2cXNJwR9HMIVqTLAi7JlasOr3apTBkzcodaS3CoaAvZTKZ0GsvqEOaxFsBmwmiAl-WGDkyQ5ShV4o.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=scontent-ord5-1.cdninstagram.com&_nc_ohc=TliY7X-k__UQ7kNvwGBsMNR&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NzY5OTQ3MjQ1NjgxODkyMywiYXNzZXRfYWdlX2RheXMiOjU3MSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjksInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=dfc0168f190cc3&_nc_vs=HBksFQIYQGlnX2VwaGVtZXJhbC9ENDQxQ0UxRUU3MkE5Nzc0QkQyN0JDMDZDNjIxMURBNV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYR2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8xNTQ4Mjk0NzYyNDUzMDM4XzY4MjY4ODE4NzA4NzQ2NjMwODIubXA0FQICyAESACgAGAAbAogHdXNlX29pbAExEnByb2dyZXNzaXZlX3JlY2hwZQExFQAAJtaD-YukqK0bFQIoAkMzLBdAI7tkWhysCBgSZGFzaF9iYXNlbGluZV8xX3YxEQB1_gdl5p0BAA&_nc_gid=FxK8mk6JvyJhtKRzk1DP9A&_nc_zt=28&_nc_ss=7a32e&oh=00_AfzTrQN1kzlrPUuBigZRmawjFpm4CHD_eyHr2Zpo2kCaFw&oe=69CAEAB4",
-    "C_WJIcJBN4A": "https://scontent-lax7-1.cdninstagram.com/o1/v/t2/f2/m367/AQPQGVH4HdlBuQPstZuc1tw4u8KxFsp66rb8HDvlFJ_nPJJMoZufzPZsYJpQTXNN05b4TNBHIB68ENeLzQVPxa1PkjVKPLLSq2ceyZo.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=scontent-lax7-1.cdninstagram.com&_nc_ohc=Auf3xWJHEDwQ7kNvwFZKj1E&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTY3ODI2MjQzNjA3ODE0MiwiYXNzZXRfYWdlX2RheXMiOjU3MSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjE5LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=cf2fc29069113632&_nc_vs=HBksFQIYQGlnX2VwaGVtZXJhbC85QzRFMDg5M0UxQzY2MUE4MjU2MUYwMjc0MjUxRjVBRl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYR2lnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8xNjcwNDU3MjEwNDc3MTI1XzUyMjEwNjI0MzMxMjE0OTY4ODcubXA0FQICyAESACgAGAAbAogHdXNlX29pbAExEnByb2dyZXNzaXZlX3JlY2hwZQExFQAAJvyIvcXdl_sFFQIoAkMzLBdAM3dLxqfvnhgSZGFzaF9iYXNlbGluZV8xX3YxEQB1_gdl5p0BAA&_nc_gid=R8x97OVcqNfN7TXPMhJ8Fg&_nc_ss=7a30f&_nc_zt=28&oh=00_AfxXm8OqUnD1slMDjr7xpq96mHtVjnWFfjuGOiLk7jjjYA&oe=69CAED84",
-    "C__DvCzSaBU": "https://scontent-vie1-1.cdninstagram.com/o1/v/t2/f2/m367/AQPLjNSyuizDCloaQQ4TEcuU6v2iy2K4Uf7dR2sU1jvLkVt9PYsAc4HuafLJqdWLB3FOG8XTzXHQ_7_zP03k6Mve3Zc-6v1BFrqsPeU.mp4?_nc_cat=103&_nc_sid=5e9851&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_ohc=kWd8jjVFMD8Q7kNvwF1oYF0&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NTQ0MjI3MTg0OTQ0NDM1LCJhc3NldF9hZ2VfZGF5cyI6NTU1LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MzYsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=d4945077b50ca9bd&_nc_vs=HBksFQIYQGlnX2VwaGVtZXJhbC9vRjE0MThGRkM3OUI4RjA3NEY2NEUyNzJFMTQyNEQxQUJfdmlkZW9fZGFzaGluaXQubXA0VAsCsgEsABUCGFmlZ194cHZfcmVlbHNfcGVybWFuZW50X3NyX3Byb2QvNTE0OTE1MTExMjU2MTk3XzYzMjk3Njk1OTAwMjIwNjY3OTIubXA0FQICyAESACgAGAAbAogHdXNlX29pbAExEnByb2dyZXNzaXZlX3JlY2hwZQExFQAAJuaUycCYvvcBFQIoAkMzLBdAQgAAAAAAAAGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHX-B2XmnQEA&_nc_gid=okI3ok2LEHFOrLOL58y6dQ&_nc_zt=28&_nc_ss=7a32e&oh=00_AfwsB-QOZTetLPM6gIWaQEpLZRwLFl_UToqaKw80_VZZ1Q&oe=69CADE14"
-  };
-
-  const gunjanThumbnails: Record<string, string> = {
-    "C_SSalBvkrB": "https://scontent-lga3-3.cdninstagram.com/v/t51.71878-15/505752121_3598245093813148_2838179198817498023_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=104&_nc_ohc=dfnW6bMsNVMQ7kNvwFDZ8VJ&oh=00_AfyPErkCx5s08wcrDzUioXzLd4_0cq1jzj9UkaBp5coyKA&oe=69CB1E78",
-    "C_IgpqivgwF": "https://scontent-ham3-1.cdninstagram.com/v/t51.71878-15/503387996_9502379263201424_1026823668768252132_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=scontent-ham3-1.cdninstagram.com&_nc_cat=108&_nc_ohc=GhB6IJR9XRMQ7kNvwFFlMp2&oh=00_AfwPiVJy6eARmiQsBtFNwR3Arw2rqpvmEMtDgIc_KGPI7w&oe=69CB0D26",
-    "C_Vt-FkvtUW": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/506305329_9534120203354130_4585691207658458718_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_cat=106&_nc_ohc=MhcP-BfkJPgQ7kNvwEJQktF&oh=00_AfxQRY3BIM1MPAseyOOmTVqhbYMUC3NbHZ9cQB87Px7uhg&oe=69CB0E0B",
-    "C_WJIcJBN4A": "https://scontent.cdninstagram.com/v/t51.71878-15/503248581_1879214909316226_5979998821839014903_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=110&oh=00_AfzncVxbO5dDss37v6xGUGclLjwhXr6GLo8AECcXK0sU_A&oe=69CB0FF0",
-    "C__DvCzSaBU": "https://scontent-sea5-1.cdninstagram.com/v/t51.71878-15/504481327_742965565070595_7797692656970216193_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=scontent-sea5-1.cdninstagram.com&_nc_cat=103&_nc_ohc=XkgO_mpxs0oQ7kNvwEQPKda&oh=00_AfyLoWCdtjrH-odgnEBfxFLdNkHGMF9B6MqbmgHURUHCBw&oe=69CB1AED"
-  };
-
   return (
     <main className="min-h-screen bg-background text-foreground transition-mode overflow-x-hidden selection:bg-foreground selection:text-background">
       <Header />
@@ -210,9 +193,9 @@ export default function ProjectPage() {
                   {[1, 2].map((set) => (
                     <div key={set} className="flex gap-8 flex-none">
                       {igUrls.map((url, idx) => {
-                        const reelId = url.split("/reel/")[1]?.split("/")[0];
-                        const mp4Url = gunjanMp4Links[reelId];
-                        const thumbnailUrl = gunjanThumbnails[reelId];
+                        const reelId = url.split("/reel/")[1]?.split("/")[0] || url.split("/p/")[1]?.split("/")[0];
+                        // Using a simple thumbnail strategy that links to Instagram's media endpoint
+                        const thumbnailUrl = `https://www.instagram.com/reels/${reelId}/thumbnail/`;
                         
                         return (
                           <a 
@@ -222,28 +205,20 @@ export default function ProjectPage() {
                             rel="noopener noreferrer"
                             className="flex-none w-[260px] md:w-[300px] relative overflow-hidden rounded-[2.5rem] bg-foreground/5 p-4 transition-all duration-500 border border-foreground/5 flex flex-col items-center group/reel hover:border-foreground/20"
                           >
-                            {/* Video Layer */}
+                            {/* Visual Layer */}
                             <div className="relative w-full aspect-[9/16] bg-black rounded-[1.8rem] overflow-hidden">
-                              {mp4Url ? (
-                                <div className="absolute inset-0">
-                                  <video 
-                                    src={mp4Url}
-                                    poster={thumbnailUrl}
-                                    className="w-full h-full object-cover"
-                                    loop
-                                    muted
-                                    playsInline
-                                    onMouseEnter={(e) => e.currentTarget.play()}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.pause();
-                                    }}
-                                  />
-                                </div>
-                              ) : (
-                                <div className="absolute inset-0 flex items-center justify-center bg-foreground/5">
-                                   <p className="text-[10px] uppercase tracking-widest opacity-20">Preview Unavailable</p>
-                                </div>
-                              )}
+                              <img 
+                                src={thumbnailUrl}
+                                alt="Reel Thumbnail"
+                                className="w-full h-full object-cover opacity-80 group-hover/reel:opacity-100 transition-opacity duration-500"
+                                onError={(e) => {
+                                  // Fallback if Instagram thumbnail endpoint fails
+                                  (e.target as HTMLImageElement).src = "https://images.weserv.nl/?url=" + encodeURIComponent(url + "media/?size=l");
+                                }}
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/reel:opacity-100 transition-opacity bg-background/20 backdrop-blur-[2px]">
+                                <span className="text-[10px] uppercase tracking-widest font-bold px-4 py-2 border border-foreground/20 bg-background/40">View on IG</span>
+                              </div>
                             </div>
                           </a>
                         );
