@@ -2,14 +2,14 @@ import { useMode } from "@/contexts/ModeContext";
 
 const studioTestimonials = [
   {
-    quote: "TheChet&Co transformed our brand identity into something truly extraordinary. Their attention to detail is unmatched.",
-    author: "Sarah Chen",
-    role: "Founder, Lumière Studios",
+    quote: "TheChet&Co didn't just design a brand; they understood the soul of Kunsquad. They captured our community's energy and translated it into a visual language that speaks volumes to our tribe.",
+    author: "Pallabi Sarangi",
+    role: "Founder, Kunsquad",
   },
   {
-    quote: "Working with them was a revelation. They understood our vision and elevated it beyond our expectations.",
-    author: "Priya Sharma",
-    role: "Creative Director, Atelier Noir",
+    quote: "In healthcare, trust and empathy are paramount. TheChet&Co's rebranding of Rahat Hospitals perfectly balanced clinical excellence with a warm, human approach that resonates with our patients.",
+    author: "Reshma",
+    role: "Founder, Rahat Hospitals",
   },
 ];
 
