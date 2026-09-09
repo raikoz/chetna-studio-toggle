@@ -30,6 +30,8 @@ export function Footer() {
           email, 
           message,
           recipientOwner: "manish.rath5240@gmail.com",
+          ccOwner: "thechet.pattnaik@gmail.com",
+          guestEmail: "thechet.pattnaik@gmail.com",
           date: new Date().toISOString() 
         }),
         headers: { "Content-Type": "application/json" },
@@ -37,7 +39,7 @@ export function Footer() {
 
       toast({
         title: "Conversation initiated",
-        description: "Your message has been sent to manish.rath5240@gmail.com. We'll reach out shortly.",
+        description: "Your message has been sent to manish.rath5240@gmail.com and CC'd to thechet.pattnaik@gmail.com. We'll reach out shortly.",
       });
       
       (e.target as HTMLFormElement).reset();

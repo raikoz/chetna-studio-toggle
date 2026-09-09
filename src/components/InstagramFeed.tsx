@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { Instagram, RefreshCw } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Instagram } from "lucide-react";
 import { InstagramReelGrid } from "@/components/InstagramReelGrid";
 import { client } from "@/lib/contentful";
 
@@ -40,11 +39,6 @@ export function InstagramFeed() {
       
       const now = new Date();
       setLastSyncTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-      
-      toast({
-        title: "Instagram Grid Synced",
-        description: `Live 1x3 reels grid updated from ${INSTAGRAM_HANDLE}`,
-      });
     } catch (error) {
       console.error("Error updating Instagram feed:", error);
     } finally {
@@ -63,18 +57,8 @@ export function InstagramFeed() {
   return (
     <section className="py-24 border-t border-foreground/10 transition-mode bg-background">
       <div className="container mx-auto px-6">
-        {/* Quirky & Creative Header Line */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-foreground/5 border border-foreground/15 rounded-full text-[10px] uppercase tracking-widest font-semibold">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                Live Grid • Auto-Sync
-              </span>
-              <span className="text-[11px] opacity-40 uppercase tracking-widest">
-                Last Synced: {lastSyncTime}
-              </span>
-            </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
               Captured in Motion — <br className="hidden md:block" />
               <span className="italic">Unfiltered Studio Artifacts</span>
@@ -82,14 +66,6 @@ export function InstagramFeed() {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={fetchLiveInstagramPosts}
-              disabled={isRefreshing}
-              className="px-5 py-3 border border-foreground/20 text-xs tracking-widest uppercase font-medium hover:bg-foreground/10 transition-colors inline-flex items-center gap-2 disabled:opacity-50 cursor-pointer"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
-              {isRefreshing ? "Syncing Grid..." : "Refresh Grid"}
-            </button>
             <a
               href={INSTAGRAM_ACCOUNT_URL}
               target="_blank"
@@ -101,7 +77,6 @@ export function InstagramFeed() {
           </div>
         </div>
 
-        {/* Fixed 1x3 Grid without scrolling */}
         <InstagramReelGrid urls={reelUrls} />
       </div>
     </section>

@@ -5,7 +5,8 @@ import { Calendar, Clock, Video, CheckCircle2, Copy, ExternalLink, ArrowRight } 
 import { useToast } from "@/hooks/use-toast";
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2Q6yswt5YxiXQwtdXIpN3ilDMZ9csprLiv4RYoaFpDMqIlXasWMypSm7IcIrlLTx3/exec";
-const OWNER_EMAIL = "thechet.pattnaik@gmail.com";
+const PRIMARY_OWNER_EMAIL = "manish.rath5240@gmail.com";
+const CHETNA_EMAIL = "thechet.pattnaik@gmail.com";
 
 // 45 mins call duration + 15 mins minimum break
 const WEEKDAY_SLOTS = [
@@ -95,7 +96,7 @@ export function GetInTouchModal() {
         (formData.notes ? `Notes: ${formData.notes}\n` : "")
       );
       
-      const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calendarTitle}&details=${calendarDetails}&add=${encodeURIComponent(OWNER_EMAIL)}&add=${encodeURIComponent(formData.email)}`;
+      const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calendarTitle}&details=${calendarDetails}&add=${encodeURIComponent(PRIMARY_OWNER_EMAIL)}&add=${encodeURIComponent(CHETNA_EMAIL)}&add=${encodeURIComponent(formData.email)}`;
 
       // Post payload to backend / Google Script to dispatch email notification to owner & store lead
       const payload = {
@@ -106,7 +107,9 @@ export function GetInTouchModal() {
         slot: formData.slot,
         notes: formData.notes,
         gmeetLink,
-        ownerEmail: OWNER_EMAIL,
+        ownerEmail: PRIMARY_OWNER_EMAIL,
+        ccEmail: CHETNA_EMAIL,
+        guestEmail: CHETNA_EMAIL,
         type: "consultation_booking",
         submittedAt: new Date().toISOString(),
       };
@@ -130,7 +133,7 @@ export function GetInTouchModal() {
 
       toast({
         title: "Consultation Scheduled!",
-        description: `Confirmation & Google Meet link sent to ${OWNER_EMAIL}.`,
+        description: `Confirmation & GMeet details dispatched to ${PRIMARY_OWNER_EMAIL} & ${CHETNA_EMAIL}.`,
       });
     } catch (error) {
       console.error("Error booking consultation:", error);
@@ -172,7 +175,7 @@ export function GetInTouchModal() {
               <div>
                 <p className="text-sm font-medium">Your Call Has Been Reserved</p>
                 <p className="text-xs opacity-70">
-                  Notification & GMeet details dispatched to <span className="font-semibold">{OWNER_EMAIL}</span>
+                  Notification & GMeet details dispatched to <span className="font-semibold">{PRIMARY_OWNER_EMAIL}</span> and CC'd to guest <span className="font-semibold">{CHETNA_EMAIL}</span>
                 </p>
               </div>
             </div>

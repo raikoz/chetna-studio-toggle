@@ -41,19 +41,20 @@ export function Hero() {
             </>
           )}
 
-          <div className="mt-12 flex items-center justify-center gap-6">
-            <a
-              href="#work"
-              className="px-8 py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300 text-sm tracking-widest uppercase"
-            >
-              View Work
-            </a>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-6">
             <button
               type="button"
               onClick={openBookingModal}
-              className="text-sm tracking-widest uppercase opacity-60 hover:opacity-100 transition-opacity cursor-pointer flex items-center gap-1"
+              className="px-8 py-3.5 bg-foreground text-background hover:opacity-90 transition-all duration-300 text-xs md:text-sm tracking-widest uppercase font-semibold cursor-pointer shadow-lg"
             >
-              Get in Touch →
+              Book a Discovery Call
+            </button>
+            <button
+              type="button"
+              onClick={openBookingModal}
+              className="px-8 py-3.5 border border-foreground/30 text-foreground hover:bg-foreground/10 transition-all duration-300 text-xs md:text-sm tracking-widest uppercase font-medium cursor-pointer"
+            >
+              Get in Touch
             </button>
           </div>
         </div>
