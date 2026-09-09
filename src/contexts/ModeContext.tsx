@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 type Mode = "personal" | "studio";
 
@@ -11,7 +11,15 @@ interface ModeContextType {
 const ModeContext = createContext<ModeContextType | undefined>(undefined);
 
 export function ModeProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<Mode>("personal");
+  // Always default to 'studio' unless we are refreshing and already have a saved preference
+  const [mode, setMode] = useState<Mode>(() => {
+    const saved = localStorage.getItem("app-mode") as Mode;
+    return saved || "studio";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("app-mode", mode);
+  }, [mode]);
 
   const toggleMode = () => {
     setMode((prev) => (prev === "personal" ? "studio" : "personal"));

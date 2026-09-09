@@ -37,7 +37,7 @@ export function Testimonials() {
           <p className="text-sm tracking-[0.3em] uppercase mb-4 opacity-60">
             Kind Words
           </p>
-          <h2 className="text-4xl md:text-5xl font-medium">Testimonials</h2>
+          <h2 className="text-3xl md:text-5xl font-medium">Testimonials</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

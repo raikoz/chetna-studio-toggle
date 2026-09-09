@@ -4,7 +4,7 @@ export function Hero() {
   const { mode } = useMode();
 
   return (
-    <section className="min-h-screen flex items-center justify-center pt-20 transition-mode">
+    <section id="about" className="min-h-screen flex items-center justify-center pt-20 transition-mode">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto text-center">
           {mode === "studio" ? (
