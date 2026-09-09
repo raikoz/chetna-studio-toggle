@@ -137,7 +137,7 @@ export default function ProjectPage() {
                         <img
                           src={img.fields.file.url.startsWith("//") ? `https:${img.fields.file.url}` : img.fields.file.url}
                           alt={img.fields.title}
-                          className="w-full h-auto max-h-[85vh] object-contain transition-transform duration-[2s]"
+                          className="w-full h-auto max-h-[85vh] object-contain transition-transform duration-[2000ms]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none"></div>
                       </div>
