@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useBooking } from "@/contexts/BookingContext";
 import { Logo } from "./Logo";
+import { DancingGradient } from "./DancingGradient";
 
 export function Footer() {
   const { toast } = useToast();
@@ -55,8 +56,8 @@ export function Footer() {
 
   return (
     <div className="relative w-full">
-      {/* Ultra-Smooth Multi-Stop Non-Linear Gradient Transition to White */}
-      <div className="relative w-full h-44 md:h-64 smooth-gradient-to-light" />
+      {/* Living Breathing Dancing Gradient Transition to White */}
+      <DancingGradient />
 
       {/* Light-Themed Flat & Minimal Footer: Increased Height, Wrapped Around Centered Image */}
       <footer className="relative bg-white text-[#7e0200] py-20 md:py-28 px-6 min-h-[460px] flex items-center">

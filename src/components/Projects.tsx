@@ -4,38 +4,63 @@ import { client } from "@/lib/contentful";
 import { useNavigate } from "react-router-dom";
 import { AnimatedSection } from "./AnimatedSection";
 
-// Minimal, subtle, abstract editorial textures for Selected Works
-const brandSubtleImages: Record<string, string> = {
-  desna: "/images/brand-subtle-1.jpg", // Minimalist architectural light & shadow
-  kunsquad: "/images/brand-subtle-2.jpg", // Subtle organic sculptural curves
-  "cafe sundowner": "/images/brand-subtle-4.jpg", // Soft ambient light refraction through fluted glass
-  sundowner: "/images/brand-subtle-4.jpg",
-  "the bar consultants": "/images/brand-subtle-6.jpg", // Subtle crimson liquid marble
-  "bar consultants": "/images/brand-subtle-6.jpg",
-  tbc: "/images/brand-subtle-6.jpg",
-  reemly: "/images/brand-subtle-5.jpg", // Minimalist geometric paper & shadow
-  "reemly design studio": "/images/brand-subtle-5.jpg",
-  azydo: "/images/brand-subtle-7.jpg", // Minimalist stone & serene natural light
-  "azydo, puri": "/images/brand-subtle-7.jpg",
-  "orange strings": "/images/brand-subtle-3.jpg", // Deep abstract crimson flow & resonance
-  lemme: "/images/brand-subtle-8.jpg", // Subtle sculpture curve & muted shadow
-  "boudh distillery lemme bottle": "/images/brand-subtle-8.jpg",
-  "boudh distillery": "/images/brand-subtle-8.jpg",
-  rahat: "/images/brand-subtle-9.jpg", // Abstract raw organic fiber & clean weave
-  "rahat hospitals": "/images/brand-subtle-9.jpg",
-  "house of niasna": "/images/brand-subtle-10.jpg", // Minimalist geometric light on fine texture
-  niasna: "/images/brand-subtle-10.jpg",
-  gunjan: "/images/brand-subtle-11.jpg", // Abstract monochrome fluid curve
-  "gunjan makeup & styling atelier": "/images/brand-subtle-11.jpg",
+
+// Helper to format 2-3 lines ending with "..."
+const formatDescription = (rawDesc?: string) => {
+  const text = (
+    rawDesc ||
+    "Architecting distinctive brand identities, visual systems, and bespoke digital touchpoints with enduring craft."
+  )
+    .replace(/[#*_`~\[\]]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (text.length <= 135) {
+    return text.replace(/[.,;:\s]*$/, "...");
+  }
+  const truncated = text.slice(0, 135);
+  const lastSpace = truncated.lastIndexOf(" ");
+  const cut = lastSpace > 65 ? truncated.slice(0, lastSpace) : truncated;
+  return cut.replace(/[.,;:\s]*$/, "...");
 };
 
 const dummyProjects = [
-  { brandName: "Desna", dummy: true, dummyImage: "/images/brand-subtle-1.jpg" },
-  { brandName: "Kunsquad", dummy: true, dummyImage: "/images/brand-subtle-2.jpg" },
-  { brandName: "Cafe Sundowner", dummy: true, dummyImage: "/images/brand-subtle-4.jpg" },
-  { brandName: "The Bar Consultants", dummy: true, dummyImage: "/images/brand-subtle-6.jpg" },
-  { brandName: "Reemly Design Studio", dummy: true, dummyImage: "/images/brand-subtle-5.jpg" },
-  { brandName: "Azydo, Puri", dummy: true, dummyImage: "/images/brand-subtle-7.jpg" },
+  {
+    brandName: "Desna",
+    dummy: true,
+    brandDescription:
+      "Architecting a contemporary culinary identity rooted in heritage recipes and slow-cured artisanal excellence.",
+  },
+  {
+    brandName: "Kunsquad",
+    dummy: true,
+    brandDescription:
+      "High-voltage streetwear identity crafted at the intersection of raw underground culture and precision tailoring.",
+  },
+  {
+    brandName: "Cafe Sundowner",
+    dummy: true,
+    brandDescription:
+      "Atmospheric cafe identity designed around warm hospitality, slow mornings, and craft roast rituals.",
+  },
+  {
+    brandName: "The Bar Consultants",
+    dummy: true,
+    brandDescription:
+      "Elevated beverage intelligence and experiential hospitality curation for iconic global cocktail programs.",
+  },
+  {
+    brandName: "Reemly Design Studio",
+    dummy: true,
+    brandDescription:
+      "Harmonious spatial design and architectural art direction celebrating tactile material palettes and natural light.",
+  },
+  {
+    brandName: "Azydo, Puri",
+    dummy: true,
+    brandDescription:
+      "Transforming spiritual pilgrimage hospitality into a transcendent, tranquil coastal sanctuary experience.",
+  },
 ];
 
 export function Projects() {
@@ -69,25 +94,36 @@ export function Projects() {
         ? contentfulProjects
         : dummyProjects
       : [
-          { title: "Personal Branding", category: "Identity", year: "2024" },
-          { title: "Photography Series", category: "Art", year: "2024" },
-          { title: "Fashion Editorials", category: "Creative Direction", year: "2023" },
+          {
+            title: "Personal Branding",
+            brandName: "Personal Branding",
+            brandDescription:
+              "Crafting authentic personal narratives and strategic positioning for thought leaders and executives.",
+            category: "Identity",
+            year: "2024",
+          },
+          {
+            title: "Photography Series",
+            brandName: "Photography Series",
+            brandDescription:
+              "High-contrast editorial photography exploring light, shadow, and architectural serenity across South Asia.",
+            category: "Art",
+            year: "2024",
+          },
+          {
+            title: "Fashion Editorials",
+            brandName: "Fashion Editorials",
+            brandDescription:
+              "Contemporary editorial styling and creative direction highlighting modern Indian textile movements.",
+            category: "Creative Direction",
+            year: "2023",
+          },
         ];
 
   const handleProjectClick = (project: any) => {
     if (mode === "studio" && project.sysId) {
       navigate(`/project/${project.sysId}`);
     }
-  };
-
-  const getSubtleImageUrl = (project: any) => {
-    const name = (project.brandName || project.title || "").toLowerCase();
-    for (const key of Object.keys(brandSubtleImages)) {
-      if (name.includes(key)) {
-        return brandSubtleImages[key];
-      }
-    }
-    return project.dummyImage || "/images/brand-subtle-1.jpg";
   };
 
   return (
@@ -107,52 +143,50 @@ export function Projects() {
           </div>
         </AnimatedSection>
 
-        {/* Minimal Flat Grid - Ultra-Subtle Minimal Abstract Cards */}
+        {/* Minimal Flat Grid - Logo Only Default, Description Only on Hover */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
           {projects.map((project: any, index: number) => {
             const isClickable = mode === "studio";
-            const subtleImageUrl = getSubtleImageUrl(project);
             const logoUrl = project.logo?.fields?.file?.url;
             const fullLogoUrl = logoUrl
               ? logoUrl.startsWith("//")
                 ? `https:${logoUrl}`
                 : logoUrl
               : null;
+            const descText = formatDescription(project.brandDescription || project.description);
 
             return (
               <AnimatedSection key={index} delay={index * 0.03}>
                 <div
-                  className={`group relative overflow-hidden rounded-[10px] aspect-square bg-foreground/5 transition-all duration-500 ${
+                  className={`group relative overflow-hidden rounded-[10px] aspect-square bg-foreground/[0.03] hover:bg-foreground/[0.07] border border-foreground/10 hover:border-foreground/25 transition-all duration-500 ${
                     isClickable ? "cursor-pointer active:scale-[0.98]" : "cursor-default"
                   }`}
                   onClick={() => isClickable && handleProjectClick(project)}
                 >
-                  {/* Minimal Subtle Abstract Photo */}
-                  <img
-                    src={subtleImageUrl}
-                    alt={project.brandName || "Selected Work"}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-
-                  {/* Soft Dark Red Tint Overlay */}
-                  <div className="absolute inset-0 bg-[#7e0200]/25 mix-blend-multiply transition-colors duration-500 group-hover:bg-[#7e0200]/45 pointer-events-none" />
-
-                  {/* Gradient Depth */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-40 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none" />
-
-                  {/* Logo Center and Middle Reveal on Hover / Active */}
-                  <div className="absolute inset-0 flex items-center justify-center p-8 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out pointer-events-none">
+                  {/* DEFAULT STATE: Logo Only (Middle and Center Aligned, Fades Out on Hover) */}
+                  <div className="absolute inset-0 flex items-center justify-center p-8 sm:p-12 transition-all duration-400 ease-out opacity-100 group-hover:opacity-0 group-hover:scale-95 pointer-events-none">
                     {fullLogoUrl ? (
                       <img
                         src={fullLogoUrl}
                         alt={`${project.brandName} Logo`}
-                        className="max-h-24 max-w-[75%] w-auto object-contain filter brightness-0 invert drop-shadow-xl transform scale-95 group-hover:scale-100 transition-transform duration-400"
+                        className={`max-h-20 sm:max-h-24 max-w-[75%] w-auto object-contain transition-transform duration-400 ${
+                          mode === "studio" ? "filter brightness-0 invert" : "filter brightness-0"
+                        }`}
                       />
                     ) : (
-                      <span className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase text-center drop-shadow-md">
-                        {project.brandName}
+                      <span className="text-2xl sm:text-3xl font-serif tracking-widest uppercase text-center text-foreground font-light">
+                        {project.brandName || project.title}
                       </span>
                     )}
+                  </div>
+
+                  {/* HOVER STATE: Brand Description Only (No Logo, No Other Text, Middle + Center Container, Left-Aligned Text, 2-3 Lines with '...') */}
+                  <div className="absolute inset-0 flex items-center justify-center p-8 sm:p-10 transition-all duration-400 ease-out opacity-0 group-hover:opacity-100 pointer-events-none">
+                    <div className="w-full max-w-[85%] mx-auto">
+                      <p className="text-left font-serif text-base sm:text-lg md:text-xl font-light leading-relaxed text-foreground tracking-normal line-clamp-3">
+                        {descText}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </AnimatedSection>

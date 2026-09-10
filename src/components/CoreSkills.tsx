@@ -10,31 +10,31 @@ interface SkillItem {
   image: string;
 }
 
-// Dedicated capabilities visuals - no client / selected works
+// 4 different images from the About section for Capabilities hover preview
 const SKILLS: SkillItem[] = [
   {
     id: "strategy",
     name: "Creative Strategy",
     subtitle: "Positioning & Narrative Architecture",
-    image: "/images/service-strategy.jpg",
+    image: "/images/about-1.jpg",
   },
   {
     id: "branding",
     name: "Brand Identity",
     subtitle: "Visual Systems & Art Direction",
-    image: "/images/service-branding.jpg",
+    image: "/images/about-2.jpg",
   },
   {
     id: "motion",
     name: "Motion & Social Storytelling",
     subtitle: "Campaign Motion & Video Direction",
-    image: "/images/service-motion.jpg",
+    image: "/images/about-3.jpg",
   },
   {
     id: "marketing",
     name: "Digital Marketing & Drops",
     subtitle: "Launch Collateral & Community Design",
-    image: "/images/service-marketing.jpg",
+    image: "/images/about-4.jpg",
   },
 ];
 
