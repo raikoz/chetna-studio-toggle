@@ -12,20 +12,20 @@ export function ModeToggle() {
   };
 
   return (
-    <div className="flex items-center border border-foreground/30 transition-mode">
+    <div className="flex items-center rounded-[8px] overflow-hidden border border-foreground/20 transition-mode">
       <button
         onClick={() => handleModeSwitch("studio")}
-        className={`px-4 py-2 text-sm tracking-widest uppercase transition-mode ${
+        className={`px-3.5 py-1.5 text-xs font-sans tracking-wider uppercase transition-mode font-medium ${
           mode === "studio"
             ? "bg-foreground text-background"
             : "bg-transparent text-foreground hover:bg-foreground/10"
         }`}
       >
-        TheChet&Co
+        TheChet&amp;Co
       </button>
       <button
         onClick={() => handleModeSwitch("personal")}
-        className={`px-4 py-2 text-sm tracking-widest uppercase transition-mode ${
+        className={`px-3.5 py-1.5 text-xs font-sans tracking-wider uppercase transition-mode font-medium ${
           mode === "personal"
             ? "bg-foreground text-background"
             : "bg-transparent text-foreground hover:bg-foreground/10"

@@ -47,8 +47,8 @@ export default function ProjectPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background text-foreground transition-mode">
-        <p className="font-mono tracking-[0.4em] uppercase text-xs animate-pulse">
-          CURATING ARTIFACTS...
+        <p className="font-sans tracking-[0.3em] uppercase text-xs animate-pulse opacity-70">
+          Loading Project...
         </p>
       </div>
     );
@@ -74,10 +74,10 @@ export default function ProjectPage() {
     <main className="min-h-screen bg-background text-foreground transition-mode overflow-x-hidden selection:bg-foreground selection:text-background relative">
       <Header />
 
-      {/* Floating Flat Back Button */}
+      {/* Floating Back Button */}
       <Link
         to="/"
-        className="fixed bottom-8 left-8 z-50 px-5 py-3 bg-foreground text-background border border-foreground text-xs font-mono uppercase tracking-widest hover:bg-transparent hover:text-foreground transition-colors flex items-center gap-2 group"
+        className="fixed bottom-8 left-8 z-50 px-5 py-3 bg-foreground text-background text-xs font-sans font-medium uppercase tracking-widest hover:opacity-85 transition-opacity flex items-center gap-2 group rounded-[8px] shadow-sm"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
         <span>Back to Index</span>
@@ -85,7 +85,7 @@ export default function ProjectPage() {
 
       {/* Top Bar Navigation */}
       <div className="container mx-auto px-6 pt-32 pb-8">
-        <div className="flex items-center justify-between border-b border-foreground/15 pb-4 text-xs font-mono uppercase tracking-widest opacity-60">
+        <div className="flex items-center justify-between border-b border-foreground/10 pb-4 text-xs font-sans uppercase tracking-widest opacity-60">
           <Link to="/" className="hover:opacity-100 transition-opacity flex items-center gap-2">
             <span>←</span> Return to Showcase
           </Link>
@@ -95,7 +95,7 @@ export default function ProjectPage() {
 
       {/* 1. FIRST IMAGE: EDGE-TO-EDGE FULL BLEED */}
       {firstImage && (
-        <section className="w-full overflow-hidden border-y border-foreground/20 bg-foreground/5 mb-16">
+        <section className="w-full overflow-hidden mb-16">
           <ParallaxImage
             src={firstImage}
             alt={project.brandName}
@@ -108,19 +108,16 @@ export default function ProjectPage() {
       {/* 2. MASSIVE BRAND NAME + WHAT WE DID (SCOPE) */}
       <section className="container mx-auto px-6 mb-20">
         <AnimatedSection>
-          <div className="border-b border-foreground/20 pb-10">
-            <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60 mb-4">
-              CASE STUDY
-            </p>
+          <div className="border-b border-foreground/10 pb-10">
             {/* Massive Brand Name */}
-            <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light leading-[0.9] tracking-tight uppercase mb-8">
+            <h1 className="text-6xl md:text-8xl lg:text-[8.5rem] font-serif font-light leading-[0.92] tracking-tight uppercase mb-8">
               {project.brandName}
             </h1>
 
             {/* Scope Tags */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-6 border-t border-foreground/15">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-6 border-t border-foreground/10">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-mono uppercase tracking-widest opacity-50">
+                <span className="text-xs font-sans uppercase tracking-widest opacity-50">
                   SCOPE:
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -128,7 +125,7 @@ export default function ProjectPage() {
                     (tag: string, i: number) => (
                       <span
                         key={i}
-                        className="text-xs font-mono uppercase tracking-wider px-3 py-1 border border-foreground/25 bg-foreground/[0.03] font-medium"
+                        className="text-xs font-sans uppercase tracking-wider px-3.5 py-1 bg-foreground/[0.06] rounded-[6px] font-medium"
                       >
                         {tag}
                       </span>
@@ -137,7 +134,7 @@ export default function ProjectPage() {
                 </div>
               </div>
 
-              <div className="text-xs font-mono uppercase tracking-widest opacity-60">
+              <div className="text-xs font-sans uppercase tracking-widest opacity-60">
                 CLIENT: {project.client || project.brandName} • YEAR: {project.year || "2025"}
               </div>
             </div>
@@ -150,10 +147,10 @@ export default function ProjectPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left: Sticky Text Details */}
           <AnimatedSection direction="right" className="lg:col-span-4 sticky top-28">
-            <div className="border-l border-foreground/30 pl-6 py-2 space-y-6">
+            <div className="space-y-6">
               <div>
-                <p className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-50 mb-2">
-                  THE CONTEXT &amp; MANDATE
+                <p className="text-[10px] font-sans uppercase tracking-[0.3em] opacity-50 mb-2">
+                  THE MANDATE
                 </p>
                 <h2 className="text-2xl font-serif italic text-foreground">
                   The Strategic Shift
@@ -165,11 +162,11 @@ export default function ProjectPage() {
                 <ReactMarkdown>{project.brandDescription}</ReactMarkdown>
               </div>
 
-              <div className="pt-6 border-t border-foreground/15">
+              <div className="pt-6 border-t border-foreground/10">
                 <button
                   type="button"
                   onClick={openBookingModal}
-                  className="w-full py-3.5 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-3.5 bg-foreground text-background text-xs font-sans uppercase tracking-widest font-semibold hover:opacity-85 transition-opacity flex items-center justify-center gap-2 rounded-[8px] cursor-pointer"
                 >
                   <span>Inquire for Similar Scope</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -179,20 +176,20 @@ export default function ProjectPage() {
           </AnimatedSection>
 
           {/* Right: Flat Showcase Gallery */}
-          <div className="lg:col-span-8 space-y-10">
+          <div className="lg:col-span-8 space-y-12">
             {remainingImages.map((img: any, idx: number) => (
               <AnimatedSection key={idx} delay={idx * 0.08}>
-                <div className="border border-foreground/20 bg-foreground/5 p-3 hover:border-foreground transition-colors duration-200">
-                  <div className="overflow-hidden bg-background">
+                <div className="group">
+                  <div className="overflow-hidden bg-foreground/5 rounded-[10px]">
                     <img
                       src={getImageUrl(img)}
                       alt={img.fields?.title || `${project.brandName} showcase`}
-                      className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-500"
+                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                     />
                   </div>
-                  <div className="pt-3 flex items-center justify-between text-[10px] font-mono opacity-60 uppercase tracking-widest">
-                    <span>ARTIFACT {String(idx + 1).padStart(2, "0")}</span>
+                  <div className="pt-3 flex items-center justify-between text-[11px] font-sans opacity-60 uppercase tracking-widest">
                     <span>{project.brandName}</span>
+                    <span>SHOWCASE</span>
                   </div>
                 </div>
               </AnimatedSection>
@@ -203,7 +200,7 @@ export default function ProjectPage() {
 
       {/* 4. SECOND IMAGE: EDGE-TO-EDGE FULL BLEED */}
       {secondImage && (
-        <section className="w-full overflow-hidden border-y border-foreground/20 bg-foreground/5 my-20">
+        <section className="w-full overflow-hidden my-20">
           <ParallaxImage
             src={secondImage}
             alt={`${project.brandName} Edge Visual`}
@@ -215,10 +212,10 @@ export default function ProjectPage() {
 
       {/* 5. INSTAGRAM STORYTELLING REELS */}
       {igUrls.length > 0 && (
-        <section className="container mx-auto px-6 mt-28 pt-16 border-t border-foreground/15">
+        <section className="container mx-auto px-6 mt-28 pt-16 border-t border-foreground/10">
           <div className="mb-12 text-center">
-            <p className="text-xs font-mono uppercase tracking-[0.4em] opacity-60 mb-2">
-              LIVE ARTIFACTS
+            <p className="text-xs font-sans uppercase tracking-[0.35em] opacity-60 mb-2">
+              MOTION ARCHIVE
             </p>
             <h2 className="text-4xl md:text-5xl font-serif italic tracking-tight">
               Captured in Motion

@@ -50,7 +50,6 @@ export function Header() {
     }
 
     if (link.isRoute) {
-      // Direct page navigation
       return;
     }
 
@@ -72,22 +71,22 @@ export function Header() {
       initial={{ y: -100 }}
       animate={{ y: hidden ? -100 : 0 }}
       transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-xl border-foreground/15 shadow-sm"
-          : "bg-background/40 backdrop-blur-sm border-transparent"
+          ? "bg-background/90 backdrop-blur-xl border-b border-foreground/10 shadow-sm"
+          : "bg-background/40 backdrop-blur-sm border-b border-transparent"
       }`}
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group hover:opacity-80 transition-opacity">
+          <Link to="/" className="flex items-center gap-3 group hover:opacity-85 transition-opacity">
             <Logo className="h-10 w-auto text-foreground transition-colors" />
-            <span className="text-[11px] tracking-[0.25em] uppercase font-mono hidden sm:inline-block border-l border-foreground/20 pl-3 opacity-80 font-bold">
+            <span className="text-[11px] tracking-[0.25em] uppercase font-sans hidden sm:inline-block border-l border-foreground/20 pl-3 opacity-80 font-medium">
               {mode === "studio" ? "TheChet&Co" : "Chetna Pattnaik"}
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8 text-xs tracking-widest uppercase font-mono">
+          <nav className="hidden lg:flex items-center gap-8 text-xs tracking-widest uppercase font-sans">
             {navLinks.map((link) => (
               link.isRoute ? (
                 <Link
@@ -117,7 +116,7 @@ export function Header() {
               onClick={openBookingModal}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="hidden sm:flex items-center gap-2 text-xs font-mono uppercase tracking-widest px-5 py-2.5 bg-foreground text-background font-bold border border-foreground hover:bg-transparent hover:text-foreground transition-all duration-300 shadow-[3px_3px_0px_0px_hsl(var(--foreground)/0.2)]"
+              className="hidden sm:flex items-center gap-2 text-xs font-sans uppercase tracking-widest px-5 py-2.5 bg-foreground text-background font-semibold rounded-[8px] hover:opacity-85 transition-opacity cursor-pointer"
             >
               <Calendar className="w-3.5 h-3.5" /> Book Call
             </motion.button>
@@ -127,15 +126,15 @@ export function Header() {
             <div className="lg:hidden">
               <Sheet>
                 <SheetTrigger asChild>
-                  <button className="p-2 border border-foreground/20 hover:bg-foreground/5 transition-colors">
+                  <button className="p-2 border border-foreground/15 rounded-[8px] hover:bg-foreground/5 transition-colors">
                     <Menu className="w-5 h-5" />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[320px] bg-background border-l-2 border-foreground p-8">
-                  <div className="border-b border-foreground/15 pb-4 mb-8">
+                <SheetContent side="right" className="w-[320px] bg-background border-l border-foreground/15 p-8">
+                  <div className="border-b border-foreground/10 pb-4 mb-8">
                     <Logo className="h-8 w-auto text-foreground mb-2" />
-                    <span className="text-[10px] font-mono uppercase tracking-widest opacity-60">
-                      INDEX NAVIGATION
+                    <span className="text-[10px] font-sans uppercase tracking-widest opacity-60">
+                      NAVIGATION
                     </span>
                   </div>
                   <nav className="flex flex-col gap-6">

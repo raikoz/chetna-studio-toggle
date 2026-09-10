@@ -51,36 +51,33 @@ export function InstagramFeed() {
   }, []);
 
   return (
-    <section className="py-32 border-t border-foreground/15 transition-mode bg-background">
+    <section className="py-24 transition-mode bg-background">
       <div className="container mx-auto px-6">
-        <AnimatedSection>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 border-b border-foreground/15 pb-8">
+        <AnimatedSection className="mb-14">
+          <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 border-b border-foreground/10 pb-6">
             <div>
-              <p className="text-xs font-mono uppercase tracking-[0.4em] opacity-60 mb-3">
-                [ 07 // UNFILTERED MOTION ]
-              </p>
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light tracking-tight">
-                Captured in Motion — <br className="hidden md:block" />
-                <span className="italic">Studio Artifacts</span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
+                Captured in Motion
               </h2>
+              <p className="text-xs font-mono uppercase tracking-widest opacity-50 mt-2">
+                Live Studio Artifacts
+              </p>
             </div>
 
-            <div className="flex items-center gap-4">
-              <a
-                href={INSTAGRAM_ACCOUNT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3.5 bg-foreground text-background text-xs font-mono tracking-widest uppercase font-medium hover:opacity-90 transition-opacity inline-flex items-center gap-2 border border-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]"
-              >
-                <Instagram className="w-4 h-4" />
-                <span>Follow {INSTAGRAM_HANDLE}</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
+            <a
+              href={INSTAGRAM_ACCOUNT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity inline-flex items-center gap-2 group"
+            >
+              <Instagram className="w-4 h-4" />
+              <span>Follow {INSTAGRAM_HANDLE}</span>
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
           </div>
         </AnimatedSection>
 
-        <AnimatedSection delay={0.2}>
+        <AnimatedSection delay={0.1}>
           <InstagramReelGrid urls={reelUrls} />
         </AnimatedSection>
       </div>

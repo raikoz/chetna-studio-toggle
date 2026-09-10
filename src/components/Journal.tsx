@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { AnimatedSection } from "./AnimatedSection";
 
@@ -6,116 +5,86 @@ interface JournalEntry {
   id: string;
   tag: string;
   date: string;
-  readTime: string;
   title: string;
-  excerpt: string;
   image: string;
 }
 
 const ENTRIES: JournalEntry[] = [
   {
     id: "rebrand-anatomy",
-    tag: "BRAND ARCHITECTURE",
-    date: "SEP 2025",
-    readTime: "4 MIN READ",
-    title: "The Anatomy of a High-Conviction Rebrand: Moving Beyond Aesthetic Fluff",
-    excerpt:
-      "A look into why modern brands fail when they treat visual design as lipstick rather than strategic positioning and cultural gravity.",
+    tag: "Brand Architecture",
+    date: "Sep 2025",
+    title: "The Anatomy of a High-Conviction Rebrand",
     image: "/images/montage-5.jpg",
   },
   {
     id: "fault-in-our-ops",
-    tag: "DESIGN OPERATIONS",
-    date: "AUG 2025",
-    readTime: "6 MIN READ",
-    title: "Why Most Brand Guidelines Die on Slide 12: Building Living Operating Systems",
-    excerpt:
-      "SOPs shouldn't be 40-page PDFs destined for forgotten Google Drives. How we architect agile, usable design tokens for fast-moving teams.",
+    tag: "Design Operations",
+    date: "Aug 2025",
+    title: "Why Most Brand Guidelines Die on Slide 12",
     image: "/images/about-2.jpg",
   },
   {
     id: "the-gathering",
-    tag: "LEADERSHIP & CULTURE",
-    date: "JUL 2025",
-    readTime: "5 MIN READ",
-    title: "The Gathering: What Happens When CXOs and Founders Stop Pitching and Start Talking Truth",
-    excerpt:
-      "Notes from Day 1 of our offline founder gathering. Why building in isolation is a trap, and how physical rooms catalyze digital conviction.",
+    tag: "Leadership & Culture",
+    date: "Jul 2025",
+    title: "The Gathering: Notes from the Founder Salon",
     image: "/images/montage-7.jpg",
   },
   {
     id: "physical-community",
-    tag: "COMMUNITY ARTIFACTS",
-    date: "JUN 2025",
-    readTime: "3 MIN READ",
-    title: "Sofar Sounds & Community Spaces: How Intimate Gatherings Amplify Brand Resonance",
-    excerpt:
-      "From pop-up streetwear drops to acoustic rooms in Bhubaneswar—how real-world human energy injects irreplaceable soul into modern brands.",
+    tag: "Community Artifacts",
+    date: "Jun 2025",
+    title: "Sofar Sounds: Physical Rooms, Digital Resonance",
     image: "/images/montage-9.jpg",
   },
 ];
 
 export function Journal() {
   return (
-    <section id="journal" className="py-28 border-t border-foreground/15 transition-mode relative">
+    <section id="journal" className="py-24 transition-mode relative">
       <div className="container mx-auto px-6">
-        {/* Section Header */}
-        <AnimatedSection className="mb-16">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-foreground/15 pb-6">
-            <div>
-              <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60 mb-2">
-                04 / EDITORIAL &amp; DISPATCHES
-              </p>
-              <h2 className="text-4xl md:text-6xl font-serif font-light tracking-tight">
-                The Journal
-              </h2>
-            </div>
-            <p className="text-xs font-mono uppercase tracking-widest opacity-60 max-w-sm">
-              Unfiltered thoughts on design architecture, culture, and running an independent studio.
+        {/* Minimal Section Header */}
+        <AnimatedSection className="mb-14">
+          <div className="border-b border-foreground/10 pb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
+              The Journal
+            </h2>
+            <p className="text-xs font-mono uppercase tracking-widest opacity-50 mt-2">
+              Editorial &amp; Dispatches
             </p>
           </div>
         </AnimatedSection>
 
-        {/* 2x2 Bauhaus Flat Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Minimal Non-Boxy 2x2 Grid (Soft 10px rounded image, clean typography below) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {ENTRIES.map((entry, index) => (
-            <AnimatedSection key={entry.id} delay={index * 0.08}>
-              <article className="group border border-foreground/20 bg-background transition-colors duration-200 hover:border-foreground flex flex-col h-full">
-                {/* Image Container with Hover Zoom */}
-                <div className="relative aspect-[16/10] overflow-hidden border-b border-foreground/20 bg-foreground/5">
+            <AnimatedSection key={entry.id} delay={index * 0.06}>
+              <article className="group cursor-pointer">
+                {/* Image Container with Soft 10px Radius */}
+                <div className="relative aspect-[16/10] overflow-hidden rounded-[10px] bg-foreground/5 mb-4">
                   <img
                     src={entry.image}
                     alt={entry.title}
-                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  {/* Flat Bauhaus Tag */}
-                  <div className="absolute top-4 left-4 bg-background border border-foreground/30 px-3 py-1 text-[10px] font-mono uppercase tracking-widest font-bold">
+                  <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-sm text-[10px] font-mono uppercase tracking-widest">
                     {entry.tag}
                   </div>
                 </div>
 
-                {/* Content Box */}
-                <div className="p-8 flex flex-col justify-between flex-grow">
+                {/* Minimal Typography: Date + Header */}
+                <div className="flex items-baseline justify-between gap-4">
                   <div>
-                    <div className="flex items-center justify-between text-[11px] font-mono opacity-50 uppercase tracking-widest mb-4">
-                      <span>{entry.date}</span>
-                      <span>{entry.readTime}</span>
-                    </div>
-                    <h3 className="text-2xl font-serif font-light tracking-tight mb-4 group-hover:translate-x-1 transition-transform duration-300">
+                    <span className="text-xs font-mono opacity-50 uppercase tracking-wider block mb-1">
+                      {entry.date}
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-serif font-light tracking-tight group-hover:opacity-75 transition-opacity">
                       {entry.title}
                     </h3>
-                    <p className="text-sm opacity-70 font-sans leading-relaxed">
-                      {entry.excerpt}
-                    </p>
                   </div>
-
-                  <div className="pt-6 mt-6 border-t border-foreground/10 flex items-center justify-between">
-                    <span className="text-xs font-mono uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
-                      Read Dispatch
-                    </span>
-                    <div className="w-8 h-8 border border-foreground/20 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </div>
               </article>

@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* TheChet&Co Mode - Blood Dark Red Background */
+    /* TheChet&Co Mode - Deep Crimson Red Background */
     --crimson: 0 93% 12%;
     --crimson-dark: 0 93% 8%;
     --pure-white: 0 0% 100%;
@@ -41,7 +41,7 @@
     --input: 0 93% 90%;
     --ring: 0 93% 12%;
 
-    --radius: 0rem;
+    --radius: 8px;
   }
 
   /* TheChet&Co Studio Mode - Dark Red Background */
@@ -67,8 +67,8 @@
     --accent: 0 93% 20%;
     --accent-foreground: 0 0% 100%;
 
-    --border: 0 0% 100% / 0.15;
-    --input: 0 0% 100% / 0.15;
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.1;
     --ring: 0 0% 100%;
   }
 }
@@ -78,10 +78,8 @@
     @apply bg-foreground/20 text-foreground;
   }
   
-  /* BAUHAUS & FLAT UI: Strict 0px corners, flat surfaces, zero drop shadows */
-  *, *::before, *::after {
-    border-radius: 0 !important;
-    box-shadow: none !important;
+  /* Minimal Flat UI with soft 8px edges where needed - no harsh boxes */
+  * {
     cursor: none;
   }
 
@@ -98,7 +96,7 @@
 
   /* Restore default cursor on touch/mobile devices */
   @media (hover: none) and (pointer: coarse) {
-    *, *::before, *::after {
+    * {
       cursor: auto !important;
     }
   }
@@ -112,26 +110,6 @@
 
   .mode-studio .text-stroke {
     -webkit-text-stroke: 1px hsl(var(--foreground));
-  }
-
-  /* Bauhaus clean architectural flat card */
-  .bauhaus-panel {
-    border: 1px solid hsl(var(--foreground) / 0.2);
-    background-color: hsl(var(--background));
-    transition: border-color 0.25s ease, background-color 0.25s ease;
-  }
-
-  .bauhaus-panel:hover {
-    border-color: hsl(var(--foreground));
-  }
-
-  /* Flat button styles */
-  .bauhaus-btn-primary {
-    @apply px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest font-bold transition-all duration-200 border border-foreground hover:bg-transparent hover:text-foreground;
-  }
-
-  .bauhaus-btn-secondary {
-    @apply px-7 py-3.5 bg-transparent text-foreground font-mono text-xs uppercase tracking-widest font-medium transition-all duration-200 border border-foreground/30 hover:border-foreground hover:bg-foreground/5;
   }
 }
 
@@ -166,21 +144,20 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Non-linear gradient for transition to light footer (flat, elegant) */
-  .noisy-gradient-to-light {
+  /* Ultra-smooth, non-linear multi-stop gradient transition to white */
+  .smooth-gradient-to-light {
     background: linear-gradient(
       180deg,
       hsl(0 93% 12%) 0%,
-      hsl(0 80% 16%) 20%,
-      hsl(0 60% 28%) 45%,
-      hsl(0 40% 50%) 65%,
-      hsl(0 20% 80%) 85%,
+      hsl(0 91% 13.5%) 15%,
+      hsl(0 87% 16%) 28%,
+      hsl(0 80% 21%) 40%,
+      hsl(0 70% 30%) 52%,
+      hsl(0 58% 44%) 64%,
+      hsl(0 50% 62%) 75%,
+      hsl(0 45% 82%) 86%,
+      hsl(0 40% 95%) 94%,
       #ffffff 100%
     );
-    position: relative;
-  }
-
-  .noise-overlay {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
   }
 }

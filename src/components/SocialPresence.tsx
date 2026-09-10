@@ -13,53 +13,44 @@ export function SocialPresence() {
   ];
 
   return (
-    <section id="contact" className="py-28 border-t border-foreground/15 transition-mode relative">
+    <section id="contact" className="py-24 transition-mode relative">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl">
+        <div className="max-w-3xl">
           <AnimatedSection>
-            <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60 mb-2">
-              06 / DIRECT CONSULTATION
-            </p>
-            <h2 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight mb-4">
               {mode === "studio" 
-                ? "Ready to create something extraordinary?" 
-                : "Let's create together"}
+                ? "Let's build something extraordinary." 
+                : "Let's create together."}
             </h2>
-            <p className="text-sm md:text-base opacity-70 font-sans leading-relaxed max-w-2xl mb-10">
-              We take on a limited number of brand and design consultancy clients per quarter. Book a 45-minute discovery call directly on our calendar.
+            <p className="text-base font-serif italic opacity-70 mb-8">
+              Selective capacity. Book a 45-minute discovery consultation.
             </p>
 
-            <div className="mb-14">
+            <div className="mb-12">
               <button
                 type="button"
                 onClick={openBookingModal}
-                className="px-8 py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors inline-flex items-center gap-3 cursor-pointer"
+                className="px-8 py-3.5 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-medium rounded-md hover:opacity-90 transition-opacity inline-flex items-center gap-2.5 cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
-                <span>Book 45-Min Consultation Call</span>
+                <span>Book 45-Min Discovery Call</span>
               </button>
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-10 border-t border-foreground/15">
+          {/* Minimalist social links without heavy boxes */}
+          <div className="flex flex-wrap items-center gap-8 pt-6 border-t border-foreground/10">
             {socials.map((social, index) => (
               <AnimatedSection key={index} delay={index * 0.08}>
                 <a
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-6 border border-foreground/20 hover:border-foreground transition-colors duration-200 group bg-background"
+                  className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider opacity-70 hover:opacity-100 transition-opacity group"
                 >
-                  <div className="flex items-center gap-4">
-                    <social.icon className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
-                    <div>
-                      <span className="text-lg font-serif italic block">{social.label}</span>
-                      <span className="text-xs font-mono opacity-50 uppercase tracking-widest">{social.handle}</span>
-                    </div>
-                  </div>
-                  <div className="w-8 h-8 border border-foreground/20 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
+                  <social.icon className="w-4 h-4" />
+                  <span>{social.label}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
               </AnimatedSection>
             ))}

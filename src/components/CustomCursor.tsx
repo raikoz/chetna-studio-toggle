@@ -16,12 +16,9 @@ export function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Bauhaus smooth geometric springs
-  const mainX = useSpring(cursorX, { stiffness: 700, damping: 35 });
-  const mainY = useSpring(cursorY, { stiffness: 700, damping: 35 });
-
-  const trailingX = useSpring(cursorX, { stiffness: 220, damping: 25 });
-  const trailingY = useSpring(cursorY, { stiffness: 220, damping: 25 });
+  // Smooth responsive spring for the circle
+  const mainX = useSpring(cursorX, { stiffness: 800, damping: 35 });
+  const mainY = useSpring(cursorY, { stiffness: 800, damping: 35 });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -40,13 +37,14 @@ export function CustomCursor() {
       if (!isVisible) setIsVisible(true);
 
       counter++;
-      if (counter % 5 === 0) {
+      // Stardust effect
+      if (counter % 4 === 0) {
         const newParticle: Particle = {
           id: Date.now() + Math.random(),
           x: e.clientX,
           y: e.clientY,
         };
-        setParticles((prev) => [...prev.slice(-6), newParticle]);
+        setParticles((prev) => [...prev.slice(-8), newParticle]);
       }
     };
 
@@ -88,7 +86,7 @@ export function CustomCursor() {
     if (particles.length === 0) return;
     const interval = setInterval(() => {
       setParticles((prev) => prev.slice(1));
-    }, 100);
+    }, 90);
     return () => clearInterval(interval);
   }, [particles]);
 
@@ -96,13 +94,13 @@ export function CustomCursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
-      {/* Bauhaus minimal geometric dust points */}
+      {/* Stardust particles trail */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          initial={{ opacity: 0.5, scale: 1 }}
+          initial={{ opacity: 0.6, scale: 1 }}
           animate={{ opacity: 0, scale: 0.2 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
           style={{
             position: "fixed",
             left: p.x - 1.5,
@@ -110,27 +108,11 @@ export function CustomCursor() {
             width: 3,
             height: 3,
           }}
-          className="bg-foreground pointer-events-none"
+          className="rounded-full bg-white mix-blend-difference pointer-events-none"
         />
       ))}
 
-      {/* Trailing flat Bauhaus square */}
-      <motion.div
-        style={{
-          x: trailingX,
-          y: trailingY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          scale: isHovered ? 1.5 : 1,
-          rotate: isHovered ? 45 : 0,
-        }}
-        transition={{ type: "spring", stiffness: 350, damping: 25 }}
-        className="fixed w-7 h-7 border border-foreground/50 pointer-events-none bg-transparent"
-      />
-
-      {/* Main center solid geometric dot */}
+      {/* Main clean circle pointer: inverts color automatically on light/dark, shrinks on hover */}
       <motion.div
         style={{
           x: mainX,
@@ -139,9 +121,10 @@ export function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          scale: isHovered ? 0.5 : 1,
+          scale: isHovered ? 0.45 : 1, // Shrinks on hover as requested
         }}
-        className="fixed w-2 h-2 bg-foreground pointer-events-none"
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="fixed w-3 h-3 rounded-full bg-white mix-blend-difference pointer-events-none"
       />
     </div>
   );

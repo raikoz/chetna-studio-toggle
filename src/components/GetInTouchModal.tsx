@@ -158,27 +158,27 @@ export function GetInTouchModal() {
 
   return (
     <Dialog open={isBookingOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl max-h-[92vh] overflow-y-auto bg-background text-foreground border border-foreground/30 p-8 md:p-10">
-        <DialogHeader className="mb-8 border-b border-foreground/15 pb-6">
+      <DialogContent className="max-w-2xl max-h-[92vh] overflow-y-auto bg-background text-foreground border border-foreground/15 rounded-[12px] p-8 md:p-10 shadow-lg">
+        <DialogHeader className="mb-8 border-b border-foreground/10 pb-6">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-60">
+            <span className="text-[10px] font-sans uppercase tracking-[0.3em] opacity-60">
               COMMENCE ENGAGEMENT
             </span>
-            <span className="text-[10px] font-mono uppercase tracking-widest opacity-60">
+            <span className="text-[10px] font-sans uppercase tracking-widest opacity-60">
               CHETNA PATTNAIK
             </span>
           </div>
           <DialogTitle className="text-3xl md:text-4xl font-serif font-light tracking-tight text-left mt-2">
             {submittedBooking ? "Consultation Confirmed" : "Book a Discovery Call"}
           </DialogTitle>
-          <DialogDescription className="text-xs font-mono uppercase tracking-widest opacity-60 text-left mt-1">
+          <DialogDescription className="text-xs font-sans uppercase tracking-widest opacity-60 text-left mt-1">
             45-Minute 1-on-1 Session • Google Meet Direct Sync
           </DialogDescription>
         </DialogHeader>
 
         {submittedBooking ? (
           <div className="space-y-8 py-2">
-            <div className="flex items-start gap-4 p-5 border border-foreground/20 bg-foreground/5">
+            <div className="flex items-start gap-4 p-5 rounded-[10px] bg-foreground/5 border border-foreground/10">
               <CheckCircle2 className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <p className="text-base font-sans font-medium uppercase tracking-wider">
@@ -233,7 +233,7 @@ export function GetInTouchModal() {
                   href={submittedBooking.gmeetLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors inline-flex items-center gap-2"
+                  className="px-6 py-3 bg-foreground text-background text-xs font-sans uppercase tracking-widest font-semibold hover:opacity-85 transition-opacity inline-flex items-center gap-2 rounded-[8px]"
                 >
                   <span>Join Google Meet</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -242,7 +242,7 @@ export function GetInTouchModal() {
                   href={submittedBooking.calendarUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 border border-foreground text-foreground text-xs font-mono uppercase tracking-widest font-bold hover:bg-foreground hover:text-background transition-colors inline-flex items-center gap-2"
+                  className="px-6 py-3 border border-foreground/20 text-foreground text-xs font-sans uppercase tracking-widest font-semibold hover:bg-foreground/5 transition-colors inline-flex items-center gap-2 rounded-[8px]"
                 >
                   <span>Add to Google Calendar</span>
                   <Calendar className="w-3.5 h-3.5" />
@@ -253,7 +253,7 @@ export function GetInTouchModal() {
             <button
               type="button"
               onClick={handleClose}
-              className="w-full py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors"
+              className="w-full py-4 bg-foreground text-background text-xs font-sans uppercase tracking-widest font-semibold hover:opacity-85 transition-opacity rounded-[8px]"
             >
               Done &amp; Return to Studio
             </button>
@@ -362,18 +362,18 @@ export function GetInTouchModal() {
               </div>
             </div>
 
-            <div className="pt-4 flex items-center justify-end gap-6 border-t border-foreground/15">
+            <div className="pt-4 flex items-center justify-end gap-6 border-t border-foreground/10">
               <button
                 type="button"
                 onClick={handleClose}
-                className="text-xs font-mono uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+                className="text-xs font-sans uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-8 py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors inline-flex items-center gap-2.5 disabled:opacity-50 cursor-pointer"
+                className="px-8 py-4 bg-foreground text-background text-xs font-sans uppercase tracking-widest font-semibold hover:opacity-85 transition-opacity inline-flex items-center gap-2.5 rounded-[8px] disabled:opacity-50 cursor-pointer"
               >
                 <span>{isSubmitting ? "GENERATING GMEET..." : "CONFIRM & CREATE GMEET"}</span>
                 <ArrowRight className="w-4 h-4" />

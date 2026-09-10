@@ -15,8 +15,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["DM Sans", "system-ui", "sans-serif"],
-        serif: ["Cormorant Garamond", "Georgia", "serif"],
-        display: ["DM Sans", "system-ui", "sans-serif"],
+        serif: ["Carla", "Cormorant Garamond", "Georgia", "serif"],
+        display: ["Carla", "DM Sans", "sans-serif"],
         mono: ["Space Mono", "monospace"],
       },
       colors: {
@@ -59,9 +59,9 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "10px",
+        md: "8px",
+        sm: "5px",
       },
       keyframes: {
         "accordion-down": {

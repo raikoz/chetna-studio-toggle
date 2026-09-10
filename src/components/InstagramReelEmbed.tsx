@@ -46,14 +46,14 @@ export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedPr
       onClick={handleContainerClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative overflow-hidden bg-black cursor-pointer transition-all duration-500 hover:scale-[1.01] border-2 border-foreground/30 hover:border-foreground shadow-[6px_6px_0px_0px_hsl(var(--foreground)/0.15)] ${className}`}
+      className={`group relative overflow-hidden rounded-[10px] bg-black cursor-pointer transition-transform duration-500 hover:scale-[1.01] ${className}`}
       title="Click to open Reel on Instagram"
     >
       {/* Video Container */}
-      <div className="relative w-full aspect-[9/16] overflow-hidden bg-black">
+      <div className="relative w-full aspect-[9/16] overflow-hidden rounded-[10px] bg-black">
         <iframe
           src={embedUrl}
-          className="absolute inset-0 w-full h-[120%] -top-[10%] border-0 outline-none pointer-events-none"
+          className="absolute inset-0 w-full h-[120%] -top-[10%] border-0 outline-none pointer-events-none rounded-[10px]"
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           allowFullScreen
           scrolling="no"
@@ -69,27 +69,27 @@ export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedPr
             type="button"
             onClick={togglePlay}
             aria-label={activePlaying ? "Pause Reel" : "Play Reel"}
-            className="p-2.5 bg-black/80 backdrop-blur-md text-white hover:bg-black transition-colors border border-white/30 shadow-lg cursor-pointer"
+            className="p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/90 transition-all border border-white/20 cursor-pointer"
           >
-            {activePlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
+            {activePlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-white" />}
           </button>
 
           <button
             type="button"
             onClick={toggleMute}
             aria-label={isMuted ? "Unmute Reel" : "Mute Reel"}
-            className="p-2.5 bg-black/80 backdrop-blur-md text-white hover:bg-black transition-colors border border-white/30 shadow-lg cursor-pointer"
+            className="p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/90 transition-all border border-white/20 cursor-pointer"
           >
-            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
           </button>
         </div>
 
         {/* Hover overlay indicator */}
         <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px] pointer-events-none">
-          <span className="px-5 py-2.5 bg-white text-black text-xs font-mono uppercase tracking-[0.2em] font-bold shadow-2xl flex items-center gap-2 mb-2 border border-black">
+          <span className="px-4 py-2 bg-white text-black text-xs font-mono uppercase tracking-widest font-bold rounded-full flex items-center gap-2 mb-2">
             View Reel <ExternalLink className="w-3.5 h-3.5" />
           </span>
-          <span className="text-[10px] text-white/80 font-mono uppercase tracking-widest bg-black/80 px-3 py-1 border border-white/20">
+          <span className="text-[10px] text-white/80 font-mono uppercase tracking-widest">
             Paused on Hover
           </span>
         </div>
