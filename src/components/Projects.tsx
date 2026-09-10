@@ -4,37 +4,38 @@ import { client } from "@/lib/contentful";
 import { useNavigate } from "react-router-dom";
 import { AnimatedSection } from "./AnimatedSection";
 
-// Hyper-realistic 4K camera shot photos matching each brand's domain
-const brandCraftImages: Record<string, string> = {
-  gunjan: "/images/brand-gunjan.jpg", // Makeup, styling
-  desna: "/images/brand-desna.jpg", // Pickles
-  niasna: "/images/brand-niasna.jpg", // Sarees, dresses
-  "house of niasna": "/images/brand-niasna.jpg",
-  kunsquad: "/images/brand-kunsquad.jpg", // Streetwear
-  reemly: "/images/brand-reemly.jpg", // Sarees
-  "reemly design studio": "/images/brand-reemly.jpg",
-  lemme: "/images/brand-lemme.jpg", // Drinks, beverages
-  "boudh distillery lemme bottle": "/images/brand-lemme.jpg",
-  "boudh distillery": "/images/brand-lemme.jpg",
-  "orange strings": "/images/brand-orange-strings.jpg", // Saree
-  sundowner: "/images/brand-sundowner.jpg", // Coffee, cafe
-  "cafe sundowner": "/images/brand-sundowner.jpg",
-  tbc: "/images/brand-the-bar.jpg", // The Bar Consultants (kept as requested)
-  "the bar consultants": "/images/brand-the-bar.jpg",
-  "bar consultants": "/images/brand-the-bar.jpg",
-  rahat: "/images/brand-rahat.jpg", // Hospital, doctor
-  "rahat hospitals": "/images/brand-rahat.jpg",
-  azydo: "/images/brand-azydo.jpg", // Puri, Jagannath temple
-  "azydo, puri": "/images/brand-azydo.jpg",
+// Minimal, subtle, abstract editorial textures for Selected Works
+const brandSubtleImages: Record<string, string> = {
+  desna: "/images/brand-subtle-1.jpg", // Minimalist architectural light & shadow
+  kunsquad: "/images/brand-subtle-2.jpg", // Subtle organic sculptural curves
+  "cafe sundowner": "/images/brand-subtle-4.jpg", // Soft ambient light refraction through fluted glass
+  sundowner: "/images/brand-subtle-4.jpg",
+  "the bar consultants": "/images/brand-subtle-6.jpg", // Subtle crimson liquid marble
+  "bar consultants": "/images/brand-subtle-6.jpg",
+  tbc: "/images/brand-subtle-6.jpg",
+  reemly: "/images/brand-subtle-5.jpg", // Minimalist geometric paper & shadow
+  "reemly design studio": "/images/brand-subtle-5.jpg",
+  azydo: "/images/brand-subtle-7.jpg", // Minimalist stone & serene natural light
+  "azydo, puri": "/images/brand-subtle-7.jpg",
+  "orange strings": "/images/brand-subtle-3.jpg", // Deep abstract crimson flow & resonance
+  lemme: "/images/brand-subtle-8.jpg", // Subtle sculpture curve & muted shadow
+  "boudh distillery lemme bottle": "/images/brand-subtle-8.jpg",
+  "boudh distillery": "/images/brand-subtle-8.jpg",
+  rahat: "/images/brand-subtle-9.jpg", // Abstract raw organic fiber & clean weave
+  "rahat hospitals": "/images/brand-subtle-9.jpg",
+  "house of niasna": "/images/brand-subtle-10.jpg", // Minimalist geometric light on fine texture
+  niasna: "/images/brand-subtle-10.jpg",
+  gunjan: "/images/brand-subtle-11.jpg", // Abstract monochrome fluid curve
+  "gunjan makeup & styling atelier": "/images/brand-subtle-11.jpg",
 };
 
 const dummyProjects = [
-  { brandName: "Desna", dummy: true, dummyImage: "/images/brand-desna.jpg" },
-  { brandName: "Kunsquad", dummy: true, dummyImage: "/images/brand-kunsquad.jpg" },
-  { brandName: "House of Niasna", dummy: true, dummyImage: "/images/brand-niasna.jpg" },
-  { brandName: "Reemly Design Studio", dummy: true, dummyImage: "/images/brand-reemly.jpg" },
-  { brandName: "Cafe Sundowner", dummy: true, dummyImage: "/images/brand-sundowner.jpg" },
-  { brandName: "The Bar Consultants", dummy: true, dummyImage: "/images/brand-the-bar.jpg" },
+  { brandName: "Desna", dummy: true, dummyImage: "/images/brand-subtle-1.jpg" },
+  { brandName: "Kunsquad", dummy: true, dummyImage: "/images/brand-subtle-2.jpg" },
+  { brandName: "Cafe Sundowner", dummy: true, dummyImage: "/images/brand-subtle-4.jpg" },
+  { brandName: "The Bar Consultants", dummy: true, dummyImage: "/images/brand-subtle-6.jpg" },
+  { brandName: "Reemly Design Studio", dummy: true, dummyImage: "/images/brand-subtle-5.jpg" },
+  { brandName: "Azydo, Puri", dummy: true, dummyImage: "/images/brand-subtle-7.jpg" },
 ];
 
 export function Projects() {
@@ -79,24 +80,24 @@ export function Projects() {
     }
   };
 
-  const getCraftImageUrl = (project: any) => {
+  const getSubtleImageUrl = (project: any) => {
     const name = (project.brandName || project.title || "").toLowerCase();
-    for (const key of Object.keys(brandCraftImages)) {
+    for (const key of Object.keys(brandSubtleImages)) {
       if (name.includes(key)) {
-        return brandCraftImages[key];
+        return brandSubtleImages[key];
       }
     }
-    return project.dummyImage || "/images/brand-desna.jpg";
+    return project.dummyImage || "/images/brand-subtle-1.jpg";
   };
 
   return (
-    <section id="work" className="py-24 transition-mode">
+    <section id="work" className="py-16 md:py-24 transition-mode">
       <div className="container mx-auto px-6">
         {/* Minimal Section Header */}
-        <AnimatedSection className="mb-14">
+        <AnimatedSection className="mb-10 md:mb-14">
           <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 border-b border-foreground/10 pb-6">
             <div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight">
                 {mode === "studio" ? "Selected Works" : "Commissions"}
               </h2>
               <p className="text-xs font-sans uppercase tracking-widest opacity-50 mt-2">
@@ -106,11 +107,11 @@ export function Projects() {
           </div>
         </AnimatedSection>
 
-        {/* Minimal Flat Grid - Height reduced by 20% (aspect-square), Clickable, Logo dead center on hover */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        {/* Minimal Flat Grid - Ultra-Subtle Minimal Abstract Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
           {projects.map((project: any, index: number) => {
             const isClickable = mode === "studio";
-            const craftImageUrl = getCraftImageUrl(project);
+            const subtleImageUrl = getSubtleImageUrl(project);
             const logoUrl = project.logo?.fields?.file?.url;
             const fullLogoUrl = logoUrl
               ? logoUrl.startsWith("//")
@@ -122,25 +123,25 @@ export function Projects() {
               <AnimatedSection key={index} delay={index * 0.03}>
                 <div
                   className={`group relative overflow-hidden rounded-[10px] aspect-square bg-foreground/5 transition-all duration-500 ${
-                    isClickable ? "cursor-pointer" : "cursor-default"
+                    isClickable ? "cursor-pointer active:scale-[0.98]" : "cursor-default"
                   }`}
                   onClick={() => isClickable && handleProjectClick(project)}
                 >
-                  {/* Hyper-Realistic 4K Camera Shot (Fits width, zooms on hover) */}
+                  {/* Minimal Subtle Abstract Photo */}
                   <img
-                    src={craftImageUrl}
-                    alt={project.brandName || "Brand Craft"}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    src={subtleImageUrl}
+                    alt={project.brandName || "Selected Work"}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
 
                   {/* Soft Dark Red Tint Overlay */}
-                  <div className="absolute inset-0 bg-[#7e0200]/20 mix-blend-multiply transition-colors duration-500 group-hover:bg-[#7e0200]/40 pointer-events-none" />
+                  <div className="absolute inset-0 bg-[#7e0200]/25 mix-blend-multiply transition-colors duration-500 group-hover:bg-[#7e0200]/45 pointer-events-none" />
 
-                  {/* Subtle Gradient Shadow */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 opacity-30 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none" />
+                  {/* Gradient Depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 opacity-40 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none" />
 
-                  {/* Logo Center and Middle Reveal on Hover (No 'Explore Cases' text) */}
-                  <div className="absolute inset-0 flex items-center justify-center p-8 bg-black/45 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out pointer-events-none">
+                  {/* Logo Center and Middle Reveal on Hover / Active */}
+                  <div className="absolute inset-0 flex items-center justify-center p-8 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out pointer-events-none">
                     {fullLogoUrl ? (
                       <img
                         src={fullLogoUrl}
