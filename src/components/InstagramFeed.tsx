@@ -13,7 +13,6 @@ const INITIAL_REEL_URLS = [
 ];
 
 export function InstagramFeed() {
-  const { toast } = useToast();
   const [reelUrls, setReelUrls] = useState<string[]>(INITIAL_REEL_URLS);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState<string>("Just now");
@@ -27,11 +26,15 @@ export function InstagramFeed() {
       });
       const regex = /(https?:\/\/(www\.)?instagram\.com\/(reel|p|reels|tv)\/[a-zA-Z0-9_-]+)/gi;
       const fetchedUrls: string[] = [];
-      response.items.forEach((item: any) => {
-        const str = JSON.stringify(item.fields);
-        const matches = str.match(regex);
-        if (matches) fetchedUrls.push(...matches);
-      });
+      if (response && response.items && Array.isArray(response.items)) {
+        response.items.forEach((item: any) => {
+          if (item && item.fields) {
+            const str = JSON.stringify(item.fields);
+            const matches = str.match(regex);
+            if (matches) fetchedUrls.push(...matches);
+          }
+        });
+      }
       const uniqueUrls = Array.from(new Set(fetchedUrls.map(u => u.trim())));
       if (uniqueUrls.length > 0) {
         setReelUrls(uniqueUrls.slice(0, 3));
