@@ -86,10 +86,10 @@ export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedPr
 
         {/* Hover overlay indicator */}
         <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px] pointer-events-none">
-          <span className="px-4 py-2 bg-white text-black text-xs font-mono uppercase tracking-widest font-bold rounded-full flex items-center gap-2 mb-2">
+          <span className="px-4 py-2 bg-white text-black text-xs font-sans uppercase tracking-widest font-bold rounded-full flex items-center gap-2 mb-2">
             View Reel <ExternalLink className="w-3.5 h-3.5" />
           </span>
-          <span className="text-[10px] text-white/80 font-mono uppercase tracking-widest">
+          <span className="text-[10px] text-white/80 font-sans uppercase tracking-widest">
             Paused on Hover
           </span>
         </div>

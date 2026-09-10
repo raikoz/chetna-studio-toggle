@@ -3,7 +3,7 @@ import { useMode } from "@/contexts/ModeContext";
 import { useBooking } from "@/contexts/BookingContext";
 import { Logo } from "./Logo";
 import { Menu, Calendar } from "lucide-react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
@@ -15,7 +15,6 @@ import {
 export function Header() {
   const { mode } = useMode();
   const { openBookingModal } = useBooking();
-  const navigate = useNavigate();
   const location = useLocation();
   const [hidden, setHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -33,38 +32,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  // Each menu item is a dedicated separate page
   const navLinks = [
-    { href: "/#work", label: "Work", id: "work", isRoute: false },
-    { href: "/#services", label: "Capabilities", id: "services", isRoute: false },
-    { href: "/about", label: "About Studio", id: "about", isRoute: true },
-    { href: "/#journal", label: "Journal", id: "journal", isRoute: false },
-    { href: "/#faq", label: "FAQ", id: "faq", isRoute: false },
-    { href: "#contact", label: "Contact", id: "contact", isRoute: false },
+    { href: "/work", label: "Work" },
+    { href: "/services", label: "Capabilities" },
+    { href: "/about", label: "About Studio" },
+    { href: "/journal", label: "Journal" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/contact", label: "Contact" },
   ];
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
-    if (link.id === "contact") {
-      e.preventDefault();
-      openBookingModal();
-      return;
-    }
-
-    if (link.isRoute) {
-      return;
-    }
-
-    e.preventDefault();
-    if (location.pathname !== "/") {
-      navigate(link.href);
-    } else {
-      const element = document.getElementById(link.id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      } else {
-        navigate(link.href);
-      }
-    }
-  };
 
   return (
     <motion.header
@@ -87,28 +63,25 @@ export function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8 text-xs tracking-widest uppercase font-sans">
-            {navLinks.map((link) => (
-              link.isRoute ? (
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.href;
+              return (
                 <Link
                   key={link.href}
                   to={link.href}
-                  className="relative group py-1 opacity-70 hover:opacity-100 transition-opacity"
+                  className={`relative group py-1 transition-opacity ${
+                    isActive ? "opacity-100 font-semibold" : "opacity-70 hover:opacity-100"
+                  }`}
                 >
                   <span>{link.label}</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300 ease-out" />
+                  <span
+                    className={`absolute bottom-0 left-0 h-[2px] bg-foreground transition-all duration-300 ease-out ${
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
                 </Link>
-              ) : (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link)}
-                  className="relative group py-1 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
-                >
-                  <span>{link.label}</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300 ease-out" />
-                </a>
-              )
-            ))}
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-4">
@@ -139,24 +112,15 @@ export function Header() {
                   </div>
                   <nav className="flex flex-col gap-6">
                     {navLinks.map((link) => (
-                      link.isRoute ? (
-                        <Link
-                          key={link.href}
-                          to={link.href}
-                          className="text-xl font-serif font-light tracking-tight hover:opacity-60 transition-opacity uppercase"
-                        >
-                          {link.label}
-                        </Link>
-                      ) : (
-                        <a
-                          key={link.href}
-                          href={link.href}
-                          onClick={(e) => handleNavClick(e, link)}
-                          className="text-xl font-serif font-light tracking-tight hover:opacity-60 transition-opacity uppercase cursor-pointer"
-                        >
-                          {link.label}
-                        </a>
-                      )
+                      <Link
+                        key={link.href}
+                        to={link.href}
+                        className={`text-xl font-serif font-light tracking-tight transition-opacity uppercase ${
+                          location.pathname === link.href ? "opacity-100 italic" : "hover:opacity-60"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
                     ))}
                   </nav>
                 </SheetContent>

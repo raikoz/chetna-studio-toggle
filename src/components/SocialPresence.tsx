@@ -30,7 +30,7 @@ export function SocialPresence() {
               <button
                 type="button"
                 onClick={openBookingModal}
-                className="px-8 py-3.5 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-medium rounded-md hover:opacity-90 transition-opacity inline-flex items-center gap-2.5 cursor-pointer"
+                className="px-8 py-3.5 bg-foreground text-background text-xs font-sans uppercase tracking-widest font-medium rounded-md hover:opacity-90 transition-opacity inline-flex items-center gap-2.5 cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book 45-Min Discovery Call</span>
@@ -46,7 +46,7 @@ export function SocialPresence() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider opacity-70 hover:opacity-100 transition-opacity group"
+                  className="flex items-center gap-2 text-xs font-sans uppercase tracking-wider opacity-70 hover:opacity-100 transition-opacity group"
                 >
                   <social.icon className="w-4 h-4" />
                   <span>{social.label}</span>

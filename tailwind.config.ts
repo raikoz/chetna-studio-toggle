@@ -14,10 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "system-ui", "sans-serif"],
-        serif: ["Carla", "Cormorant Garamond", "Georgia", "serif"],
-        display: ["Carla", "DM Sans", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
+        sans: ["DM Sans", "sans-serif"],
+        serif: ["Carla", "Cormorant Garamond", "serif"],
+        display: ["Carla", "serif"],
+        mono: ["DM Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

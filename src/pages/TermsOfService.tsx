@@ -99,7 +99,7 @@ export default function TermsOfService() {
             <p className="opacity-80">
               The Chet & Co. makes reasonable efforts to ensure website availability and accurate scheduling. However, we shall not be held liable for indirect, incidental, or consequential damages resulting from third-party video conferencing interruptions or internet outages.
             </p>
-            <div className="p-6 border border-foreground/20 bg-foreground/5 space-y-1 text-sm font-mono mt-4">
+            <div className="p-6 border border-foreground/20 bg-foreground/5 space-y-1 text-sm font-sans mt-4">
               <p>For questions regarding these Terms of Service:</p>
               <p>Email: <a href="mailto:thechet.pattnaik@gmail.com" className="underline">thechet.pattnaik@gmail.com</a></p>
               <p>LinkedIn: <a href="https://www.linkedin.com/company/the-chet-co" target="_blank" rel="noopener noreferrer" className="underline">The Chet & Co.</a></p>

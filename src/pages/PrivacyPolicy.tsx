@@ -109,7 +109,7 @@ export default function PrivacyPolicy() {
             <p className="opacity-80">
               You retain full rights to request access to, modification of, or complete erasure of your personal data stored in our records. For any privacy requests or inquiries, please contact studio management at:
             </p>
-            <div className="p-6 border border-foreground/20 bg-foreground/5 space-y-1 text-sm font-mono">
+            <div className="p-6 border border-foreground/20 bg-foreground/5 space-y-1 text-sm font-sans">
               <p>The Chet & Co. Design Studio & Consultancy</p>
               <p>Email: <a href="mailto:thechet.pattnaik@gmail.com" className="underline">thechet.pattnaik@gmail.com</a></p>
               <p>Instagram: <a href="https://www.instagram.com/thechetandco/" target="_blank" rel="noopener noreferrer" className="underline">@thechetandco</a></p>

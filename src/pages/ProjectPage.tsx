@@ -7,10 +7,10 @@ import ReactMarkdown from "react-markdown";
 import { extractInstagramUrls } from "@/lib/instagram";
 import { InstagramReelGrid } from "@/components/InstagramReelGrid";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ChevronDown, ChevronUp } from "lucide-react";
 import { useBooking } from "@/contexts/BookingContext";
 
-// Interactive zoom component: smoothly zooms into the hovered coordinates of the image
+// Interactive zoom component: spans edge-to-edge across screen, zooms into hovered part
 function ZoomableEdgeImage({ src, alt }: { src: string; alt: string }) {
   const [transformOrigin, setTransformOrigin] = useState("50% 50%");
   const [isHovered, setIsHovered] = useState(false);
@@ -33,7 +33,7 @@ function ZoomableEdgeImage({ src, alt }: { src: string; alt: string }) {
         setTransformOrigin("50% 50%");
       }}
       onMouseMove={handleMouseMove}
-      className="relative w-full overflow-hidden cursor-crosshair bg-foreground/5"
+      className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] max-w-none overflow-hidden cursor-crosshair bg-foreground/5"
     >
       <img
         src={src}
@@ -45,9 +45,8 @@ function ZoomableEdgeImage({ src, alt }: { src: string; alt: string }) {
         }}
         className="w-full h-auto block select-none will-change-transform"
       />
-      {/* Subtle indicator prompt that fades out on first hover */}
       {!isHovered && (
-        <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-md px-3 py-1 rounded-[6px] text-[10px] font-sans uppercase tracking-widest opacity-60 pointer-events-none hidden sm:block">
+        <div className="absolute bottom-4 right-6 bg-background/80 backdrop-blur-md px-3 py-1 rounded-[6px] text-[10px] font-sans uppercase tracking-widest opacity-60 pointer-events-none hidden sm:block">
           Hover to inspect detail
         </div>
       )}
@@ -60,6 +59,7 @@ export default function ProjectPage() {
   const { openBookingModal } = useBooking();
   const [project, setProject] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [showFullText, setShowFullText] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -73,8 +73,9 @@ export default function ProjectPage() {
         } else {
           setProject({
             brandName: id?.replace(/-/g, " ") || "Showcase Brand",
-            brandDescription: "We worked closely with the founder to architect a fearless visual language, defining typography, merchandise collateral, and digital presence.",
-            scope: ["Visual Identity", "Art Direction", "Merchandise", "Brand Ops"],
+            brandDescription:
+              "We collaborated closely with the leadership team to architect a distinctive visual ecosystem. From core typography and editorial art direction to digital touchpoints, each artifact was engineered to convey conviction and timeless elegance.",
+            scope: ["Visual Identity", "Art Direction", "Brand Ops"],
             dummy: true,
           });
         }
@@ -113,39 +114,50 @@ export default function ProjectPage() {
   const firstImage = images.length > 0 ? getImageUrl(images[0]) : null;
   const remainingImages = images.slice(1);
 
+  // Split description into paragraphs, limiting to 2-3 max with View More toggle
+  const fullDescription = project.brandDescription || "";
+  const paragraphs = fullDescription
+    .split(/\n\n+/)
+    .map((p: string) => p.trim())
+    .filter(Boolean);
+
+  const initialParagraphs = paragraphs.slice(0, 2);
+  const extraParagraphs = paragraphs.slice(2);
+  const hasMoreText = extraParagraphs.length > 0;
+
   return (
     <main className="min-h-screen bg-background text-foreground transition-mode overflow-x-hidden selection:bg-foreground selection:text-background relative">
       <Header />
 
       {/* Floating Back Button */}
       <Link
-        to="/"
+        to="/work"
         className="fixed bottom-8 left-8 z-50 px-5 py-3 bg-foreground text-background text-xs font-sans font-medium uppercase tracking-widest hover:opacity-85 transition-opacity flex items-center gap-2 group rounded-[8px] shadow-sm"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-        <span>Back to Index</span>
+        <span>Back to Work</span>
       </Link>
 
       {/* Top Bar Navigation */}
       <div className="container mx-auto px-6 pt-32 pb-6">
         <div className="flex items-center justify-between border-b border-foreground/10 pb-4 text-xs font-sans uppercase tracking-widest opacity-60">
-          <Link to="/" className="hover:opacity-100 transition-opacity flex items-center gap-2">
+          <Link to="/work" className="hover:opacity-100 transition-opacity flex items-center gap-2">
             <span>←</span> Return to Showcase
           </Link>
           <span>CLIENT ARCHIVE</span>
         </div>
       </div>
 
-      {/* 1. MASSIVE HERO HEADER WITH SCOPE & METADATA */}
+      {/* 1. BRAND HEADER: TYPOGRAPHY, SCOPE & METADATA */}
       <section className="container mx-auto px-6 mb-12">
         <AnimatedSection>
-          <div className="pt-4">
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] font-serif font-light leading-[0.92] tracking-tight uppercase mb-8">
+          <div className="pt-2">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[8rem] font-serif font-light leading-[0.92] tracking-tight uppercase mb-6">
               {project.brandName}
             </h1>
 
             {/* Scope Tags & Client Info */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-foreground/10 text-xs font-sans">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-5 border-t border-foreground/10 text-xs font-sans">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="uppercase tracking-widest opacity-50 mr-2">Scope:</span>
                 {(project.scope || ["Visual Identity", "Strategy", "Art Direction"]).map(
@@ -168,48 +180,55 @@ export default function ProjectPage() {
         </AnimatedSection>
       </section>
 
-      {/* 2. PRIMARY EDGE-TO-EDGE FULL-WIDTH IMAGE WITH ZOOM INSPECTION */}
+      {/* 2. PRIMARY EDGE-TO-EDGE FULL-WIDTH IMAGE WITH HOVER ZOOM */}
       {firstImage && (
-        <section className="w-full mb-16">
+        <section className="w-full mb-16 overflow-hidden">
           <ZoomableEdgeImage src={firstImage} alt={project.brandName} />
         </section>
       )}
 
-      {/* 3. 2-COLUMN TEXT LAYOUT (SMALL TEXT) */}
+      {/* 3. 1-COLUMN NARRATIVE: SMALL TEXT, MAX 2-3 PARAGRAPHS WITH VIEW MORE */}
       <section className="container mx-auto px-6 mb-20">
         <AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 pt-8 border-t border-foreground/10 text-xs sm:text-[13px] font-sans leading-relaxed">
-            {/* Column 1: Context & Strategic Overview */}
-            <div>
-              <p className="text-[10px] font-sans uppercase tracking-[0.3em] opacity-50 mb-3">
-                THE MANDATE &amp; STRATEGY
-              </p>
-              <div className="prose prose-sm max-w-none text-foreground/80 leading-relaxed">
-                <ReactMarkdown>{project.brandDescription}</ReactMarkdown>
-              </div>
+          <div className="max-w-3xl pt-8 border-t border-foreground/10">
+            <p className="text-[10px] font-sans uppercase tracking-[0.3em] opacity-50 mb-3">
+              MANDATE &amp; CONTEXT
+            </p>
+
+            <div className="text-xs sm:text-[13px] font-sans leading-relaxed text-foreground/80 space-y-4">
+              {initialParagraphs.map((para: string, idx: number) => (
+                <p key={idx}>{para}</p>
+              ))}
+
+              {/* Extended text revealed on View More */}
+              {showFullText &&
+                extraParagraphs.map((para: string, idx: number) => (
+                  <p key={`extra-${idx}`} className="animate-fadeIn">
+                    {para}
+                  </p>
+                ))}
             </div>
 
-            {/* Column 2: Execution Narrative & Collaboration CTA */}
-            <div className="flex flex-col justify-between space-y-6">
-              <div>
-                <p className="text-[10px] font-sans uppercase tracking-[0.3em] opacity-50 mb-3">
-                  IDENTITY ARCHITECTURE
-                </p>
-                <p className="text-foreground/80 leading-relaxed">
-                  Every artifact in this identity system was engineered for physical and digital resonance—balancing bold typography, tactile materiality, and distinctive cultural positioning.
-                </p>
-              </div>
+            {hasMoreText && (
+              <button
+                type="button"
+                onClick={() => setShowFullText(!showFullText)}
+                className="mt-4 text-xs font-sans font-medium uppercase tracking-wider opacity-70 hover:opacity-100 transition-opacity flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>{showFullText ? "View Less" : "View More Details"}</span>
+                {showFullText ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+            )}
 
-              <div className="pt-4 border-t border-foreground/10">
-                <button
-                  type="button"
-                  onClick={openBookingModal}
-                  className="px-6 py-3 bg-foreground text-background text-xs font-sans uppercase tracking-widest font-semibold hover:opacity-85 transition-opacity flex items-center gap-2 rounded-[8px] cursor-pointer"
-                >
-                  <span>Inquire for Similar Scope</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
+            <div className="pt-6 mt-8 border-t border-foreground/10 flex items-center gap-4">
+              <button
+                type="button"
+                onClick={openBookingModal}
+                className="px-6 py-3 bg-foreground text-background text-xs font-sans uppercase tracking-widest font-semibold hover:opacity-85 transition-opacity flex items-center gap-2 rounded-[8px] cursor-pointer"
+              >
+                <span>Inquire for Similar Scope</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
         </AnimatedSection>
@@ -217,9 +236,9 @@ export default function ProjectPage() {
 
       {/* 4. REMAINING SHOWCASE IMAGES: EDGE-TO-EDGE FIT-WIDTH WITH HOVER ZOOM */}
       {remainingImages.length > 0 && (
-        <section className="w-full space-y-16 mb-24">
+        <section className="w-full space-y-16 mb-24 overflow-hidden">
           {remainingImages.map((img: any, idx: number) => (
-            <div key={idx} className="w-full">
+            <div key={idx} className="w-full overflow-hidden">
               <ZoomableEdgeImage
                 src={getImageUrl(img)}
                 alt={img.fields?.title || `${project.brandName} Visual ${idx + 1}`}
@@ -229,7 +248,7 @@ export default function ProjectPage() {
         </section>
       )}
 
-      {/* 5. INSTAGRAM STORYTELLING REELS */}
+      {/* 5. MOTION ARCHIVE REELS */}
       {igUrls.length > 0 && (
         <section className="container mx-auto px-6 mb-28 pt-16 border-t border-foreground/10">
           <div className="mb-12 text-center">

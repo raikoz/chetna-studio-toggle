@@ -40,7 +40,7 @@ export function Testimonials() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
               Kind Words
             </h2>
-            <p className="text-xs font-mono uppercase tracking-widest opacity-50 mt-2">
+            <p className="text-xs font-sans uppercase tracking-widest opacity-50 mt-2">
               Founder Commendations
             </p>
           </div>
@@ -58,7 +58,7 @@ export function Testimonials() {
                 <div className="pt-4 border-t border-foreground/10 flex items-center justify-between">
                   <div>
                     <p className="font-sans font-medium uppercase tracking-wider text-sm">{t.author}</p>
-                    <p className="text-xs font-mono opacity-50 uppercase tracking-widest mt-0.5">{t.role}</p>
+                    <p className="text-xs font-sans opacity-50 uppercase tracking-widest mt-0.5">{t.role}</p>
                   </div>
                   <span className="text-xl font-serif opacity-30">✦</span>
                 </div>

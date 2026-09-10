@@ -184,7 +184,7 @@ export function GetInTouchModal() {
                 <p className="text-base font-sans font-medium uppercase tracking-wider">
                   Your Call Has Been Reserved
                 </p>
-                <p className="text-xs font-mono opacity-80 leading-relaxed">
+                <p className="text-xs font-sans opacity-80 leading-relaxed">
                   Calendar invites &amp; GMeet link dispatched to{" "}
                   <span className="font-bold underline">{PRIMARY_OWNER_EMAIL}</span> and CC&apos;d to{" "}
                   <span className="font-bold underline">{CHETNA_EMAIL}</span>.
@@ -192,7 +192,7 @@ export function GetInTouchModal() {
               </div>
             </div>
 
-            <div className="border border-foreground/20 p-6 space-y-4 text-xs font-mono">
+            <div className="border border-foreground/20 p-6 space-y-4 text-xs font-sans">
               <div className="flex justify-between border-b border-foreground/10 pb-2">
                 <span className="opacity-50 uppercase tracking-wider">Client Name</span>
                 <span className="font-medium text-sm uppercase">{submittedBooking.name}</span>
@@ -214,18 +214,18 @@ export function GetInTouchModal() {
             {/* Google Meet Box */}
             <div className="p-6 border border-foreground/20 bg-foreground/5 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2">
+                <span className="text-xs font-sans uppercase tracking-widest font-bold flex items-center gap-2">
                   <Video className="w-4 h-4" /> Google Meet Link
                 </span>
                 <button
                   type="button"
                   onClick={copyMeetLink}
-                  className="text-xs font-mono flex items-center gap-1.5 opacity-70 hover:opacity-100 hover:underline transition-opacity"
+                  className="text-xs font-sans flex items-center gap-1.5 opacity-70 hover:opacity-100 hover:underline transition-opacity"
                 >
                   <Copy className="w-3.5 h-3.5" /> Copy Link
                 </button>
               </div>
-              <p className="text-xs font-mono break-all p-3 border border-foreground/20 bg-background">
+              <p className="text-xs font-sans break-all p-3 border border-foreground/20 bg-background">
                 {submittedBooking.gmeetLink}
               </p>
               <div className="pt-2 flex flex-wrap gap-4">
@@ -262,7 +262,7 @@ export function GetInTouchModal() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-6">
               <div>
-                <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
+                <label className="block text-xs font-sans uppercase tracking-widest opacity-60 mb-2">
                   Full Name *
                 </label>
                 <input
@@ -278,7 +278,7 @@ export function GetInTouchModal() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
+                  <label className="block text-xs font-sans uppercase tracking-widest opacity-60 mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -293,7 +293,7 @@ export function GetInTouchModal() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
+                  <label className="block text-xs font-sans uppercase tracking-widest opacity-60 mb-2">
                     Email Address *
                   </label>
                   <input
@@ -310,7 +310,7 @@ export function GetInTouchModal() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
+                  <label className="block text-xs font-sans uppercase tracking-widest opacity-60 mb-2">
                     Select Date *
                   </label>
                   <input
@@ -320,12 +320,12 @@ export function GetInTouchModal() {
                     value={formData.date}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-transparent border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
+                    className="w-full bg-transparent border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans transition-colors cursor-pointer"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
+                  <label className="block text-xs font-sans uppercase tracking-widest opacity-60 mb-2">
                     Select 45-Min Slot *
                   </label>
                   <select
@@ -333,7 +333,7 @@ export function GetInTouchModal() {
                     value={formData.slot}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-background border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
+                    className="w-full bg-background border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans transition-colors cursor-pointer"
                   >
                     <option value="" disabled>
                       Choose a time slot...
@@ -348,7 +348,7 @@ export function GetInTouchModal() {
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
+                <label className="block text-xs font-sans uppercase tracking-widest opacity-60 mb-2">
                   Project Details / Brief (Optional)
                 </label>
                 <textarea

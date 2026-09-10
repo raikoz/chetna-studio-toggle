@@ -75,9 +75,24 @@ export function Footer() {
               </div>
 
               {/* Navigation Links */}
-              <div className="flex flex-wrap items-center gap-5 text-xs font-sans uppercase tracking-widest pt-2">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-sans uppercase tracking-widest pt-2">
+                <Link to="/work" className="hover:opacity-60 transition-opacity">
+                  Work
+                </Link>
+                <Link to="/services" className="hover:opacity-60 transition-opacity">
+                  Capabilities
+                </Link>
                 <Link to="/about" className="hover:opacity-60 transition-opacity">
-                  About Studio
+                  About
+                </Link>
+                <Link to="/journal" className="hover:opacity-60 transition-opacity">
+                  Journal
+                </Link>
+                <Link to="/faq" className="hover:opacity-60 transition-opacity">
+                  FAQ
+                </Link>
+                <Link to="/contact" className="hover:opacity-60 transition-opacity">
+                  Contact
                 </Link>
                 <a
                   href="https://www.instagram.com/thechetandco/"

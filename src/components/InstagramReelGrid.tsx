@@ -24,7 +24,7 @@ export function InstagramReelGrid({ urls }: InstagramReelGridProps) {
             className="hidden md:flex flex-col items-center justify-center aspect-[9/16] bg-foreground/5 border-2 border-dashed border-foreground/20 p-6 text-center"
           >
             <span className="text-2xl opacity-20 font-serif mb-2">✦</span>
-            <span className="text-xs uppercase tracking-widest opacity-40 font-mono">Curating Reel</span>
+            <span className="text-xs uppercase tracking-widest opacity-40 font-sans">Curating Reel</span>
           </div>
         ))}
       </div>

@@ -8,7 +8,13 @@ import { BookingProvider } from "@/contexts/BookingContext";
 import { GetInTouchModal } from "@/components/GetInTouchModal";
 import { CustomCursor } from "@/components/CustomCursor";
 import Index from "./pages/Index";
+import Work from "./pages/Work";
+import Services from "./pages/Services";
 import About from "./pages/About";
+import JournalPage from "./pages/JournalPage";
+import JournalPost from "./pages/JournalPost";
+import FaqPage from "./pages/FaqPage";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import ProjectPage from "./pages/ProjectPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -27,7 +33,13 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/services" element={<Services />} />
               <Route path="/about" element={<About />} />
+              <Route path="/journal" element={<JournalPage />} />
+              <Route path="/journal/:id" element={<JournalPost />} />
+              <Route path="/faq" element={<FaqPage />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/project/:id" element={<ProjectPage />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="*" element={<NotFound />} />

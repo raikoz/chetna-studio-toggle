@@ -26,7 +26,55 @@ export default function About() {
         <span>Back to Studio</span>
       </Link>
 
-      <div className="container mx-auto px-6 pt-36 pb-32">
+      {/* Crafty Background Embedded Images (Placed gracefully across the page canvas, no captions, no dedicated section) */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden select-none">
+        {/* Top Right: Chetna in Transit (Ambient floating behind manifesto) */}
+        <div className="absolute top-28 -right-8 md:right-8 w-48 sm:w-64 md:w-80 opacity-20 md:opacity-30 rotate-3 transform rounded-[10px] overflow-hidden shadow-2xl transition-opacity duration-700">
+          <img
+            src="/images/about-1.jpg"
+            alt=""
+            className="w-full h-auto object-cover filter contrast-105"
+          />
+        </div>
+
+        {/* Upper Left: Founder Retreat Matchbox (Crafty subtle tilt) */}
+        <div className="absolute top-[680px] -left-10 md:left-6 w-36 sm:w-48 md:w-60 opacity-20 md:opacity-25 -rotate-6 transform rounded-[10px] overflow-hidden shadow-xl">
+          <img
+            src="/images/montage-8.jpg"
+            alt=""
+            className="w-full h-auto object-contain"
+          />
+        </div>
+
+        {/* Middle Right: Day 1 Gathering Stamp (Floating paper note) */}
+        <div className="absolute top-[1050px] right-4 md:right-16 w-36 sm:w-48 md:w-56 opacity-15 md:opacity-25 rotate-6 transform rounded-[10px] overflow-hidden shadow-xl">
+          <img
+            src="/images/montage-4.jpg"
+            alt=""
+            className="w-full h-auto object-contain"
+          />
+        </div>
+
+        {/* Lower Left: Sofar Community Gathering (Atmospheric landscape) */}
+        <div className="absolute top-[1480px] -left-12 md:left-8 w-56 sm:w-72 md:w-96 opacity-15 md:opacity-25 -rotate-2 transform rounded-[10px] overflow-hidden shadow-2xl">
+          <img
+            src="/images/montage-9.jpg"
+            alt=""
+            className="w-full h-auto object-cover"
+          />
+        </div>
+
+        {/* Deep Bottom Right: Studio Workspace Print */}
+        <div className="absolute top-[1900px] -right-8 md:right-12 w-48 sm:w-64 md:w-80 opacity-15 md:opacity-25 rotate-4 transform rounded-[10px] overflow-hidden shadow-xl">
+          <img
+            src="/images/about-5.jpg"
+            alt=""
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 pt-36 pb-32 relative z-10">
         {/* Breadcrumb / Top Bar */}
         <div className="flex items-center justify-between border-b border-foreground/10 pb-6 mb-16">
           <div className="text-[11px] font-sans uppercase tracking-[0.3em] opacity-60">
@@ -38,12 +86,12 @@ export default function About() {
         </div>
 
         {/* Hero Banner: Bauhaus Typographic Scale */}
-        <section className="mb-24">
+        <section className="mb-28">
           <AnimatedSection>
             <p className="text-xs font-sans uppercase tracking-[0.35em] opacity-60 mb-4">
               THE MANIFESTO &amp; THE MIND BEHIND IT
             </p>
-            <h1 className="text-5xl md:text-7xl lg:text-[7rem] font-serif font-light uppercase tracking-tight leading-[0.94] mb-12">
+            <h1 className="text-5xl md:text-7xl lg:text-[7.5rem] font-serif font-light uppercase tracking-tight leading-[0.92] mb-12 max-w-5xl">
               Form Follows Conviction. <br />
               <span className="italic">We Build Living Worlds.</span>
             </h1>
@@ -55,7 +103,7 @@ export default function About() {
               <p className="text-2xl md:text-3xl font-serif font-light leading-relaxed opacity-90">
                 TheChet&amp;Co exists as an anti-agency sanctuary for founders and cultural agitators who dare to stand out.
               </p>
-              <p className="mt-6 text-base md:text-lg opacity-70 font-sans leading-relaxed">
+              <p className="mt-6 text-base md:text-lg opacity-75 font-sans leading-relaxed max-w-2xl">
                 Founded by Chetna Pattnaik, we combine fine art sensibility with sharp strategic positioning to create visual identities that turn strangers into devotees.
               </p>
             </div>
@@ -73,145 +121,6 @@ export default function About() {
                 <div className="text-xs font-sans uppercase tracking-widest opacity-60 mt-1">Strategy to Cultural Drops</div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Bauhaus Montage Grid: Crisp Flat Layout, Soft Rounded Corners */}
-        <section className="my-28">
-          <AnimatedSection className="mb-12">
-            <div className="flex items-baseline justify-between border-b border-foreground/10 pb-4">
-              <h2 className="text-3xl md:text-4xl font-serif italic">
-                The Montage: Studio Artifacts
-              </h2>
-              <span className="text-xs font-sans uppercase tracking-widest opacity-50">
-                VISUAL CHRONICLE
-              </span>
-            </div>
-          </AnimatedSection>
-
-          {/* Asymmetric Montage Grid - No Boxy Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            {/* Chetna in Transit */}
-            <AnimatedSection className="md:col-span-6 lg:col-span-5">
-              <div className="group">
-                <div className="relative overflow-hidden bg-foreground/5 rounded-[10px]">
-                  <img
-                    src="/images/about-1.jpg"
-                    alt="Chetna Pattnaik on the street"
-                    className="w-full h-auto max-h-[580px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute top-3 left-3 bg-foreground text-background text-[10px] font-sans px-3 py-1 rounded-[6px] uppercase tracking-wider font-semibold shadow-sm">
-                    IN TRANSIT
-                  </div>
-                </div>
-                <div className="mt-3 flex items-center justify-between text-xs font-sans opacity-70">
-                  <span className="font-medium">CHETNA PATTNAIK</span>
-                  <span className="opacity-60">DIRECTING &amp; GEAR</span>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Retreat & Day 1 + Community Gathering */}
-            <div className="md:col-span-6 lg:col-span-7 space-y-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {/* Matchbox */}
-                <AnimatedSection delay={0.1}>
-                  <div className="group">
-                    <div className="overflow-hidden bg-foreground/5 rounded-[10px]">
-                      <img
-                        src="/images/montage-8.jpg"
-                        alt="Founders don't take breaks. Let's change that."
-                        className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                    <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
-                      FOUNDERS RETREAT
-                    </p>
-                  </div>
-                </AnimatedSection>
-
-                {/* Day 1 Stamp */}
-                <AnimatedSection delay={0.2}>
-                  <div className="group">
-                    <div className="overflow-hidden bg-foreground/5 rounded-[10px]">
-                      <img
-                        src="/images/montage-4.jpg"
-                        alt="The Gathering Day 1 Stamp"
-                        className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                    <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
-                      THE GATHERING
-                    </p>
-                  </div>
-                </AnimatedSection>
-              </div>
-
-              {/* Sofar Music */}
-              <AnimatedSection delay={0.3}>
-                <div className="group">
-                  <div className="overflow-hidden bg-foreground/5 rounded-[10px]">
-                    <img
-                      src="/images/montage-9.jpg"
-                      alt="Sofar Sounds Community Gathering"
-                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="mt-3 flex items-center justify-between text-xs font-sans opacity-70">
-                    <span className="font-medium">SOFAR SOUNDS BHUBANESWAR</span>
-                    <span className="opacity-60">COMMUNITY FOOTPRINT</span>
-                  </div>
-                </div>
-              </AnimatedSection>
-            </div>
-          </div>
-
-          {/* Lower Montage Row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
-            <AnimatedSection delay={0.1}>
-              <div className="group">
-                <div className="overflow-hidden rounded-[10px] bg-foreground/5">
-                  <img
-                    src="/images/montage-1.jpg"
-                    alt="Kunsquad Pop-Up Exhibition"
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
-                  KUNSQUAD // STREETWEAR LAUNCH
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.2}>
-              <div className="group">
-                <div className="overflow-hidden rounded-[10px] bg-foreground/5">
-                  <img
-                    src="/images/about-4.jpg"
-                    alt="Chetna Pattnaik Red Portrait Print"
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
-                  PORTRAIT // PRINT ARCHIVE
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.3}>
-              <div className="group">
-                <div className="overflow-hidden rounded-[10px] bg-foreground/5">
-                  <img
-                    src="/images/about-5.jpg"
-                    alt="Chetna at Studio Workspace"
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
-                  STUDIO WORKSPACE // CHETNA
-                </p>
-              </div>
-            </AnimatedSection>
           </div>
         </section>
 
@@ -277,7 +186,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* Flat Minimal CTA Section */}
+        {/* Flat Minimal Collaboration Section */}
         <section className="my-20 pt-16 border-t border-foreground/10">
           <div className="max-w-3xl">
             <span className="text-[11px] font-sans uppercase tracking-[0.3em] opacity-60">

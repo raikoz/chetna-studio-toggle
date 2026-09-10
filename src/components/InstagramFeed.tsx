@@ -59,7 +59,7 @@ export function InstagramFeed() {
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
                 Captured in Motion
               </h2>
-              <p className="text-xs font-mono uppercase tracking-widest opacity-50 mt-2">
+              <p className="text-xs font-sans uppercase tracking-widest opacity-50 mt-2">
                 Live Studio Artifacts
               </p>
             </div>
@@ -68,7 +68,7 @@ export function InstagramFeed() {
               href={INSTAGRAM_ACCOUNT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-mono uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity inline-flex items-center gap-2 group"
+              className="text-xs font-sans uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity inline-flex items-center gap-2 group"
             >
               <Instagram className="w-4 h-4" />
               <span>Follow {INSTAGRAM_HANDLE}</span>

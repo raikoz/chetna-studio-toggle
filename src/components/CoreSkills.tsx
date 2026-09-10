@@ -10,30 +10,31 @@ interface SkillItem {
   image: string;
 }
 
+// Dedicated capabilities visuals - no client / selected works
 const SKILLS: SkillItem[] = [
   {
     id: "strategy",
     name: "Creative Strategy",
     subtitle: "Positioning & Narrative Architecture",
-    image: "/images/montage-8.jpg",
+    image: "/images/service-strategy.jpg",
   },
   {
     id: "branding",
     name: "Brand Identity",
     subtitle: "Visual Systems & Art Direction",
-    image: "/images/montage-1.jpg",
+    image: "/images/service-branding.jpg",
   },
   {
     id: "motion",
     name: "Motion & Social Storytelling",
     subtitle: "Campaign Motion & Video Direction",
-    image: "/images/montage-4.jpg",
+    image: "/images/service-motion.jpg",
   },
   {
     id: "marketing",
     name: "Digital Marketing & Drops",
     subtitle: "Launch Collateral & Community Design",
-    image: "/images/montage-6.jpg",
+    image: "/images/service-marketing.jpg",
   },
 ];
 
@@ -47,9 +48,9 @@ export function CoreSkills() {
         <AnimatedSection className="mb-14">
           <div className="border-b border-foreground/10 pb-6">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
-              Our Core Skills
+              Our Capabilities
             </h2>
-            <p className="text-xs font-mono uppercase tracking-widest opacity-50 mt-2">
+            <p className="text-xs font-sans uppercase tracking-widest opacity-50 mt-2">
               Capabilities &amp; Craft
             </p>
           </div>
@@ -88,7 +89,7 @@ export function CoreSkills() {
             );
           })}
 
-          {/* Floating Hover Image Preview with Soft 8px Rounded Edges */}
+          {/* Floating Hover Image Preview with Soft 10px Rounded Edges */}
           <AnimatePresence>
             {activeSkill && (
               <motion.div
@@ -109,7 +110,7 @@ export function CoreSkills() {
                     <p className="text-xs font-sans font-medium uppercase tracking-wider">
                       {activeSkill.name}
                     </p>
-                    <p className="text-[10px] font-mono opacity-75 truncate mt-0.5">
+                    <p className="text-[10px] font-sans opacity-75 truncate mt-0.5">
                       {activeSkill.subtitle}
                     </p>
                   </div>

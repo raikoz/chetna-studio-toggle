@@ -171,7 +171,7 @@ export function Hero() {
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="text-xs font-mono uppercase tracking-[0.35em] opacity-60 mb-6"
+                className="text-xs font-sans uppercase tracking-[0.35em] opacity-60 mb-6"
               >
                 Design Studio &amp; Consultancy
               </motion.p>
@@ -211,7 +211,7 @@ export function Hero() {
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="text-xs font-mono uppercase tracking-[0.35em] opacity-60 mb-6"
+                className="text-xs font-sans uppercase tracking-[0.35em] opacity-60 mb-6"
               >
                 Creative Director &amp; Consultant
               </motion.p>
@@ -272,14 +272,14 @@ export function Hero() {
             <button
               type="button"
               onClick={openBookingModal}
-              className="px-8 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest font-medium rounded-md hover:opacity-90 transition-opacity cursor-pointer"
+              className="px-8 py-3.5 bg-foreground text-background font-sans text-xs uppercase tracking-widest font-medium rounded-md hover:opacity-90 transition-opacity cursor-pointer"
             >
               Book a Discovery Call
             </button>
             <button
               type="button"
               onClick={openBookingModal}
-              className="px-6 py-3.5 text-foreground font-mono text-xs tracking-widest uppercase font-medium hover:opacity-70 transition-opacity cursor-pointer flex items-center gap-2 group"
+              className="px-6 py-3.5 text-foreground font-sans text-xs tracking-widest uppercase font-medium hover:opacity-70 transition-opacity cursor-pointer flex items-center gap-2 group"
             >
               <span>Get in Touch</span>
               <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
