@@ -163,18 +163,18 @@ export function Projects() {
                   }`}
                   onClick={() => isClickable && handleProjectClick(project)}
                 >
-                  {/* DEFAULT STATE: Logo Only (Middle and Center Aligned, Fades Out on Hover) */}
-                  <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-8 transition-all duration-400 ease-out opacity-100 group-hover:opacity-0 group-hover:scale-95 pointer-events-none">
+                  {/* DEFAULT STATE: Logo Only (Increased by 30%, Middle and Center Aligned, Fades Out on Hover) */}
+                  <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 md:p-6 transition-all duration-400 ease-out opacity-100 group-hover:opacity-0 group-hover:scale-95 pointer-events-none">
                     {fullLogoUrl ? (
                       <img
                         src={fullLogoUrl}
                         alt={`${project.brandName} Logo`}
-                        className={`max-h-16 sm:max-h-24 md:max-h-36 max-w-[85%] sm:max-w-[88%] w-auto object-contain transition-transform duration-400 ${
+                        className={`max-h-[84px] sm:max-h-32 md:max-h-48 max-w-[90%] sm:max-w-[92%] w-auto object-contain transition-transform duration-400 ${
                           mode === "studio" ? "filter brightness-0 invert" : "filter brightness-0"
                         }`}
                       />
                     ) : (
-                      <span className="text-lg sm:text-2xl md:text-4xl font-serif tracking-wider uppercase text-center text-foreground font-light">
+                      <span className="text-xl sm:text-3xl md:text-5xl font-serif tracking-wider uppercase text-center text-foreground font-light">
                         {project.brandName || project.title}
                       </span>
                     )}
