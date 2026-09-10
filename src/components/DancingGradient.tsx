@@ -1,142 +1,201 @@
-import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { useMode } from "@/contexts/ModeContext";
 
-/**
- * DancingGradient – animated wave transition from page background into the white footer.
- *
- * Three layered SVG waves animate via CSS @keyframes path interpolation.
- * Two crimson aurora orbs breathe in the background.
- * Cursor follower ripple reacts on hover (desktop only).
- */
 export function DancingGradient() {
   const { mode } = useMode();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
-  const springCfg = { stiffness: 100, damping: 22 };
-  const smoothX = useSpring(mouseX, springCfg);
-  const smoothY = useSpring(mouseY, springCfg);
-  const xPercent = useTransform(smoothX, [0, 1], ["0%", "100%"]);
-  const yPercent = useTransform(smoothY, [0, 1], ["0%", "100%"]);
+  // Mouse position in normalized coordinates [0..1]
+  const mouseRef = useRef({ x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let time = 0;
+
+    const handleResize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    const isStudio = mode === "studio";
+
+    const render = () => {
+      time += 0.012;
+
+      // Smooth mouse interpolation
+      const mouse = mouseRef.current;
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. BASE BACKGROUND: Seamless transition from page background color at top
+      const topColor = isStudio ? "hsl(0, 93%, 12%)" : "#ffffff";
+      const bgGradient = ctx.createLinearGradient(0, 0, 0, height);
+      bgGradient.addColorStop(0, topColor);
+      bgGradient.addColorStop(0.4, isStudio ? "#550202" : "#fff5f5");
+      bgGradient.addColorStop(1, "#ffffff");
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. LUMINOUS SCARLET AMBIENT GLOW (Breathes softly behind the wave)
+      const glowX = width * (0.5 + Math.sin(time * 0.5) * 0.2 + (mouse.x - 0.5) * 0.3);
+      const glowY = height * (0.35 + Math.cos(time * 0.6) * 0.1);
+      const glowRadius = Math.max(width, height) * 0.6;
+      const ambientGlow = ctx.createRadialGradient(glowX, glowY, 10, glowX, glowY, glowRadius);
+      if (isStudio) {
+        ambientGlow.addColorStop(0, "rgba(215, 30, 30, 0.45)");
+        ambientGlow.addColorStop(0.5, "rgba(140, 5, 5, 0.2)");
+        ambientGlow.addColorStop(1, "transparent");
+      } else {
+        ambientGlow.addColorStop(0, "rgba(244, 63, 94, 0.15)");
+        ambientGlow.addColorStop(0.6, "rgba(254, 226, 226, 0.1)");
+        ambientGlow.addColorStop(1, "transparent");
+      }
+      ctx.fillStyle = ambientGlow;
+      ctx.fillRect(0, 0, width, height);
+
+      // 3. SINGLE DYNAMIC SEAMLESS GRADIENT WAVE (Volumetric liquid silk flow)
+      // We calculate a unified, smoothly undulating silk curve across the canvas
+      const points: { x: number; y: number }[] = [];
+      const segments = 120;
+      const step = width / segments;
+
+      // Base elevation and wave amplitudes
+      const baseY = height * 0.48;
+      const primaryAmp = height * 0.18;
+      const secondaryAmp = height * 0.08;
+
+      for (let i = 0; i <= segments; i++) {
+        const x = i * step;
+        const normX = x / width;
+
+        // Harmonic traveling sine & cosine waves for liquid organic drape
+        const wave1 = Math.sin(normX * Math.PI * 2 + time) * primaryAmp;
+        const wave2 = Math.cos(normX * Math.PI * 3.5 - time * 1.3) * secondaryAmp;
+        const wave3 = Math.sin(normX * Math.PI * 1.2 + time * 0.7) * (height * 0.05);
+
+        // Gentle interactive mouse depression / pull
+        const distToMouse = Math.abs(normX - mouse.x);
+        const mouseDip = Math.exp(-Math.pow(distToMouse * 3.5, 2)) * (mouse.y - 0.5) * (height * 0.25);
+
+        const y = baseY + wave1 + wave2 + wave3 + mouseDip;
+        points.push({ x, y });
+      }
+
+      // Draw the wave surface filling seamlessly down to bottom (0 -> width -> height -> 0)
+      ctx.beginPath();
+      ctx.moveTo(0, points[0].y);
+
+      // Smooth Bezier curve through all points
+      for (let i = 0; i < points.length - 1; i++) {
+        const xc = (points[i].x + points[i + 1].x) / 2;
+        const yc = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+      }
+      const lastPoint = points[points.length - 1];
+      ctx.lineTo(lastPoint.x, lastPoint.y);
+      ctx.lineTo(width, height);
+      ctx.lineTo(0, height);
+      ctx.closePath();
+
+      // Multi-stop liquid gradient filling the wave body directly into pure #ffffff
+      const waveGradient = ctx.createLinearGradient(0, height * 0.2, 0, height);
+      if (isStudio) {
+        waveGradient.addColorStop(0, "rgba(235, 60, 60, 0.85)"); // Vibrant scarlet crest
+        waveGradient.addColorStop(0.2, "rgba(255, 145, 145, 0.92)"); // Soft rose-gold light highlight
+        waveGradient.addColorStop(0.55, "rgba(255, 235, 235, 0.98)"); // Luminous champagne silk body
+        waveGradient.addColorStop(0.85, "#ffffff"); // Seamless melt into white
+        waveGradient.addColorStop(1, "#ffffff"); // Solid 100% white at footer seam
+      } else {
+        waveGradient.addColorStop(0, "rgba(251, 113, 133, 0.6)");
+        waveGradient.addColorStop(0.3, "rgba(253, 164, 175, 0.8)");
+        waveGradient.addColorStop(0.7, "#ffffff");
+        waveGradient.addColorStop(1, "#ffffff");
+      }
+
+      ctx.fillStyle = waveGradient;
+      ctx.fill();
+
+      // 4. SOFT SILK CREST HIGHLIGHT (Subtle specular ribbon accentuating the single wave's 3D motion)
+      ctx.beginPath();
+      ctx.moveTo(0, points[0].y);
+      for (let i = 0; i < points.length - 1; i++) {
+        const xc = (points[i].x + points[i + 1].x) / 2;
+        const yc = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+      }
+      ctx.lineTo(lastPoint.x, lastPoint.y);
+
+      const crestStroke = ctx.createLinearGradient(0, 0, width, 0);
+      if (isStudio) {
+        crestStroke.addColorStop(0, "rgba(255, 180, 180, 0.3)");
+        crestStroke.addColorStop(mouse.x, "rgba(255, 255, 255, 0.75)"); // Interactive light glint under cursor
+        crestStroke.addColorStop(1, "rgba(255, 180, 180, 0.3)");
+      } else {
+        crestStroke.addColorStop(0, "rgba(244, 63, 94, 0.2)");
+        crestStroke.addColorStop(mouse.x, "rgba(255, 255, 255, 0.8)");
+        crestStroke.addColorStop(1, "rgba(244, 63, 94, 0.2)");
+      }
+      ctx.strokeStyle = crestStroke;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [mode]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    mouseX.set((e.clientX - rect.left) / rect.width);
-    mouseY.set((e.clientY - rect.top) / rect.height);
+    mouseRef.current.targetX = (e.clientX - rect.left) / rect.width;
+    mouseRef.current.targetY = (e.clientY - rect.top) / rect.height;
   };
 
-  const isStudio = mode === "studio";
-
   return (
-    <>
-      {/* ── CSS Keyframes injected once ── */}
-      <style>{`
-        @keyframes wave1 {
-          0%,100% { d: path("M0,130 C320,70,520,190,780,130 C1040,80,1220,180,1440,110 L1440,360 L0,360 Z"); }
-          33%      { d: path("M0,150 C300,190,500,80,760,150 C1020,210,1200,100,1440,160 L1440,360 L0,360 Z"); }
-          66%      { d: path("M0,120 C340,60,540,180,800,120 C1060,70,1240,170,1440,120 L1440,360 L0,360 Z"); }
-        }
-        @keyframes wave2 {
-          0%,100% { d: path("M0,180 C280,240,480,130,740,190 C1000,250,1180,140,1440,180 L1440,360 L0,360 Z"); }
-          33%      { d: path("M0,200 C320,140,520,250,780,180 C1040,120,1220,230,1440,210 L1440,360 L0,360 Z"); }
-          66%      { d: path("M0,170 C290,230,490,120,750,200 C1010,260,1190,150,1440,170 L1440,360 L0,360 Z"); }
-        }
-        @keyframes wave3 {
-          0%,100% { d: path("M0,230 C340,170,540,280,820,210 C1100,150,1260,260,1440,210 L1440,360 L0,360 Z"); }
-          33%      { d: path("M0,250 C360,270,560,180,840,230 C1120,280,1280,180,1440,240 L1440,360 L0,360 Z"); }
-          66%      { d: path("M0,220 C330,160,530,270,810,200 C1090,140,1250,250,1440,200 L1440,360 L0,360 Z"); }
-        }
-
-        .wave1-path { animation: wave1 11s ease-in-out infinite; }
-        .wave2-path { animation: wave2 14s ease-in-out infinite; }
-        .wave3-path { animation: wave3 16s ease-in-out infinite; }
-      `}</style>
-
-      <div
-        ref={containerRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          mouseX.set(0.5);
-          mouseY.set(0.5);
-        }}
-        className="relative w-full overflow-hidden select-none"
-        style={{
-          height: "clamp(200px, 28vw, 420px)",
-          backgroundColor: isStudio ? "hsl(0 93% 12%)" : "#fff",
-        }}
-      >
-        {/* ── Aurora background orbs ── */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <motion.div
-            animate={{ x: ["-10%","12%","-5%","-10%"], y:["0%","15%","-10%","0%"], scale:[1,1.2,0.95,1] }}
-            transition={{ duration:12, repeat: Infinity, ease:"easeInOut" }}
-            className="absolute -top-1/4 -left-1/4 w-[85vw] h-[85vw] max-w-[750px] max-h-[750px] rounded-full blur-[90px] opacity-70 mix-blend-screen"
-            style={{
-              background: isStudio
-                ? "radial-gradient(circle, rgba(185,20,20,0.85) 0%, rgba(126,2,0,0.5) 50%, transparent 75%)"
-                : "radial-gradient(circle, rgba(244,63,94,0.22) 0%, rgba(254,226,226,0.35) 50%, transparent 75%)",
-            }}
-          />
-          <motion.div
-            animate={{ x:["10%","-12%","5%","10%"], y:["5%","-10%","15%","5%"], scale:[1.05,0.9,1.15,1.05] }}
-            transition={{ duration:15, repeat: Infinity, ease:"easeInOut" }}
-            className="absolute top-0 -right-1/4 w-[80vw] h-[80vw] max-w-[700px] max-h-[700px] rounded-full blur-[100px] opacity-65 mix-blend-screen"
-            style={{
-              background: isStudio
-                ? "radial-gradient(circle, rgba(210,28,28,0.75) 0%, rgba(140,5,5,0.45) 55%, transparent 80%)"
-                : "radial-gradient(circle, rgba(251,113,133,0.25) 0%, rgba(244,63,94,0.12) 60%, transparent 80%)",
-            }}
-          />
-          {/* Cursor ripple */}
-          <motion.div
-            animate={{ scale: isHovered ? 1.3 : 1, opacity: isHovered ? 0.65 : 0.3 }}
-            transition={{ duration: 0.35 }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 rounded-full blur-[65px] pointer-events-none"
-            style={{
-              left: xPercent,
-              top: yPercent,
-              background: isStudio
-                ? "radial-gradient(circle, rgba(255,140,140,0.6) 0%, rgba(200,30,30,0.3) 45%, transparent 75%)"
-                : "radial-gradient(circle, rgba(244,63,94,0.3) 0%, rgba(253,164,175,0.15) 50%, transparent 75%)",
-            }}
-          />
-        </div>
-
-        {/* ── Three CSS-animated SVG waves ── */}
-        <div className="absolute inset-0 pointer-events-none">
-          <svg
-            viewBox="0 0 1440 360"
-            preserveAspectRatio="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ width: "100%", height: "100%", display: "block" }}
-          >
-            {/* Wave 1 – translucent white mist */}
-            <path
-              className="wave1-path"
-              d="M0,130 C320,70,520,190,780,130 C1040,80,1220,180,1440,110 L1440,360 L0,360 Z"
-              fill={isStudio ? "rgba(255,255,255,0.20)" : "rgba(255,255,255,0.38)"}
-            />
-            {/* Wave 2 – semi-solid luminous white */}
-            <path
-              className="wave2-path"
-              d="M0,180 C280,240,480,130,740,190 C1000,250,1180,140,1440,180 L1440,360 L0,360 Z"
-              fill={isStudio ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.72)"}
-            />
-            {/* Wave 3 – solid white body flowing into footer */}
-            <path
-              className="wave3-path"
-              d="M0,230 C340,170,540,280,820,210 C1100,150,1260,260,1440,210 L1440,360 L0,360 Z"
-              fill="#ffffff"
-            />
-          </svg>
-        </div>
-      </div>
-    </>
+    <div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        mouseRef.current.targetX = 0.5;
+        mouseRef.current.targetY = 0.5;
+      }}
+      className="relative w-full overflow-hidden select-none cursor-pointer"
+      style={{
+        height: "clamp(220px, 32vw, 440px)",
+        backgroundColor: mode === "studio" ? "hsl(0 93% 12%)" : "#ffffff",
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full block pointer-events-none"
+      />
+    </div>
   );
 }
