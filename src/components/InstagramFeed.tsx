@@ -11,6 +11,7 @@ const INITIAL_REEL_URLS = [
   "https://www.instagram.com/reel/DQTXcFOjYKM/",
   "https://www.instagram.com/reel/DCB49SwvJ2J/",
   "https://www.instagram.com/reel/DDo_GfEvDOr/",
+  "https://www.instagram.com/reel/DDl_u8yvZgL/",
 ];
 
 export function InstagramFeed() {
@@ -35,7 +36,7 @@ export function InstagramFeed() {
       }
       const uniqueUrls = Array.from(new Set(fetchedUrls.map((u) => u.trim())));
       if (uniqueUrls.length > 0) {
-        setReelUrls(uniqueUrls.slice(0, 3));
+        setReelUrls(uniqueUrls.slice(0, 4));
       }
     } catch (error) {
       console.error("Error updating Instagram feed:", error);

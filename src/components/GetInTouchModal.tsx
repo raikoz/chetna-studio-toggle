@@ -98,28 +98,80 @@ export function GetInTouchModal() {
       
       const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calendarTitle}&details=${calendarDetails}&add=${encodeURIComponent(PRIMARY_OWNER_EMAIL)}&add=${encodeURIComponent(CHETNA_EMAIL)}&add=${encodeURIComponent(formData.email)}`;
 
-      // Post payload to Google Apps Script webhook
+      const CC_EMAILS = `${PRIMARY_OWNER_EMAIL}, ${CHETNA_EMAIL}`;
+
+      // Post comprehensive payload to Google Apps Script webhook
       const payload = {
-        name: formData.name,
-        phone: formData.phone,
+        // Target Recipient: Whoever fills the form
+        to: formData.email,
         email: formData.email,
+        guestEmail: formData.email,
+        recipient: formData.email,
+        recipientEmail: formData.email,
+        clientEmail: formData.email,
+        userEmail: formData.email,
+
+        // CC: Manish Rath and Chetna Pattnaik
+        cc: CC_EMAILS,
+        ccEmail: CC_EMAILS,
+        ccOwner: CHETNA_EMAIL,
+        ownerEmail: PRIMARY_OWNER_EMAIL,
+
+        // Client info
+        name: formData.name,
+        clientName: formData.name,
+        firstName: formData.name,
+        phone: formData.phone,
+        clientPhone: formData.phone,
+
+        // Meeting details
         date: formData.date,
         slot: formData.slot,
+        time: formData.slot,
+        meetingTime: `${formData.date} at ${formData.slot}`,
         notes: formData.notes,
+        message: formData.notes,
+
+        // Meeting Link & Calendar URL
         gmeetLink,
-        ownerEmail: PRIMARY_OWNER_EMAIL,
-        ccEmail: CHETNA_EMAIL,
-        guestEmail: CHETNA_EMAIL,
+        meetingLink: gmeetLink,
+        link: gmeetLink,
+        meetUrl: gmeetLink,
+        calendarUrl,
+
+        // Subject & formatted details for automated email dispatch
+        subject: `Confirmed: 45-Min Discovery Call with TheChet&Co – ${formData.date} at ${formData.slot}`,
+        meetingDetails:
+          `Discovery Consultation Session with Chetna Pattnaik (TheChet&Co Design Studio)\n\n` +
+          `Client Name: ${formData.name}\n` +
+          `Client Email: ${formData.email}\n` +
+          `Client Phone: ${formData.phone}\n` +
+          `Date: ${formData.date}\n` +
+          `Time: ${formData.slot} (45 Mins)\n` +
+          `Google Meet Link: ${gmeetLink}\n` +
+          (formData.notes ? `Project Brief / Notes: ${formData.notes}\n` : "") +
+          `\nCC: ${CC_EMAILS}`,
+
         type: "consultation_booking",
         submittedAt: new Date().toISOString(),
       };
 
-      await fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" },
-      });
+      const payloadString = JSON.stringify(payload);
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          cache: "no-cache",
+          body: payloadString,
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+        });
+      } catch (err) {
+        console.warn("Direct fetch error, attempting sendBeacon fallback", err);
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(SCRIPT_URL, payloadString);
+        }
+      }
 
       setSubmittedBooking({
         name: formData.name,
@@ -133,7 +185,7 @@ export function GetInTouchModal() {
 
       toast({
         title: "Consultation Scheduled!",
-        description: `Confirmation & GMeet details dispatched to ${PRIMARY_OWNER_EMAIL} & ${CHETNA_EMAIL}.`,
+        description: `Confirmation & GMeet details dispatched to ${formData.email} (CC: ${PRIMARY_OWNER_EMAIL} & ${CHETNA_EMAIL}).`,
       });
     } catch (error) {
       console.error("Error booking consultation:", error);

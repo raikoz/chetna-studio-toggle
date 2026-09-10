@@ -5,27 +5,17 @@ interface InstagramReelGridProps {
 }
 
 export function InstagramReelGrid({ urls }: InstagramReelGridProps) {
-  const reels = (urls || []).slice(0, 3);
+  // Take up to 4 reels for clean 2-in-a-row pairs on mobile and 3-4 on desktop
+  const reels = (urls || []).slice(0, 4);
 
   if (reels.length === 0) return null;
 
   return (
-    <div className="w-full max-w-6xl mx-auto my-12">
-      {/* Fixed 1x3 Grid layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+    <div className="w-full max-w-6xl mx-auto my-8 sm:my-12">
+      {/* Strictly 2 reels per row on mobile (grid-cols-2), 3 on md, 4 on lg */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
         {reels.map((url, idx) => (
           <InstagramReelEmbed key={idx} url={url} className="w-full" />
-        ))}
-
-        {/* Placeholder if fewer than 3 reels */}
-        {Array.from({ length: Math.max(0, 3 - reels.length) }).map((_, idx) => (
-          <div
-            key={`placeholder-${idx}`}
-            className="hidden md:flex flex-col items-center justify-center aspect-[9/16] bg-foreground/5 border-2 border-dashed border-foreground/20 p-6 text-center"
-          >
-            <span className="text-2xl opacity-20 font-serif mb-2">✦</span>
-            <span className="text-xs uppercase tracking-widest opacity-40 font-sans">Curating Reel</span>
-          </div>
         ))}
       </div>
     </div>
