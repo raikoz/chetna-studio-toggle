@@ -163,27 +163,27 @@ export function Projects() {
                   }`}
                   onClick={() => isClickable && handleProjectClick(project)}
                 >
-                  {/* DEFAULT STATE: Logo Only (Middle and Center Aligned, Fades Out on Hover) */}
-                  <div className="absolute inset-0 flex items-center justify-center p-8 sm:p-12 transition-all duration-400 ease-out opacity-100 group-hover:opacity-0 group-hover:scale-95 pointer-events-none">
+                  {/* DEFAULT STATE: Logo Only (Increased by 30%, Middle and Center Aligned, Fades Out on Hover) */}
+                  <div className="absolute inset-0 flex items-center justify-center p-6 sm:p-8 transition-all duration-400 ease-out opacity-100 group-hover:opacity-0 group-hover:scale-95 pointer-events-none">
                     {fullLogoUrl ? (
                       <img
                         src={fullLogoUrl}
                         alt={`${project.brandName} Logo`}
-                        className={`max-h-20 sm:max-h-24 max-w-[75%] w-auto object-contain transition-transform duration-400 ${
+                        className={`max-h-28 sm:max-h-32 md:max-h-36 max-w-[85%] sm:max-w-[88%] w-auto object-contain transition-transform duration-400 ${
                           mode === "studio" ? "filter brightness-0 invert" : "filter brightness-0"
                         }`}
                       />
                     ) : (
-                      <span className="text-2xl sm:text-3xl font-serif tracking-widest uppercase text-center text-foreground font-light">
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-serif tracking-widest uppercase text-center text-foreground font-light">
                         {project.brandName || project.title}
                       </span>
                     )}
                   </div>
 
-                  {/* HOVER STATE: Brand Description Only (No Logo, No Other Text, Middle + Center Container, Left-Aligned Text, 2-3 Lines with '...') */}
+                  {/* HOVER STATE: Brand Description Only (No Logo, No Other Text, Middle + Center Container, Left-Aligned Text, 2-3 Lines with '...', in font-card) */}
                   <div className="absolute inset-0 flex items-center justify-center p-8 sm:p-10 transition-all duration-400 ease-out opacity-0 group-hover:opacity-100 pointer-events-none">
                     <div className="w-full max-w-[85%] mx-auto">
-                      <p className="text-left font-serif text-base sm:text-lg md:text-xl font-light leading-relaxed text-foreground tracking-normal line-clamp-3">
+                      <p className="text-left font-card text-sm sm:text-base md:text-lg font-normal leading-relaxed text-foreground tracking-wide line-clamp-3">
                         {descText}
                       </p>
                     </div>

@@ -7,11 +7,11 @@ export function DancingGradient() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Mouse tracking for interactive liquid cursor dance
+  // Interactive mouse tracking for fluid water pull
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
 
-  const springConfig = { stiffness: 120, damping: 20 };
+  const springConfig = { stiffness: 100, damping: 22 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
@@ -40,156 +40,136 @@ export function DancingGradient() {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-56 sm:h-64 md:h-80 lg:h-96 overflow-hidden select-none cursor-pointer"
+      className="relative w-full h-56 sm:h-64 md:h-80 lg:h-96 overflow-hidden select-none"
       style={{
-        background:
-          mode === "studio"
-            ? "hsl(0 93% 12%)"
-            : "#ffffff",
+        backgroundColor: mode === "studio" ? "hsl(0 93% 12%)" : "#ffffff",
       }}
     >
-      {/* Dynamic Animated Liquid Orbs that Breathe and Dance */}
+      {/* Background Liquid Light Atmosphere (Dark Red/Crimson Aurora) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Living Breathing Orb 1: Rich Crimson & Scarlet Pulse */}
+        {/* Living Breathing Orb 1: Rich Crimson Pulse */}
         <motion.div
           animate={{
-            x: ["-10%", "15%", "-5%", "-10%"],
-            y: ["0%", "20%", "-15%", "0%"],
-            scale: [1, 1.25, 0.95, 1],
-            rotate: [0, 45, -20, 0],
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute -top-1/4 -left-1/4 w-[90vw] h-[90vw] max-w-[800px] max-h-[800px] rounded-full blur-[90px] opacity-70 mix-blend-screen"
-          style={{
-            background:
-              mode === "studio"
-                ? "radial-gradient(circle, rgba(168, 18, 18, 0.85) 0%, rgba(126, 2, 0, 0.5) 50%, transparent 75%)"
-                : "radial-gradient(circle, rgba(220, 38, 38, 0.3) 0%, rgba(254, 226, 226, 0.5) 50%, transparent 75%)",
-          }}
-        />
-
-        {/* Living Breathing Orb 2: Deep Wine & Amber Rhythm */}
-        <motion.div
-          animate={{
-            x: ["10%", "-15%", "5%", "10%"],
-            y: ["10%", "-10%", "25%", "10%"],
-            scale: [1.1, 0.9, 1.2, 1.1],
-            rotate: [0, -30, 40, 0],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-0 -right-1/4 w-[85vw] h-[85vw] max-w-[750px] max-h-[750px] rounded-full blur-[100px] opacity-65 mix-blend-screen"
-          style={{
-            background:
-              mode === "studio"
-                ? "radial-gradient(circle, rgba(190, 24, 24, 0.75) 0%, rgba(140, 5, 5, 0.45) 55%, transparent 80%)"
-                : "radial-gradient(circle, rgba(251, 113, 133, 0.35) 0%, rgba(244, 63, 94, 0.2) 60%, transparent 80%)",
-          }}
-        />
-
-        {/* Living Breathing Orb 3: Champagne / Soft Coral Undulation at bottom boundary */}
-        <motion.div
-          animate={{
-            x: ["-20%", "20%", "-10%", "-20%"],
-            y: ["15%", "-5%", "10%", "15%"],
-            scale: [0.95, 1.15, 1.05, 0.95],
+            x: ["-10%", "12%", "-5%", "-10%"],
+            y: ["0%", "15%", "-10%", "0%"],
+            scale: [1, 1.2, 0.95, 1],
           }}
           transition={{
             duration: 12,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute -bottom-1/3 left-1/4 w-[75vw] h-[75vw] max-w-[700px] max-h-[700px] rounded-full blur-[80px] opacity-80"
+          className="absolute -top-1/4 -left-1/4 w-[85vw] h-[85vw] max-w-[750px] max-h-[750px] rounded-full blur-[90px] opacity-75 mix-blend-screen"
           style={{
             background:
               mode === "studio"
-                ? "radial-gradient(circle, rgba(255, 120, 120, 0.45) 0%, rgba(255, 200, 200, 0.2) 45%, transparent 70%)"
-                : "radial-gradient(circle, rgba(254, 205, 211, 0.6) 0%, rgba(255, 255, 255, 0.8) 55%, transparent 80%)",
+                ? "radial-gradient(circle, rgba(185, 20, 20, 0.85) 0%, rgba(126, 2, 0, 0.5) 50%, transparent 75%)"
+                : "radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, rgba(254, 226, 226, 0.4) 50%, transparent 75%)",
           }}
         />
 
-        {/* Interactive Mouse Dancing Fluid Light Ripple */}
+        {/* Living Breathing Orb 2: Deep Scarlet Rhythm */}
         <motion.div
           animate={{
-            scale: isHovered ? 1.35 : 1,
-            opacity: isHovered ? 0.75 : 0.4,
+            x: ["10%", "-12%", "5%", "10%"],
+            y: ["5%", "-10%", "15%", "5%"],
+            scale: [1.05, 0.9, 1.15, 1.05],
           }}
-          transition={{ duration: 0.4 }}
-          className="absolute -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 rounded-full blur-[60px] pointer-events-none"
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-0 -right-1/4 w-[80vw] h-[80vw] max-w-[700px] max-h-[700px] rounded-full blur-[100px] opacity-70 mix-blend-screen"
+          style={{
+            background:
+              mode === "studio"
+                ? "radial-gradient(circle, rgba(210, 28, 28, 0.75) 0%, rgba(140, 5, 5, 0.45) 55%, transparent 80%)"
+                : "radial-gradient(circle, rgba(251, 113, 133, 0.3) 0%, rgba(244, 63, 94, 0.15) 60%, transparent 80%)",
+          }}
+        />
+
+        {/* Interactive Fluid Cursor Light */}
+        <motion.div
+          animate={{
+            scale: isHovered ? 1.3 : 1,
+            opacity: isHovered ? 0.7 : 0.35,
+          }}
+          transition={{ duration: 0.35 }}
+          className="absolute -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 rounded-full blur-[65px] pointer-events-none"
           style={{
             left: xPercent,
             top: yPercent,
             background:
               mode === "studio"
-                ? "radial-gradient(circle, rgba(255, 150, 150, 0.6) 0%, rgba(210, 40, 40, 0.3) 45%, transparent 75%)"
-                : "radial-gradient(circle, rgba(244, 63, 94, 0.4) 0%, rgba(253, 164, 175, 0.2) 50%, transparent 75%)",
+                ? "radial-gradient(circle, rgba(255, 140, 140, 0.65) 0%, rgba(200, 30, 30, 0.35) 45%, transparent 75%)"
+                : "radial-gradient(circle, rgba(244, 63, 94, 0.35) 0%, rgba(253, 164, 175, 0.2) 50%, transparent 75%)",
           }}
         />
       </div>
 
-      {/* Fluid Undulating SVG Wave Ribbon */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
+      {/* Living Breathing Whole Gradient Wave (Flowing White Wave of the Footer) */}
+      <div className="absolute inset-0 pointer-events-none">
         <svg
-          viewBox="0 0 1440 320"
+          viewBox="0 0 1440 360"
           preserveAspectRatio="none"
           className="w-full h-full"
         >
+          {/* WAVE 1 (Back Layer): Soft Translucent White Mist */}
           <motion.path
-            fill="none"
-            stroke={mode === "studio" ? "rgba(255, 255, 255, 0.15)" : "rgba(126, 2, 0, 0.12)"}
-            strokeWidth="2"
+            fill={mode === "studio" ? "rgba(255, 255, 255, 0.22)" : "rgba(255, 255, 255, 0.4)"}
             animate={{
               d: [
-                "M0,160 C320,100, 420,240, 720,170 C1020,100, 1120,220, 1440,160",
-                "M0,170 C320,230, 420,90, 720,160 C1020,230, 1120,110, 1440,170",
-                "M0,150 C320,80, 420,250, 720,180 C1020,110, 1120,240, 1440,150",
-                "M0,160 C320,100, 420,240, 720,170 C1020,100, 1120,220, 1440,160",
+                "M0,130 C320,70, 520,190, 780,130 C1040,80, 1220,180, 1440,110 L1440,360 L0,360 Z",
+                "M0,150 C300,190, 500,80, 760,150 C1020,210, 1200,100, 1440,160 L1440,360 L0,360 Z",
+                "M0,120 C340,60, 540,180, 800,120 C1060,70, 1240,170, 1440,120 L1440,360 L0,360 Z",
+                "M0,130 C320,70, 520,190, 780,130 C1040,80, 1220,180, 1440,110 L1440,360 L0,360 Z",
               ],
             }}
             transition={{
-              duration: 10,
+              duration: 11,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           />
+
+          {/* WAVE 2 (Middle Layer): Luminous Semi-Solid White Flow */}
           <motion.path
-            fill="none"
-            stroke={mode === "studio" ? "rgba(255, 180, 180, 0.18)" : "rgba(126, 2, 0, 0.08)"}
-            strokeWidth="1.5"
+            fill={mode === "studio" ? "rgba(255, 255, 255, 0.58)" : "rgba(255, 255, 255, 0.75)"}
             animate={{
               d: [
-                "M0,200 C360,260, 480,120, 780,210 C1080,290, 1200,140, 1440,200",
-                "M0,190 C360,130, 480,270, 780,190 C1080,120, 1200,260, 1440,190",
-                "M0,210 C360,280, 480,140, 780,220 C1080,290, 1200,160, 1440,210",
-                "M0,200 C360,260, 480,120, 780,210 C1080,290, 1200,140, 1440,200",
+                "M0,180 C280,240, 480,130, 740,190 C1000,250, 1180,140, 1440,180 L1440,360 L0,360 Z",
+                "M0,200 C320,140, 520,250, 780,180 C1040,120, 1220,230, 1440,210 L1440,360 L0,360 Z",
+                "M0,170 C290,230, 490,120, 750,200 C1010,260, 1190,150, 1440,170 L1440,360 L0,360 Z",
+                "M0,180 C280,240, 480,130, 740,190 C1000,250, 1180,140, 1440,180 L1440,360 L0,360 Z",
               ],
             }}
             transition={{
-              duration: 13,
+              duration: 14,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          {/* WAVE 3 (Front Layer): Solid Pure White (#ffffff) Wave Body Merging Seamlessly into Footer */}
+          <motion.path
+            fill="#ffffff"
+            animate={{
+              d: [
+                "M0,230 C340,170, 540,280, 820,210 C1100,150, 1260,260, 1440,210 L1440,360 L0,360 Z",
+                "M0,250 C360,270, 560,180, 840,230 C1120,280, 1280,180, 1440,240 L1440,360 L0,360 Z",
+                "M0,220 C330,160, 530,270, 810,200 C1090,140, 1250,250, 1440,200 L1440,360 L0,360 Z",
+                "M0,230 C340,170, 540,280, 820,210 C1100,150, 1260,260, 1440,210 L1440,360 L0,360 Z",
+              ],
+            }}
+            transition={{
+              duration: 16,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           />
         </svg>
       </div>
-
-      {/* Multi-Stop Non-Linear Smoothing Mask (Seamless transition from background at top to pure #ffffff at bottom) */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            mode === "studio"
-              ? "linear-gradient(180deg, hsl(0 93% 12% / 0.95) 0%, hsl(0 91% 13.5% / 0.7) 18%, hsl(0 87% 16% / 0.45) 35%, hsl(0 75% 26% / 0.25) 52%, hsl(0 55% 48% / 0.15) 68%, rgba(255, 255, 255, 0.4) 82%, rgba(255, 255, 255, 0.85) 93%, #ffffff 100%)"
-              : "linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 245, 245, 0.6) 20%, rgba(254, 226, 226, 0.3) 45%, rgba(255, 255, 255, 0.5) 75%, #ffffff 100%)",
-        }}
-      />
     </div>
   );
 }

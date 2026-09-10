@@ -17,6 +17,7 @@ export default {
         sans: ["DM Sans", "sans-serif"],
         serif: ["Carla", "Cormorant Garamond", "serif"],
         display: ["Carla", "serif"],
+        card: ["'Plus Jakarta Sans'", "sans-serif"],
         mono: ["DM Sans", "sans-serif"],
       },
       colors: {

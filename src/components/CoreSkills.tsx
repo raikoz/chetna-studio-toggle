@@ -10,31 +10,31 @@ interface SkillItem {
   image: string;
 }
 
-// 4 different images from the About section for Capabilities hover preview
+// Dedicated montage named images for Capabilities hover preview - each point uses a distinct image
 const SKILLS: SkillItem[] = [
   {
     id: "strategy",
     name: "Creative Strategy",
     subtitle: "Positioning & Narrative Architecture",
-    image: "/images/about-1.jpg",
+    image: "/images/montage-1.jpg",
   },
   {
     id: "branding",
     name: "Brand Identity",
     subtitle: "Visual Systems & Art Direction",
-    image: "/images/about-2.jpg",
+    image: "/images/montage-2.jpg",
   },
   {
     id: "motion",
     name: "Motion & Social Storytelling",
     subtitle: "Campaign Motion & Video Direction",
-    image: "/images/about-3.jpg",
+    image: "/images/montage-5.jpg",
   },
   {
     id: "marketing",
     name: "Digital Marketing & Drops",
     subtitle: "Launch Collateral & Community Design",
-    image: "/images/about-4.jpg",
+    image: "/images/montage-6.jpg",
   },
 ];
 
