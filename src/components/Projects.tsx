@@ -3,14 +3,36 @@ import { useEffect, useState } from "react";
 import { client } from "@/lib/contentful";
 import { useNavigate } from "react-router-dom";
 import { AnimatedSection } from "./AnimatedSection";
-import { ArrowUpRight } from "lucide-react";
+
+// Map of craft/task close-up images tailored to each brand's domain
+const brandCraftImages: Record<string, string> = {
+  desna: "/images/brand-desna.jpg", // Macro Indian pickles, mustard oil & spices
+  kunsquad: "/images/brand-kunsquad.jpg", // Macro tailoring stitch, measuring tape & denim
+  "cafe sundowner": "/images/brand-sundowner.jpg", // Macro espresso extraction & coffee beans
+  sundowner: "/images/brand-sundowner.jpg",
+  "the bar consultants": "/images/brand-the-bar.jpg", // Macro flaming orange peel mixology & crystal glass
+  "bar consultants": "/images/brand-the-bar.jpg",
+  "reemly design studio": "/images/brand-reemly.jpg", // Macro travertine marble, oak & architectural blueprint
+  reemly: "/images/brand-reemly.jpg",
+  "azydo, puri": "/images/hero-abstract-1.jpg", // Coastal ocean luxury texture
+  azydo: "/images/hero-abstract-1.jpg",
+  "orange strings": "/images/service-motion.jpg", // Musical wave motion & string resonance
+  "boudh distillery lemme bottle": "/images/service-strategy.jpg", // Amber spirit bottle craft
+  "boudh distillery": "/images/service-strategy.jpg",
+  "rahat hospitals": "/images/service-branding.jpg", // Healthcare precision & human care
+  "house of niasna": "/images/montage-1.jpg", // High luxury couture & jewelry
+  niasna: "/images/montage-1.jpg",
+  "gunjan makeup & styling atelier": "/images/about-4.jpg", // Editorial makeup & beauty styling
+  gunjan: "/images/about-4.jpg",
+};
 
 const dummyProjects = [
-  { brandName: "Aura Skincare", client: "Aura", year: "2024", dummy: true, dummyImage: "/images/montage-1.jpg" },
-  { brandName: "Pulse Fitness", client: "Pulse", year: "2024", dummy: true, dummyImage: "/images/montage-2.jpg" },
-  { brandName: "Zenith Architecture", client: "Zenith", year: "2023", dummy: true, dummyImage: "/images/montage-5.jpg" },
-  { brandName: "Nova Tech", client: "Nova", year: "2023", dummy: true, dummyImage: "/images/montage-6.jpg" },
-  { brandName: "Eco Living", client: "Eco", year: "2023", dummy: true, dummyImage: "/images/montage-7.jpg" },
+  { brandName: "Desna", dummy: true, dummyImage: "/images/brand-desna.jpg" },
+  { brandName: "Kunsquad", dummy: true, dummyImage: "/images/brand-kunsquad.jpg" },
+  { brandName: "Cafe Sundowner", dummy: true, dummyImage: "/images/brand-sundowner.jpg" },
+  { brandName: "The Bar Consultants", dummy: true, dummyImage: "/images/brand-the-bar.jpg" },
+  { brandName: "Reemly Design Studio", dummy: true, dummyImage: "/images/brand-reemly.jpg" },
+  { brandName: "Azydo, Puri", dummy: true, dummyImage: "/images/hero-abstract-1.jpg" },
 ];
 
 export function Projects() {
@@ -55,26 +77,22 @@ export function Projects() {
     }
   };
 
-  const getMediaImageUrl = (project: any) => {
-    // Check for brandMedia images
-    if (project.brandMedia && Array.isArray(project.brandMedia)) {
-      const img = project.brandMedia.find((m: any) =>
-        m.fields?.file?.contentType?.startsWith("image/")
-      );
-      if (img?.fields?.file?.url) {
-        const url = img.fields.file.url;
-        return url.startsWith("//") ? `https:${url}` : url;
+  const getCraftImageUrl = (project: any) => {
+    const name = (project.brandName || project.title || "").toLowerCase();
+    for (const key of Object.keys(brandCraftImages)) {
+      if (name.includes(key)) {
+        return brandCraftImages[key];
       }
     }
-    // Fallback to dummy or montage images
-    return project.dummyImage || "/images/montage-1.jpg";
+    // Fallback to project media or curated brand craft image
+    return project.dummyImage || "/images/brand-desna.jpg";
   };
 
   return (
     <section id="work" className="py-24 transition-mode">
       <div className="container mx-auto px-6">
-        {/* Minimal Non-Boxy Section Header (No case numbers, clean typography) */}
-        <AnimatedSection className="mb-16">
+        {/* Minimal Section Header */}
+        <AnimatedSection className="mb-14">
           <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 border-b border-foreground/10 pb-6">
             <div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
@@ -87,11 +105,11 @@ export function Projects() {
           </div>
         </AnimatedSection>
 
-        {/* Minimal Flat Grid - Soft 8-10px rounded image cards, no heavy box borders */}
+        {/* Minimal Flat Grid - Pure Image Cards (Names below removed as requested) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {projects.map((project: any, index: number) => {
             const isClickable = mode === "studio";
-            const brandImageUrl = getMediaImageUrl(project);
+            const craftImageUrl = getCraftImageUrl(project);
             const logoUrl = project.logo?.fields?.file?.url;
             const fullLogoUrl = logoUrl
               ? logoUrl.startsWith("//")
@@ -100,55 +118,42 @@ export function Projects() {
               : null;
 
             return (
-              <AnimatedSection key={index} delay={index * 0.05}>
+              <AnimatedSection key={index} delay={index * 0.04}>
                 <div
-                  className={`group relative transition-all duration-300 ${
-                    isClickable ? "cursor-pointer" : "cursor-default opacity-80"
+                  className={`group relative overflow-hidden rounded-[10px] aspect-[4/5] bg-foreground/5 transition-all duration-500 ${
+                    isClickable ? "cursor-pointer" : "cursor-default"
                   }`}
                   onClick={() => isClickable && handleProjectClick(project)}
                 >
-                  {/* Brand Media Image with Soft Dark Red Tint, Logo comes on hover */}
-                  <div className="aspect-[4/5] rounded-[10px] overflow-hidden relative bg-foreground/5">
-                    {/* Primary Brand Image */}
-                    <img
-                      src={brandImageUrl}
-                      alt={project.brandName || "Brand Work"}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
+                  {/* Zoomed-in Craft Photo (Fits width, zoom scale on hover) */}
+                  <img
+                    src={craftImageUrl}
+                    alt={project.brandName || "Brand Craft Showcase"}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  />
 
-                    {/* Soft Dark Red Tint Overlay */}
-                    <div className="absolute inset-0 bg-[#7e0200]/25 mix-blend-multiply transition-opacity duration-500 group-hover:bg-[#7e0200]/15 pointer-events-none" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 transition-opacity pointer-events-none" />
+                  {/* Soft Dark Red Tint Overlay */}
+                  <div className="absolute inset-0 bg-[#7e0200]/20 mix-blend-multiply transition-colors duration-500 group-hover:bg-[#7e0200]/40 pointer-events-none" />
 
-                    {/* Logo Overlay - Revealed on Hover */}
-                    <div className="absolute inset-0 flex items-center justify-center p-8 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out pointer-events-none">
-                      {fullLogoUrl ? (
-                        <img
-                          src={fullLogoUrl}
-                          alt={`${project.brandName} Logo`}
-                          className="max-h-20 max-w-[70%] object-contain filter brightness-0 invert drop-shadow-md transform translate-y-2 group-hover:translate-y-0 transition-transform duration-400"
-                        />
-                      ) : (
-                        <span className="text-2xl font-serif text-white tracking-widest uppercase">
-                          {project.brandName}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                  {/* Gradient Depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 opacity-40 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none" />
 
-                  {/* Clean Non-Boxy Bottom Metadata (No case numbers) */}
-                  <div className="pt-4 flex items-center justify-between">
-                    <div>
-                      <h3 className="text-base font-sans font-medium tracking-tight">
-                        {project.brandName || project.title}
-                      </h3>
-                      <p className="text-xs font-serif italic opacity-60 mt-0.5">
-                        Brand Identity &amp; Creative Direction
-                      </p>
-                    </div>
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </div>
+                  {/* Logo Center Reveal on Hover with Blur & Red Tint */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 bg-black/45 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-400 ease-out pointer-events-none">
+                    {fullLogoUrl ? (
+                      <img
+                        src={fullLogoUrl}
+                        alt={`${project.brandName} Logo`}
+                        className="max-h-24 max-w-[75%] w-auto object-contain filter brightness-0 invert drop-shadow-lg transform scale-95 group-hover:scale-100 transition-transform duration-400"
+                      />
+                    ) : (
+                      <span className="text-2xl md:text-3xl font-serif text-white tracking-widest uppercase text-center drop-shadow-md">
+                        {project.brandName}
+                      </span>
+                    )}
+                    <span className="text-[10px] font-sans uppercase tracking-[0.3em] text-white/75 mt-4 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                      Explore Case
+                    </span>
                   </div>
                 </div>
               </AnimatedSection>

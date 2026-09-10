@@ -58,7 +58,7 @@ export function FAQ() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light tracking-tight">
               Clarity &amp; Conviction
             </h2>
-            <p className="text-xs font-mono uppercase tracking-widest opacity-50 mt-2">
+            <p className="text-xs font-sans uppercase tracking-widest opacity-50 mt-2">
               Frequently Questioned
             </p>
           </div>
@@ -66,16 +66,16 @@ export function FAQ() {
 
         {/* 2-Column Minimal Flat Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Soft Rounded Text Image */}
+          {/* Left Column: Soft Rounded Text Image (Fits width without clipping) */}
           <AnimatedSection direction="right" className="lg:col-span-5">
-            <div className="rounded-[10px] overflow-hidden bg-white border border-foreground/10 p-3">
+            <div className="rounded-[10px] overflow-hidden bg-white/5 border border-foreground/10 p-2">
               <img
                 src="/images/about-3.jpg"
                 alt="The Chet & Co. Brand Ops & Strategy"
-                className="w-full h-auto object-cover rounded-[6px]"
+                className="w-full h-auto object-contain block rounded-[8px]"
               />
             </div>
-            <p className="mt-3 text-xs font-mono opacity-50 uppercase tracking-widest text-center">
+            <p className="mt-3 text-xs font-sans opacity-50 uppercase tracking-widest text-center">
               The Anti-Agency Playbook • Chetna Pattnaik
             </p>
           </AnimatedSection>
@@ -94,7 +94,7 @@ export function FAQ() {
                       className="w-full text-left flex items-start justify-between gap-4 cursor-pointer group"
                     >
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-widest opacity-40 block mb-1">
+                        <span className="text-[10px] font-sans uppercase tracking-widest opacity-40 block mb-1">
                           {faq.category}
                         </span>
                         <h3 className="text-lg md:text-xl font-serif font-light group-hover:opacity-75 transition-opacity">

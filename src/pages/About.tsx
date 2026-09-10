@@ -94,11 +94,11 @@ export default function About() {
             {/* Chetna in Transit */}
             <AnimatedSection className="md:col-span-6 lg:col-span-5">
               <div className="group">
-                <div className="relative overflow-hidden aspect-[3/4] bg-foreground/5 rounded-[10px]">
+                <div className="relative overflow-hidden bg-foreground/5 rounded-[10px]">
                   <img
                     src="/images/about-1.jpg"
                     alt="Chetna Pattnaik on the street"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto max-h-[580px] object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-3 left-3 bg-foreground text-background text-[10px] font-sans px-3 py-1 rounded-[6px] uppercase tracking-wider font-semibold shadow-sm">
                     IN TRANSIT
@@ -117,11 +117,11 @@ export default function About() {
                 {/* Matchbox */}
                 <AnimatedSection delay={0.1}>
                   <div className="group">
-                    <div className="aspect-square overflow-hidden bg-foreground/5 rounded-[10px]">
+                    <div className="overflow-hidden bg-foreground/5 rounded-[10px]">
                       <img
                         src="/images/montage-8.jpg"
                         alt="Founders don't take breaks. Let's change that."
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
                     <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
@@ -133,11 +133,11 @@ export default function About() {
                 {/* Day 1 Stamp */}
                 <AnimatedSection delay={0.2}>
                   <div className="group">
-                    <div className="aspect-square overflow-hidden bg-foreground/5 rounded-[10px]">
+                    <div className="overflow-hidden bg-foreground/5 rounded-[10px]">
                       <img
                         src="/images/montage-4.jpg"
                         alt="The Gathering Day 1 Stamp"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
                     <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
@@ -150,11 +150,11 @@ export default function About() {
               {/* Sofar Music */}
               <AnimatedSection delay={0.3}>
                 <div className="group">
-                  <div className="aspect-[16/10] overflow-hidden bg-foreground/5 rounded-[10px]">
+                  <div className="overflow-hidden bg-foreground/5 rounded-[10px]">
                     <img
                       src="/images/montage-9.jpg"
                       alt="Sofar Sounds Community Gathering"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
                   <div className="mt-3 flex items-center justify-between text-xs font-sans opacity-70">
@@ -170,11 +170,11 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
             <AnimatedSection delay={0.1}>
               <div className="group">
-                <div className="aspect-[4/5] overflow-hidden rounded-[10px] bg-foreground/5">
+                <div className="overflow-hidden rounded-[10px] bg-foreground/5">
                   <img
                     src="/images/montage-1.jpg"
                     alt="Kunsquad Pop-Up Exhibition"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
@@ -185,11 +185,11 @@ export default function About() {
 
             <AnimatedSection delay={0.2}>
               <div className="group">
-                <div className="aspect-[4/5] overflow-hidden rounded-[10px] bg-foreground/5">
+                <div className="overflow-hidden rounded-[10px] bg-foreground/5">
                   <img
                     src="/images/about-4.jpg"
                     alt="Chetna Pattnaik Red Portrait Print"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
@@ -200,11 +200,11 @@ export default function About() {
 
             <AnimatedSection delay={0.3}>
               <div className="group">
-                <div className="aspect-[4/5] overflow-hidden rounded-[10px] bg-foreground/5">
+                <div className="overflow-hidden rounded-[10px] bg-foreground/5">
                   <img
                     src="/images/about-5.jpg"
                     alt="Chetna at Studio Workspace"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <p className="mt-3 text-[11px] font-sans uppercase tracking-wider opacity-60">
