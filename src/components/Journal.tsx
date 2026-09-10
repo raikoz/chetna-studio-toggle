@@ -57,38 +57,38 @@ const ENTRIES: JournalEntry[] = [
 
 export function Journal() {
   return (
-    <section id="journal" className="py-32 border-t border-foreground/15 transition-mode relative">
+    <section id="journal" className="py-28 border-t border-foreground/15 transition-mode relative">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <AnimatedSection className="mb-20">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-foreground/15 pb-8">
+        <AnimatedSection className="mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-foreground/15 pb-6">
             <div>
-              <p className="text-xs font-mono uppercase tracking-[0.4em] opacity-60 mb-3">
-                [ 04 // EDITORIAL & DISPATCHES ]
+              <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60 mb-2">
+                04 / EDITORIAL &amp; DISPATCHES
               </p>
               <h2 className="text-4xl md:text-6xl font-serif font-light tracking-tight">
                 The Journal
               </h2>
             </div>
-            <p className="text-xs md:text-sm font-mono uppercase tracking-widest opacity-60 max-w-sm">
-              Unfiltered thoughts on design architecture, culture, and running a boutique studio.
+            <p className="text-xs font-mono uppercase tracking-widest opacity-60 max-w-sm">
+              Unfiltered thoughts on design architecture, culture, and running an independent studio.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* 2x2 Brutalist Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        {/* 2x2 Bauhaus Flat Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {ENTRIES.map((entry, index) => (
-            <AnimatedSection key={entry.id} delay={index * 0.1}>
-              <article className="group border border-foreground/20 bg-background transition-all duration-300 hover:border-foreground flex flex-col h-full">
-                {/* Image Container with Hover Zoom & Brutalist Wireframe */}
+            <AnimatedSection key={entry.id} delay={index * 0.08}>
+              <article className="group border border-foreground/20 bg-background transition-colors duration-200 hover:border-foreground flex flex-col h-full">
+                {/* Image Container with Hover Zoom */}
                 <div className="relative aspect-[16/10] overflow-hidden border-b border-foreground/20 bg-foreground/5">
                   <img
                     src={entry.image}
                     alt={entry.title}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108 vintage-paper"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
-                  {/* Badge */}
+                  {/* Flat Bauhaus Tag */}
                   <div className="absolute top-4 left-4 bg-background border border-foreground/30 px-3 py-1 text-[10px] font-mono uppercase tracking-widest font-bold">
                     {entry.tag}
                   </div>
@@ -101,7 +101,7 @@ export function Journal() {
                       <span>{entry.date}</span>
                       <span>{entry.readTime}</span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-serif font-light tracking-tight mb-4 group-hover:translate-x-1 transition-transform duration-300">
+                    <h3 className="text-2xl font-serif font-light tracking-tight mb-4 group-hover:translate-x-1 transition-transform duration-300">
                       {entry.title}
                     </h3>
                     <p className="text-sm opacity-70 font-sans leading-relaxed">
@@ -109,7 +109,7 @@ export function Journal() {
                     </p>
                   </div>
 
-                  <div className="pt-8 mt-6 border-t border-foreground/10 flex items-center justify-between">
+                  <div className="pt-6 mt-6 border-t border-foreground/10 flex items-center justify-between">
                     <span className="text-xs font-mono uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
                       Read Dispatch
                     </span>

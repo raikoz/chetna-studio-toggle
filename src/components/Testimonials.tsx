@@ -36,33 +36,33 @@ export function Testimonials() {
   const testimonials = mode === "studio" ? studioTestimonials : personalTestimonials;
 
   return (
-    <section className="py-32 border-t border-foreground/15 transition-mode relative">
+    <section className="py-28 border-t border-foreground/15 transition-mode relative">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <AnimatedSection className="mb-20">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-foreground/15 pb-8">
+        <AnimatedSection className="mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-foreground/15 pb-6">
             <div>
-              <p className="text-xs font-mono uppercase tracking-[0.4em] opacity-60 mb-3">
-                [ 03 // CLIENT COMMENDATIONS ]
+              <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60 mb-2">
+                03 / CLIENT COMMENDATIONS
               </p>
               <h2 className="text-4xl md:text-6xl font-serif font-light tracking-tight">
                 Kind Words
               </h2>
             </div>
-            <p className="text-xs md:text-sm font-mono uppercase tracking-widest opacity-60 max-w-xs">
+            <p className="text-xs font-mono uppercase tracking-widest opacity-60 max-w-xs">
               Direct testimonials from founders we have partnered with.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* Brutalist 2-Column Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        {/* Bauhaus Flat Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {testimonials.map((t, index) => (
-            <AnimatedSection key={index} delay={index * 0.15}>
-              <div className="border-2 border-foreground/20 p-8 md:p-12 bg-background relative h-full flex flex-col justify-between hover:border-foreground transition-all duration-300 shadow-[6px_6px_0px_0px_hsl(var(--foreground)/0.15)]">
+            <AnimatedSection key={index} delay={index * 0.1}>
+              <div className="border border-foreground/20 p-8 md:p-10 bg-background relative h-full flex flex-col justify-between hover:border-foreground transition-colors duration-200">
                 <div>
-                  <div className="flex items-center justify-between pb-6 mb-8 border-b border-foreground/10 text-xs font-mono opacity-50 uppercase tracking-widest">
-                    <span>ENDORSEMENT // {t.number}</span>
+                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-foreground/10 text-[11px] font-mono opacity-50 uppercase tracking-widest">
+                    <span>ENDORSEMENT {t.number}</span>
                     <span>VERIFIED CLIENT</span>
                   </div>
 
@@ -73,10 +73,10 @@ export function Testimonials() {
 
                 <div className="pt-6 border-t border-foreground/15 flex items-center justify-between">
                   <div>
-                    <p className="font-sans font-bold uppercase tracking-wider text-sm">{t.author}</p>
+                    <p className="font-sans font-medium uppercase tracking-wider text-sm">{t.author}</p>
                     <p className="text-xs font-mono opacity-60 uppercase tracking-widest mt-0.5">{t.role}</p>
                   </div>
-                  <span className="text-2xl font-serif opacity-30">✦</span>
+                  <span className="text-xl font-serif opacity-30">✦</span>
                 </div>
               </div>
             </AnimatedSection>

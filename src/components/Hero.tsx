@@ -11,8 +11,8 @@ export function Hero() {
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
 
-  const bgX = useSpring(useTransform(mouseX, [0, 1], [-20, 20]), { stiffness: 50, damping: 30 });
-  const bgY = useSpring(useTransform(mouseY, [0, 1], [-20, 20]), { stiffness: 50, damping: 30 });
+  const bgX = useSpring(useTransform(mouseX, [0, 1], [-15, 15]), { stiffness: 50, damping: 30 });
+  const bgY = useSpring(useTransform(mouseY, [0, 1], [-15, 15]), { stiffness: 50, damping: 30 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
@@ -22,24 +22,24 @@ export function Hero() {
   };
 
   const letterVariants = {
-    hidden: { opacity: 0, y: 80 },
+    hidden: { opacity: 0, y: 60 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.3 + i * 0.04,
-        duration: 0.8,
+        delay: 0.2 + i * 0.035,
+        duration: 0.7,
         ease: [0.25, 0.4, 0.25, 1],
       },
     }),
   };
 
   const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 25 },
     visible: (delay: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay, duration: 0.8, ease: [0.25, 0.4, 0.25, 1] },
+      transition: { delay, duration: 0.7, ease: [0.25, 0.4, 0.25, 1] },
     }),
   };
 
@@ -51,40 +51,43 @@ export function Hero() {
     <section
       ref={containerRef}
       id="about"
-      className="min-h-screen flex items-center justify-center pt-20 transition-mode relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center pt-24 pb-16 transition-mode relative overflow-hidden"
       onMouseMove={handleMouseMove}
     >
-      {/* Parallax background image */}
+      {/* Subtle background texture */}
       <motion.div
-        className="absolute inset-0 opacity-[0.07] pointer-events-none"
+        className="absolute inset-0 opacity-[0.05] pointer-events-none"
         style={{ x: bgX, y: bgY }}
       >
         <img
           src="/images/hero-abstract-1.jpg"
           alt=""
-          className="w-full h-full object-cover scale-110"
+          className="w-full h-full object-cover scale-105"
         />
       </motion.div>
 
-      {/* Gradient overlay */}
+      {/* Flat gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           {mode === "studio" ? (
             <>
-              <motion.p
+              <motion.div
                 custom={0.1}
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="text-xs tracking-[0.4em] uppercase mb-8 opacity-60 font-sans font-medium"
+                className="flex items-center gap-3 mb-8"
               >
-                Design Studio & Consultancy
-              </motion.p>
+                <span className="w-6 h-px bg-foreground/40" />
+                <p className="text-[11px] font-mono tracking-[0.3em] uppercase opacity-60">
+                  Design Studio &amp; Consultancy
+                </p>
+              </motion.div>
 
               <div className="overflow-hidden mb-6">
-                <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light leading-[0.9] tracking-tight">
+                <h1 className="text-6xl md:text-8xl lg:text-[9.5rem] font-serif font-light leading-[0.88] tracking-tight">
                   {studioTitle.split("").map((char, i) => (
                     <motion.span
                       key={i}
@@ -101,30 +104,33 @@ export function Hero() {
               </div>
 
               <motion.p
-                custom={1.2}
+                custom={0.8}
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="text-sm md:text-base max-w-lg opacity-60 leading-relaxed font-sans font-light"
+                className="text-sm md:text-base max-w-lg opacity-70 leading-relaxed font-sans font-light"
               >
-                A boutique design studio & consultancy crafting visual identities, brand experiences, 
+                A boutique design studio &amp; consultancy crafting visual identities, brand experiences, 
                 and creative direction for those who dare to stand out.
               </motion.p>
             </>
           ) : (
             <>
-              <motion.p
+              <motion.div
                 custom={0.1}
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="text-xs tracking-[0.4em] uppercase mb-8 opacity-60 font-sans font-medium"
+                className="flex items-center gap-3 mb-8"
               >
-                Creative Director & Consultant
-              </motion.p>
+                <span className="w-6 h-px bg-foreground/40" />
+                <p className="text-[11px] font-mono tracking-[0.3em] uppercase opacity-60">
+                  Creative Director &amp; Consultant
+                </p>
+              </motion.div>
 
               <div className="overflow-hidden mb-2">
-                <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light leading-[0.9] tracking-tight">
+                <h1 className="text-6xl md:text-8xl lg:text-[9.5rem] font-serif font-light leading-[0.88] tracking-tight">
                   {personalTitle1.split("").map((char, i) => (
                     <motion.span
                       key={`l1-${i}`}
@@ -140,7 +146,7 @@ export function Hero() {
                 </h1>
               </div>
               <div className="overflow-hidden mb-6">
-                <h1 className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light leading-[0.9] tracking-tight italic">
+                <h1 className="text-6xl md:text-8xl lg:text-[9.5rem] font-serif font-light leading-[0.88] tracking-tight italic">
                   {personalTitle2.split("").map((char, i) => (
                     <motion.span
                       key={`l2-${i}`}
@@ -157,11 +163,11 @@ export function Hero() {
               </div>
 
               <motion.p
-                custom={1.2}
+                custom={0.8}
                 initial="hidden"
                 animate="visible"
                 variants={fadeUp}
-                className="text-sm md:text-base max-w-lg opacity-60 leading-relaxed font-sans font-light"
+                className="text-sm md:text-base max-w-lg opacity-70 leading-relaxed font-sans font-light"
               >
                 Blending art, design, and strategic storytelling to create experiences 
                 that resonate and inspire.
@@ -169,46 +175,43 @@ export function Hero() {
             </>
           )}
 
+          {/* Bauhaus Flat Action Buttons */}
           <motion.div
-            custom={1.6}
+            custom={1.1}
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="mt-12 flex flex-wrap items-center gap-6"
+            className="mt-12 flex flex-wrap items-center gap-5"
           >
-            <motion.button
+            <button
               type="button"
               onClick={openBookingModal}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-8 py-3.5 bg-foreground text-background hover:opacity-90 transition-colors duration-300 text-xs md:text-sm tracking-widest uppercase font-sans font-semibold"
+              className="px-8 py-4 bg-foreground text-background font-mono text-xs uppercase tracking-widest font-bold border border-foreground hover:bg-transparent hover:text-foreground transition-colors duration-200 cursor-pointer"
             >
               Book a Discovery Call
-            </motion.button>
-            <motion.button
+            </button>
+            <button
               type="button"
               onClick={openBookingModal}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-8 py-3.5 border border-foreground/30 text-foreground hover:bg-foreground/10 transition-colors duration-300 text-xs md:text-sm tracking-widest uppercase font-sans font-medium"
+              className="px-8 py-4 border border-foreground/30 text-foreground font-mono text-xs tracking-widest uppercase font-medium hover:border-foreground hover:bg-foreground/5 transition-colors duration-200 cursor-pointer"
             >
               Get in Touch
-            </motion.button>
+            </button>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Bauhaus minimal scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.8, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.div
-          animate={{ y: [0, 12, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-px h-12 bg-foreground/30"
+          className="w-px h-10 bg-foreground/30"
         />
       </motion.div>
     </section>

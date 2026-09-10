@@ -158,10 +158,10 @@ export function GetInTouchModal() {
 
   return (
     <Dialog open={isBookingOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl max-h-[92vh] overflow-y-auto bg-background text-foreground border-2 border-foreground p-8 md:p-10 shadow-[12px_12px_0px_0px_hsl(var(--foreground))]">
+      <DialogContent className="max-w-2xl max-h-[92vh] overflow-y-auto bg-background text-foreground border border-foreground/30 p-8 md:p-10">
         <DialogHeader className="mb-8 border-b border-foreground/15 pb-6">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono uppercase tracking-[0.4em] opacity-60">
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-60">
               COMMENCE ENGAGEMENT
             </span>
             <span className="text-[10px] font-mono uppercase tracking-widest opacity-60">
@@ -178,10 +178,10 @@ export function GetInTouchModal() {
 
         {submittedBooking ? (
           <div className="space-y-8 py-2">
-            <div className="flex items-start gap-4 p-5 border-2 border-foreground bg-foreground/5">
-              <CheckCircle2 className="w-6 h-6 text-foreground flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-5 border border-foreground/20 bg-foreground/5">
+              <CheckCircle2 className="w-5 h-5 text-foreground flex-shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <p className="text-base font-sans font-bold uppercase tracking-wider">
+                <p className="text-base font-sans font-medium uppercase tracking-wider">
                   Your Call Has Been Reserved
                 </p>
                 <p className="text-xs font-mono opacity-80 leading-relaxed">
@@ -195,7 +195,7 @@ export function GetInTouchModal() {
             <div className="border border-foreground/20 p-6 space-y-4 text-xs font-mono">
               <div className="flex justify-between border-b border-foreground/10 pb-2">
                 <span className="opacity-50 uppercase tracking-wider">Client Name</span>
-                <span className="font-bold text-sm uppercase">{submittedBooking.name}</span>
+                <span className="font-medium text-sm uppercase">{submittedBooking.name}</span>
               </div>
               <div className="flex justify-between border-b border-foreground/10 pb-2">
                 <span className="opacity-50 uppercase tracking-wider">Coordinates</span>
@@ -203,16 +203,16 @@ export function GetInTouchModal() {
               </div>
               <div className="flex justify-between border-b border-foreground/10 pb-2">
                 <span className="opacity-50 uppercase tracking-wider">Date</span>
-                <span className="font-bold">{submittedBooking.date}</span>
+                <span className="font-medium">{submittedBooking.date}</span>
               </div>
               <div className="flex justify-between">
                 <span className="opacity-50 uppercase tracking-wider">Slot Duration</span>
-                <span className="font-bold">{submittedBooking.slot} (45 Mins)</span>
+                <span className="font-medium">{submittedBooking.slot} (45 Mins)</span>
               </div>
             </div>
 
             {/* Google Meet Box */}
-            <div className="p-6 border-2 border-foreground bg-foreground/5 space-y-4">
+            <div className="p-6 border border-foreground/20 bg-foreground/5 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2">
                   <Video className="w-4 h-4" /> Google Meet Link
@@ -233,7 +233,7 @@ export function GetInTouchModal() {
                   href={submittedBooking.gmeetLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:opacity-90 transition-opacity inline-flex items-center gap-2"
+                  className="px-6 py-3 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors inline-flex items-center gap-2"
                 >
                   <span>Join Google Meet</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -242,7 +242,7 @@ export function GetInTouchModal() {
                   href={submittedBooking.calendarUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 border-2 border-foreground text-foreground text-xs font-mono uppercase tracking-widest font-bold hover:bg-foreground hover:text-background transition-colors inline-flex items-center gap-2"
+                  className="px-6 py-3 border border-foreground text-foreground text-xs font-mono uppercase tracking-widest font-bold hover:bg-foreground hover:text-background transition-colors inline-flex items-center gap-2"
                 >
                   <span>Add to Google Calendar</span>
                   <Calendar className="w-3.5 h-3.5" />
@@ -253,7 +253,7 @@ export function GetInTouchModal() {
             <button
               type="button"
               onClick={handleClose}
-              className="w-full py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:opacity-90 transition-opacity"
+              className="w-full py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors"
             >
               Done &amp; Return to Studio
             </button>
@@ -272,7 +272,7 @@ export function GetInTouchModal() {
                   onChange={handleInputChange}
                   placeholder="e.g. Sarah Jenkins"
                   required
-                  className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
+                  className="w-full bg-transparent border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
                 />
               </div>
 
@@ -288,7 +288,7 @@ export function GetInTouchModal() {
                     onChange={handleInputChange}
                     placeholder="+1 (555) 000-0000"
                     required
-                    className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
+                    className="w-full bg-transparent border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
                   />
                 </div>
 
@@ -303,7 +303,7 @@ export function GetInTouchModal() {
                     onChange={handleInputChange}
                     placeholder="sarah@company.com"
                     required
-                    className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
+                    className="w-full bg-transparent border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
                   />
                 </div>
               </div>
@@ -320,7 +320,7 @@ export function GetInTouchModal() {
                     value={formData.date}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
+                    className="w-full bg-transparent border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
                   />
                 </div>
 
@@ -333,7 +333,7 @@ export function GetInTouchModal() {
                     value={formData.slot}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-background border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
+                    className="w-full bg-background border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
                   >
                     <option value="" disabled>
                       Choose a time slot...
@@ -357,7 +357,7 @@ export function GetInTouchModal() {
                   value={formData.notes}
                   onChange={handleInputChange}
                   placeholder="Tell us briefly about your brand, timeline, or design goals..."
-                  className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors resize-none"
+                  className="w-full bg-transparent border-b border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors resize-none"
                 />
               </div>
             </div>
@@ -373,7 +373,7 @@ export function GetInTouchModal() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-8 py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:opacity-90 transition-all inline-flex items-center gap-2.5 disabled:opacity-50 cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]"
+                className="px-8 py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors inline-flex items-center gap-2.5 disabled:opacity-50 cursor-pointer"
               >
                 <span>{isSubmitting ? "GENERATING GMEET..." : "CONFIRM & CREATE GMEET"}</span>
                 <ArrowRight className="w-4 h-4" />

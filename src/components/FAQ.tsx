@@ -50,35 +50,35 @@ export function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-32 border-t border-foreground/15 transition-mode relative">
+    <section id="faq" className="py-28 border-t border-foreground/15 transition-mode relative">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <AnimatedSection className="mb-20">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-foreground/15 pb-8">
+        <AnimatedSection className="mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-foreground/15 pb-6">
             <div>
-              <p className="text-xs font-mono uppercase tracking-[0.4em] opacity-60 mb-3">
-                [ 05 // FREQUENTLY QUESTIONED ]
+              <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60 mb-2">
+                05 / FREQUENTLY QUESTIONED
               </p>
               <h2 className="text-4xl md:text-6xl font-serif font-light tracking-tight">
-                Clarity & Conviction
+                Clarity &amp; Conviction
               </h2>
             </div>
-            <p className="text-xs md:text-sm font-mono uppercase tracking-widest opacity-60 max-w-sm">
+            <p className="text-xs font-mono uppercase tracking-widest opacity-60 max-w-sm">
               Answers to how we think, build, and deliver without agency noise.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* 2-Column Layout: Left Text Image Artifact, Right Accordion */}
+        {/* 2-Column Bauhaus Flat Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Text Image (The Fault in Our Ops / Agency Truths) */}
+          {/* Left Column: Flat Artifact Panel */}
           <AnimatedSection direction="right" className="lg:col-span-5">
-            <div className="border-2 border-foreground bg-background p-4 shadow-[8px_8px_0px_0px_hsl(var(--foreground))]">
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-foreground/15">
-                <span className="text-[10px] font-mono uppercase tracking-widest font-bold">
-                  STUDIO ARTIFACT // REF 03
+            <div className="border border-foreground/20 bg-background p-4 hover:border-foreground transition-colors duration-200">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-foreground/15 text-[10px] font-mono uppercase tracking-widest">
+                <span className="font-bold">
+                  STUDIO ARTIFACT / REF 03
                 </span>
-                <span className="text-[10px] font-mono uppercase tracking-widest opacity-60">
+                <span className="opacity-60">
                   EST. 2024
                 </span>
               </div>
@@ -86,7 +86,7 @@ export function FAQ() {
                 <img
                   src="/images/about-3.jpg"
                   alt="The Chet & Co. Manifesto on Brand Ops and Strategy"
-                  className="w-full h-auto object-cover vintage-paper hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-[1.02]"
                 />
               </div>
               <div className="pt-4 flex items-center justify-between text-xs font-mono opacity-70">
@@ -96,13 +96,13 @@ export function FAQ() {
             </div>
           </AnimatedSection>
 
-          {/* Right Column: Brutalist FAQ Accordion */}
+          {/* Right Column: Bauhaus Flat Accordion */}
           <div className="lg:col-span-7 space-y-4">
             {FAQS.map((faq, index) => {
               const isOpen = openIndex === index;
 
               return (
-                <AnimatedSection key={index} delay={index * 0.08}>
+                <AnimatedSection key={index} delay={index * 0.06}>
                   <div className="border border-foreground/20 bg-background transition-colors hover:border-foreground">
                     <button
                       type="button"
@@ -110,7 +110,7 @@ export function FAQ() {
                       className="w-full text-left p-6 flex items-start justify-between gap-4 cursor-pointer"
                     >
                       <div className="space-y-2">
-                        <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 border border-foreground/30 inline-block opacity-60">
+                        <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 border border-foreground/30 inline-block opacity-60">
                           {faq.category}
                         </span>
                         <h3 className="text-lg md:text-xl font-sans font-medium uppercase tracking-tight pr-4">
@@ -128,7 +128,7 @@ export function FAQ() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+                          transition={{ duration: 0.25, ease: [0.25, 0.4, 0.25, 1] }}
                           className="overflow-hidden"
                         >
                           <div className="p-6 pt-0 border-t border-foreground/10 text-sm md:text-base opacity-75 font-sans leading-relaxed">

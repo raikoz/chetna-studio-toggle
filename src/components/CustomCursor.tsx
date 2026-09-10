@@ -16,15 +16,14 @@ export function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Springs for smooth following
-  const mainX = useSpring(cursorX, { stiffness: 600, damping: 30 });
-  const mainY = useSpring(cursorY, { stiffness: 600, damping: 30 });
+  // Bauhaus smooth geometric springs
+  const mainX = useSpring(cursorX, { stiffness: 700, damping: 35 });
+  const mainY = useSpring(cursorY, { stiffness: 700, damping: 35 });
 
-  const trailingX = useSpring(cursorX, { stiffness: 180, damping: 20 });
-  const trailingY = useSpring(cursorY, { stiffness: 180, damping: 20 });
+  const trailingX = useSpring(cursorX, { stiffness: 220, damping: 25 });
+  const trailingY = useSpring(cursorY, { stiffness: 220, damping: 25 });
 
   useEffect(() => {
-    // Check if device has hover capability
     const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
     setIsMobile(!mediaQuery.matches);
 
@@ -33,29 +32,27 @@ export function CustomCursor() {
     };
     mediaQuery.addEventListener("change", handleMediaChange);
 
-    let particleCounter = 0;
+    let counter = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
 
-      // Spawn dust particle every few moves
-      particleCounter++;
-      if (particleCounter % 4 === 0) {
+      counter++;
+      if (counter % 5 === 0) {
         const newParticle: Particle = {
           id: Date.now() + Math.random(),
           x: e.clientX,
           y: e.clientY,
         };
-        setParticles((prev) => [...prev.slice(-8), newParticle]);
+        setParticles((prev) => [...prev.slice(-6), newParticle]);
       }
     };
 
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
 
-    // Interactive element hover detection
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (
@@ -87,12 +84,11 @@ export function CustomCursor() {
     };
   }, [cursorX, cursorY, isVisible]);
 
-  // Clean up old dust particles
   useEffect(() => {
     if (particles.length === 0) return;
     const interval = setInterval(() => {
       setParticles((prev) => prev.slice(1));
-    }, 120);
+    }, 100);
     return () => clearInterval(interval);
   }, [particles]);
 
@@ -100,25 +96,25 @@ export function CustomCursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
-      {/* Dust particles */}
-      {particles.map((p, index) => (
+      {/* Bauhaus minimal geometric dust points */}
+      {particles.map((p) => (
         <motion.div
           key={p.id}
-          initial={{ opacity: 0.7, scale: 1 }}
+          initial={{ opacity: 0.5, scale: 1 }}
           animate={{ opacity: 0, scale: 0.2 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           style={{
             position: "fixed",
-            left: p.x - 2,
-            top: p.y - 2,
-            width: 4,
-            height: 4,
+            left: p.x - 1.5,
+            top: p.y - 1.5,
+            width: 3,
+            height: 3,
           }}
           className="bg-foreground pointer-events-none"
         />
       ))}
 
-      {/* Trailing outer brutalist square */}
+      {/* Trailing flat Bauhaus square */}
       <motion.div
         style={{
           x: trailingX,
@@ -127,14 +123,14 @@ export function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          scale: isHovered ? 1.6 : 1,
+          scale: isHovered ? 1.5 : 1,
           rotate: isHovered ? 45 : 0,
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="fixed w-8 h-8 border border-foreground/60 pointer-events-none mix-blend-difference bg-transparent"
+        transition={{ type: "spring", stiffness: 350, damping: 25 }}
+        className="fixed w-7 h-7 border border-foreground/50 pointer-events-none bg-transparent"
       />
 
-      {/* Main center solid brutalist dot */}
+      {/* Main center solid geometric dot */}
       <motion.div
         style={{
           x: mainX,
@@ -143,7 +139,7 @@ export function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          scale: isHovered ? 0.4 : 1,
+          scale: isHovered ? 0.5 : 1,
         }}
         className="fixed w-2 h-2 bg-foreground pointer-events-none"
       />

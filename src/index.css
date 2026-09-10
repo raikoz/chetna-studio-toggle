@@ -67,8 +67,8 @@
     --accent: 0 93% 20%;
     --accent-foreground: 0 0% 100%;
 
-    --border: 0 0% 100% / 0.2;
-    --input: 0 0% 100% / 0.2;
+    --border: 0 0% 100% / 0.15;
+    --input: 0 0% 100% / 0.15;
     --ring: 0 0% 100%;
   }
 }
@@ -78,15 +78,16 @@
     @apply bg-foreground/20 text-foreground;
   }
   
-  /* BRUTALISM: Strict 0px corners across entire application */
+  /* BAUHAUS & FLAT UI: Strict 0px corners, flat surfaces, zero drop shadows */
   *, *::before, *::after {
     border-radius: 0 !important;
+    box-shadow: none !important;
     cursor: none;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition: background-color 0.4s ease, color 0.4s ease;
     scroll-behavior: smooth;
     overflow-x: hidden;
   }
@@ -113,40 +114,38 @@
     -webkit-text-stroke: 1px hsl(var(--foreground));
   }
 
-  /* Vintage paper / montage effect filter */
-  .vintage-paper {
-    filter: sepia(0.18) contrast(1.1) brightness(0.95);
-    box-shadow: 0 8px 0px 0px rgba(0,0,0,0.3);
+  /* Bauhaus clean architectural flat card */
+  .bauhaus-panel {
+    border: 1px solid hsl(var(--foreground) / 0.2);
+    background-color: hsl(var(--background));
+    transition: border-color 0.25s ease, background-color 0.25s ease;
   }
 
-  .vintage-stamp {
-    position: relative;
-    border: 2px solid currentColor;
-    outline: 1px dashed currentColor;
-    outline-offset: -5px;
+  .bauhaus-panel:hover {
+    border-color: hsl(var(--foreground));
   }
 
-  /* Brutalist border wireframes */
-  .brutalist-border {
-    border: 1px solid hsl(var(--foreground) / 0.25);
+  /* Flat button styles */
+  .bauhaus-btn-primary {
+    @apply px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest font-bold transition-all duration-200 border border-foreground hover:bg-transparent hover:text-foreground;
   }
 
-  .brutalist-border-thick {
-    border: 2px solid hsl(var(--foreground));
+  .bauhaus-btn-secondary {
+    @apply px-7 py-3.5 bg-transparent text-foreground font-mono text-xs uppercase tracking-widest font-medium transition-all duration-200 border border-foreground/30 hover:border-foreground hover:bg-foreground/5;
   }
 }
 
 @layer utilities {
   .animate-marquee {
-    animation: marquee 22s linear infinite;
+    animation: marquee 24s linear infinite;
   }
 
   .animate-marquee-slow {
-    animation: marquee 45s linear infinite;
+    animation: marquee 48s linear infinite;
   }
 
   .animate-marquee-reverse {
-    animation: marquee-reverse 22s linear infinite;
+    animation: marquee-reverse 24s linear infinite;
   }
 
   .pause-on-hover:hover {
@@ -164,24 +163,24 @@
   }
 
   .transition-mode {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Non-linear noisy gradient for transition from dark red to white */
+  /* Non-linear gradient for transition to light footer (flat, elegant) */
   .noisy-gradient-to-light {
     background: linear-gradient(
       180deg,
       hsl(0 93% 12%) 0%,
-      hsl(0 80% 18%) 25%,
-      hsl(0 50% 35%) 50%,
-      hsl(0 30% 65%) 75%,
-      hsl(0 15% 92%) 90%,
+      hsl(0 80% 16%) 20%,
+      hsl(0 60% 28%) 45%,
+      hsl(0 40% 50%) 65%,
+      hsl(0 20% 80%) 85%,
       #ffffff 100%
     );
     position: relative;
   }
 
   .noise-overlay {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
   }
 }

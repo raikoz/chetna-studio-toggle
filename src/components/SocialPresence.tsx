@@ -13,27 +13,27 @@ export function SocialPresence() {
   ];
 
   return (
-    <section id="contact" className="py-32 border-t border-foreground/15 transition-mode relative">
+    <section id="contact" className="py-28 border-t border-foreground/15 transition-mode relative">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl">
           <AnimatedSection>
-            <p className="text-xs font-mono uppercase tracking-[0.4em] opacity-60 mb-3">
-              [ 06 // DIRECT CONSULTATION ]
+            <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60 mb-2">
+              06 / DIRECT CONSULTATION
             </p>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light tracking-tight mb-8">
+            <h2 className="text-4xl md:text-6xl font-serif font-light tracking-tight mb-6">
               {mode === "studio" 
                 ? "Ready to create something extraordinary?" 
                 : "Let's create together"}
             </h2>
-            <p className="text-sm md:text-base opacity-70 font-sans leading-relaxed max-w-2xl mb-12">
+            <p className="text-sm md:text-base opacity-70 font-sans leading-relaxed max-w-2xl mb-10">
               We take on a limited number of brand and design consultancy clients per quarter. Book a 45-minute discovery call directly on our calendar.
             </p>
 
-            <div className="mb-16">
+            <div className="mb-14">
               <button
                 type="button"
                 onClick={openBookingModal}
-                className="px-8 py-4 bg-foreground text-background text-xs md:text-sm font-mono uppercase tracking-widest hover:opacity-90 transition-opacity inline-flex items-center gap-3 cursor-pointer shadow-[6px_6px_0px_0px_rgba(0,0,0,0.2)]"
+                className="px-8 py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:bg-transparent hover:text-foreground border border-foreground transition-colors inline-flex items-center gap-3 cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book 45-Min Consultation Call</span>
@@ -41,14 +41,14 @@ export function SocialPresence() {
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-12 border-t border-foreground/15">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-10 border-t border-foreground/15">
             {socials.map((social, index) => (
-              <AnimatedSection key={index} delay={index * 0.1}>
+              <AnimatedSection key={index} delay={index * 0.08}>
                 <a
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-6 border-2 border-foreground/20 hover:border-foreground transition-all duration-300 group bg-background shadow-[4px_4px_0px_0px_hsl(var(--foreground)/0.1)]"
+                  className="flex items-center justify-between p-6 border border-foreground/20 hover:border-foreground transition-colors duration-200 group bg-background"
                 >
                   <div className="flex items-center gap-4">
                     <social.icon className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />

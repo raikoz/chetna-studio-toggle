@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Logo } from "./Logo";
-import { motion } from "framer-motion";
 
 export function Footer() {
   const marqueeText = "THECHETANDCO • DESIGN STUDIO & CONSULTANCY • CREATIVE DIRECTION • BRAND IDENTITY • IT IS ONLY DELUSIONAL UNTIL IT WORKS • ";
@@ -60,19 +59,19 @@ export function Footer() {
   return (
     <div className="relative w-full">
       {/* Non-linear Noisy Gradient Transition from Dark Red into Crisp White */}
-      <div className="relative w-full h-40 md:h-56 noisy-gradient-to-light overflow-hidden">
+      <div className="relative w-full h-36 md:h-48 noisy-gradient-to-light overflow-hidden">
         <div className="absolute inset-0 noise-overlay pointer-events-none" />
       </div>
 
-      {/* Light-Themed Brutalist Footer (Zero Curves, High Contrast) */}
-      <footer className="relative bg-white text-[#7e0200] border-t-2 border-[#7e0200] pt-16 pb-12 overflow-hidden">
-        {/* Marquee Animation in Light Theme */}
-        <div className="relative mb-20 border-b border-[#7e0200]/20 pb-6 overflow-hidden">
+      {/* Bauhaus Light-Themed Flat Footer */}
+      <footer className="relative bg-white text-[#7e0200] border-t border-[#7e0200]/20 pt-16 pb-12 overflow-hidden">
+        {/* Marquee Animation */}
+        <div className="relative mb-16 border-b border-[#7e0200]/15 pb-6 overflow-hidden">
           <div className="flex whitespace-nowrap animate-marquee">
-            <span className="text-3xl md:text-5xl lg:text-7xl font-sans font-light uppercase tracking-tight opacity-20 mr-4">
+            <span className="text-3xl md:text-5xl lg:text-6xl font-sans font-light uppercase tracking-tight opacity-15 mr-4">
               {repeatedText}
             </span>
-            <span className="text-3xl md:text-5xl lg:text-7xl font-sans font-light uppercase tracking-tight opacity-20 mr-4">
+            <span className="text-3xl md:text-5xl lg:text-6xl font-sans font-light uppercase tracking-tight opacity-15 mr-4">
               {repeatedText}
             </span>
           </div>
@@ -80,16 +79,16 @@ export function Footer() {
 
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20 items-start">
-            {/* Left: Lead Form & Logo */}
+            {/* Left: Flat Lead Form & Logo */}
             <div className="lg:col-span-5 max-w-lg">
               <div className="mb-8">
-                <Logo className="h-12 w-auto text-[#7e0200] mb-4" />
-                <p className="text-[11px] font-mono uppercase tracking-[0.3em] opacity-60">
+                <Logo className="h-10 w-auto text-[#7e0200] mb-3" />
+                <p className="text-[10px] font-mono uppercase tracking-[0.25em] opacity-60">
                   DESIGN STUDIO &amp; CONSULTANCY • EST. 2024
                 </p>
               </div>
 
-              <h3 className="text-3xl md:text-4xl font-serif italic mb-4 text-[#7e0200]">
+              <h3 className="text-3xl md:text-4xl font-serif italic mb-3 text-[#7e0200]">
                 Start a conversation
               </h3>
               <p className="text-xs md:text-sm opacity-75 mb-8 tracking-wide font-sans leading-relaxed text-[#7e0200]">
@@ -103,7 +102,7 @@ export function Footer() {
                     name="firstName"
                     placeholder="YOUR NAME *"
                     required
-                    className="w-full bg-transparent border-b-2 border-[#7e0200]/30 py-3 outline-none focus:border-[#7e0200] transition-colors placeholder:text-[#7e0200]/40 text-xs font-mono tracking-widest uppercase text-[#7e0200]"
+                    className="w-full bg-transparent border-b border-[#7e0200]/30 py-3 outline-none focus:border-[#7e0200] transition-colors placeholder:text-[#7e0200]/40 text-xs font-mono tracking-widest uppercase text-[#7e0200]"
                   />
                 </div>
                 <div>
@@ -112,7 +111,7 @@ export function Footer() {
                     name="email"
                     placeholder="EMAIL ADDRESS *"
                     required
-                    className="w-full bg-transparent border-b-2 border-[#7e0200]/30 py-3 outline-none focus:border-[#7e0200] transition-colors placeholder:text-[#7e0200]/40 text-xs font-mono tracking-widest uppercase text-[#7e0200]"
+                    className="w-full bg-transparent border-b border-[#7e0200]/30 py-3 outline-none focus:border-[#7e0200] transition-colors placeholder:text-[#7e0200]/40 text-xs font-mono tracking-widest uppercase text-[#7e0200]"
                   />
                 </div>
                 <div>
@@ -121,13 +120,13 @@ export function Footer() {
                     rows={3}
                     placeholder="TELL US ABOUT YOUR BRAND / PROJECT *"
                     required
-                    className="w-full bg-transparent border-b-2 border-[#7e0200]/30 py-3 outline-none focus:border-[#7e0200] transition-colors placeholder:text-[#7e0200]/40 text-xs font-mono tracking-widest uppercase text-[#7e0200] resize-none"
+                    className="w-full bg-transparent border-b border-[#7e0200]/30 py-3 outline-none focus:border-[#7e0200] transition-colors placeholder:text-[#7e0200]/40 text-xs font-mono tracking-widest uppercase text-[#7e0200] resize-none"
                   />
                 </div>
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-[#7e0200] text-white text-xs font-mono tracking-widest uppercase font-bold hover:bg-black transition-colors flex items-center justify-center gap-3 disabled:opacity-40 cursor-pointer shadow-[6px_6px_0px_0px_rgba(0,0,0,0.15)]"
+                  className="w-full py-4 bg-[#7e0200] text-white text-xs font-mono tracking-widest uppercase font-bold hover:bg-[#5a0100] transition-colors flex items-center justify-center gap-3 disabled:opacity-40 cursor-pointer"
                 >
                   <span>{isSubmitting ? "SENDING DISPATCH..." : "SEND MESSAGE"}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -135,31 +134,31 @@ export function Footer() {
               </form>
             </div>
 
-            {/* Right: Interactive Footer Hover Image Artifact ("It is only delusional until it works") */}
+            {/* Right: Flat Hover Image Artifact ("It is only delusional until it works") */}
             <div className="lg:col-span-7 flex flex-col justify-between h-full">
-              {/* The Hover Image Card */}
+              {/* Flat Card */}
               <div 
                 onMouseEnter={() => setImageHovered(true)}
                 onMouseLeave={() => setImageHovered(false)}
-                className="relative border-2 border-[#7e0200] p-4 bg-white shadow-[8px_8px_0px_0px_#7e0200] mb-12 cursor-pointer group transition-all duration-300 hover:-translate-y-1"
+                className="relative border border-[#7e0200]/30 p-4 bg-white mb-12 cursor-pointer transition-colors duration-200 hover:border-[#7e0200]"
               >
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#7e0200]/20 text-[10px] font-mono uppercase tracking-widest">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#7e0200]/15 text-[10px] font-mono uppercase tracking-widest">
                   <span className="font-bold flex items-center gap-1.5 text-[#7e0200]">
                     <Sparkles className="w-3.5 h-3.5" /> STUDIO MOTTO ARTIFACT
                   </span>
                   <span className="opacity-60 text-[#7e0200]">HOVER TO REVEAL</span>
                 </div>
 
-                <div className="relative aspect-[4/3] md:aspect-[16/9] overflow-hidden bg-[#7e0200]/5 border border-[#7e0200]/20 flex items-center justify-center">
+                <div className="relative aspect-[4/3] md:aspect-[16/9] overflow-hidden bg-[#7e0200]/[0.03] border border-[#7e0200]/15 flex items-center justify-center">
                   <img
                     src="/images/footer.jpg"
                     alt="It is only delusional until it works - TheChet&Co"
-                    className={`w-full h-full object-contain p-6 transition-all duration-700 ease-out ${
-                      imageHovered ? "scale-105 filter-none" : "scale-100 opacity-90"
+                    className={`w-full h-full object-contain p-6 transition-transform duration-500 ease-out ${
+                      imageHovered ? "scale-105" : "scale-100 opacity-90"
                     }`}
                   />
 
-                  {/* Subtle Stamp Overlay */}
+                  {/* Clean Flat Stamp Overlay */}
                   <div className="absolute bottom-3 right-3 bg-white border border-[#7e0200] px-3 py-1 text-[9px] font-mono uppercase tracking-widest text-[#7e0200] font-bold">
                     THECHET&amp;CO // OFFICIAL CREED
                   </div>
@@ -171,8 +170,8 @@ export function Footer() {
                 </p>
               </div>
 
-              {/* Social Links & Navigation */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-t border-[#7e0200]/20 pt-8 gap-6">
+              {/* Flat Social Links & Navigation */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-t border-[#7e0200]/15 pt-8 gap-6">
                 <div className="flex items-center gap-8 text-xs font-mono uppercase tracking-widest">
                   <Link to="/about" className="hover:underline font-bold text-[#7e0200]">
                     About Studio
@@ -202,8 +201,8 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Bottom Copyright Bar */}
-          <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-[#7e0200]/20 gap-4 text-[10px] font-mono uppercase tracking-widest text-[#7e0200] opacity-70">
+          {/* Bottom Flat Copyright Bar */}
+          <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-[#7e0200]/15 gap-4 text-[10px] font-mono uppercase tracking-widest text-[#7e0200] opacity-70">
             <div>
               © {new Date().getFullYear()} THE CHET &amp; CO. ALL RIGHTS RESERVED.
             </div>
@@ -212,7 +211,7 @@ export function Footer() {
                 PRIVACY POLICY
               </Link>
               <span>•</span>
-              <span>NO CURVED CORNERS</span>
+              <span>BAUHAUS FLAT ARCHITECTURE</span>
               <span>•</span>
               <span>CRAFTED WITH INTENTION</span>
             </div>
