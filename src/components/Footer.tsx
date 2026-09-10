@@ -56,72 +56,26 @@ export function Footer() {
 
   return (
     <div className="relative w-full">
-      {/* Living Breathing Dancing Gradient Transition to White */}
+      {/* Non-Straight Slant Gradient with Noise Effect */}
       <DancingGradient />
 
-      {/* Light-Themed Flat & Minimal Footer: Increased Height, Wrapped Around Centered Image */}
-      <footer className="relative bg-white text-[#7e0200] py-20 md:py-28 px-6 min-h-[460px] flex items-center">
+      {/* Light-Themed Flat & Minimal Footer */}
+      <footer className="relative bg-white text-[#7e0200] pt-16 md:pt-24 pb-12 md:pb-16 px-6 min-h-[460px]">
         <div className="container mx-auto">
+          {/* Main 3-Column Content */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            {/* Left Side: Brand Identity, Studio Statement, Navigation Links, Copyright */}
-            <div className="lg:col-span-4 flex flex-col justify-between space-y-6">
-              <div>
-                <Logo className="h-10 w-auto text-[#7e0200] mb-3" />
-                <p className="text-xs font-sans uppercase tracking-widest opacity-60">
-                  Design Studio &amp; Consultancy • Chetna Pattnaik
-                </p>
-                <p className="text-sm font-serif italic opacity-75 mt-2 max-w-sm leading-relaxed">
-                  Crafting visual identities and cultural worlds for those who dare to stand out.
-                </p>
-              </div>
-
-              {/* Navigation Links */}
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-sans uppercase tracking-widest pt-2">
-                <Link to="/work" className="hover:opacity-60 transition-opacity">
-                  Work
-                </Link>
-                <Link to="/services" className="hover:opacity-60 transition-opacity">
-                  Capabilities
-                </Link>
-                <Link to="/about" className="hover:opacity-60 transition-opacity">
-                  About
-                </Link>
-                <Link to="/journal" className="hover:opacity-60 transition-opacity">
-                  Journal
-                </Link>
-                <Link to="/faq" className="hover:opacity-60 transition-opacity">
-                  FAQ
-                </Link>
-                <Link to="/contact" className="hover:opacity-60 transition-opacity">
-                  Contact
-                </Link>
-                <a
-                  href="https://www.instagram.com/thechetandco/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-60 transition-opacity flex items-center gap-1"
-                >
-                  <Instagram className="w-3.5 h-3.5" /> Instagram
-                </a>
-                <a
-                  href="https://www.linkedin.com/company/the-chet-co"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-60 transition-opacity flex items-center gap-1"
-                >
-                  <Linkedin className="w-3.5 h-3.5" /> LinkedIn
-                </a>
-                <Link to="/privacy" className="hover:opacity-60 transition-opacity">
-                  Privacy
-                </Link>
-              </div>
-
-              <div className="text-[10px] font-sans uppercase tracking-widest opacity-50 pt-2">
-                © {new Date().getFullYear()} THE CHET &amp; CO. • ALL RIGHTS RESERVED
-              </div>
+            {/* Left Column: Brand Identity & Studio Statement */}
+            <div className="lg:col-span-4 flex flex-col justify-between space-y-4">
+              <Logo className="h-10 w-auto text-[#7e0200]" />
+              <p className="text-xs font-sans uppercase tracking-widest opacity-60">
+                Design Studio &amp; Consultancy • Chetna Pattnaik
+              </p>
+              <p className="text-sm font-serif italic opacity-75 max-w-sm leading-relaxed">
+                Crafting visual identities and cultural worlds for those who dare to stand out.
+              </p>
             </div>
 
-            {/* Middle: Embedded Creed Image (Nestled directly in the center, footer wrapped on left & right) */}
+            {/* Middle Column: Embedded Creed Image */}
             <div className="lg:col-span-4 flex flex-col items-center justify-center my-4 lg:my-0">
               <img
                 src="/images/footer.jpg"
@@ -130,7 +84,7 @@ export function Footer() {
               />
             </div>
 
-            {/* Right Side: Fast Email Dispatch, Direct Communication & Discovery Booking */}
+            {/* Right Column: Fast Email Dispatch, Direct Communication & Discovery Booking */}
             <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-between space-y-6">
               <div className="w-full sm:w-80">
                 <p className="text-[10px] font-sans uppercase tracking-[0.25em] opacity-60 mb-2">
@@ -155,7 +109,7 @@ export function Footer() {
                 </form>
               </div>
 
-              <div className="space-y-2 text-left lg:text-right">
+              <div className="space-y-1.5 text-left lg:text-right">
                 <a
                   href="mailto:hello@thechetandco.com"
                   className="text-xs font-sans tracking-wider opacity-80 hover:opacity-100 transition-opacity block font-medium"
@@ -176,6 +130,62 @@ export function Footer() {
                 <span>Book 45-Min Call</span>
               </button>
             </div>
+          </div>
+
+          {/* Dedicated Site Map Row: Sub pages on Left, Social Icons on Right (Same on Mobile & Desktop) */}
+          <div className="border-t border-[#7e0200]/15 pt-8 mt-14 flex flex-row items-start justify-between gap-4">
+            {/* Left: Site's Sub Pages */}
+            <nav className="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs font-sans uppercase tracking-widest">
+              <Link to="/work" className="hover:opacity-60 transition-opacity">
+                Work
+              </Link>
+              <Link to="/services" className="hover:opacity-60 transition-opacity">
+                Capabilities
+              </Link>
+              <Link to="/about" className="hover:opacity-60 transition-opacity">
+                About
+              </Link>
+              <Link to="/journal" className="hover:opacity-60 transition-opacity">
+                Journal
+              </Link>
+              <Link to="/faq" className="hover:opacity-60 transition-opacity">
+                FAQ
+              </Link>
+              <Link to="/contact" className="hover:opacity-60 transition-opacity">
+                Contact
+              </Link>
+              <Link to="/privacy" className="hover:opacity-60 transition-opacity opacity-70">
+                Privacy
+              </Link>
+            </nav>
+
+            {/* Right: Social Icons (Right-aligned on mobile and desktop) */}
+            <div className="flex items-center gap-3 shrink-0">
+              <a
+                href="https://www.instagram.com/thechetandco/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="p-2 border border-[#7e0200]/25 rounded-full hover:bg-[#7e0200] hover:text-white transition-all duration-300 flex items-center justify-center text-[#7e0200]"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/the-chet-co"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="p-2 border border-[#7e0200]/25 rounded-full hover:bg-[#7e0200] hover:text-white transition-all duration-300 flex items-center justify-center text-[#7e0200]"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom Copyright */}
+          <div className="pt-6 mt-6 border-t border-[#7e0200]/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-sans uppercase tracking-widest opacity-50">
+            <span>© {new Date().getFullYear()} THE CHET &amp; CO. • ALL RIGHTS RESERVED</span>
+            <span>FORM FOLLOWS CONVICTION</span>
           </div>
         </div>
       </footer>
