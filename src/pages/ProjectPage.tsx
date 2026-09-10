@@ -3,25 +3,21 @@ import { useEffect, useState } from "react";
 import { client } from "@/lib/contentful";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import ReactMarkdown from "react-markdown";
 import { extractInstagramUrls } from "@/lib/instagram";
 import { InstagramReelGrid } from "@/components/InstagramReelGrid";
-import { ArrowLeft } from "lucide-react";
+import { ParallaxImage } from "@/components/ParallaxImage";
+import { AnimatedSection } from "@/components/AnimatedSection";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { useBooking } from "@/contexts/BookingContext";
 
 export default function ProjectPage() {
   const { id } = useParams();
+  const { openBookingModal } = useBooking();
   const [project, setProject] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Scroll to top on page load
     window.scrollTo(0, 0);
 
     const fetchProject = async () => {
@@ -29,13 +25,13 @@ export default function ProjectPage() {
         setLoading(true);
         if (id && id.length > 10) {
           const entry = await client.getEntry(id);
-          console.log('DEBUG: Project data received:', entry.fields);
           setProject(entry.fields);
         } else {
           setProject({
             brandName: id?.replace(/-/g, " ") || "Showcase Brand",
-            brandDescription: "This project is currently being curated. We're working closely with the client to finalize the brandbook and showcase the evolution of their identity. Check back soon for the full story.",
-            dummy: true
+            brandDescription: "We worked closely with the founder to architect a fearless visual language, defining typography, merchandise collateral, and digital presence.",
+            scope: ["Visual Identity", "Art Direction", "Merchandise", "Brand Ops"],
+            dummy: true,
           });
         }
       } catch (error) {
@@ -48,149 +44,190 @@ export default function ProjectPage() {
     fetchProject();
   }, [id]);
 
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-background text-foreground transition-mode">
-      <p className="animate-pulse tracking-widest uppercase text-sm font-medium">Curating Showcase...</p>
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground transition-mode">
+        <p className="font-mono tracking-[0.4em] uppercase text-xs animate-pulse">
+          CURATING ARTIFACTS...
+        </p>
+      </div>
+    );
+  }
 
-  const images = project?.brandMedia?.filter((m: any) => 
-    m.fields?.file?.contentType?.startsWith("image/")
-  ) || [];
+  const images =
+    project?.brandMedia?.filter((m: any) =>
+      m.fields?.file?.contentType?.startsWith("image/")
+    ) || [];
+
+  const getImageUrl = (img: any) => {
+    if (!img?.fields?.file?.url) return "";
+    const url = img.fields.file.url;
+    return url.startsWith("//") ? `https:${url}` : url;
+  };
 
   const igUrls = extractInstagramUrls(project);
+  const firstImage = images.length > 0 ? getImageUrl(images[0]) : null;
+  const secondImage = images.length > 1 ? getImageUrl(images[1]) : null;
+  const remainingImages = images.slice(2);
 
   return (
     <main className="min-h-screen bg-background text-foreground transition-mode overflow-x-hidden selection:bg-foreground selection:text-background relative">
       <Header />
-      
-      {/* Floating Back Button for Entry Pages */}
-      <Link 
-        to="/" 
-        className="fixed bottom-8 left-8 z-50 px-5 py-3 rounded-full bg-foreground text-background border border-foreground/20 text-xs tracking-[0.2em] font-bold uppercase hover:scale-105 shadow-2xl transition-all flex items-center gap-2 group backdrop-blur-md opacity-90 hover:opacity-100"
+
+      {/* Floating Brutalist Back Button */}
+      <Link
+        to="/"
+        className="fixed bottom-8 left-8 z-50 px-5 py-3 bg-foreground text-background border border-foreground/30 text-xs font-mono uppercase tracking-widest hover:scale-105 shadow-2xl transition-transform flex items-center gap-2 group"
       >
         <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-        <span>Back to Home</span>
+        <span>Back to Index</span>
       </Link>
-      
-      <div className="container mx-auto px-6 pt-40 pb-32">
-        {/* Breadcrumb Navigation */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-24 space-y-8 md:space-y-0">
-          <Link 
-            to="/" 
-            className="group flex items-center space-x-4 text-[12px] uppercase tracking-[0.6em] opacity-40 hover:opacity-100 transition-all font-bold"
-          >
-            <span className="transition-transform group-hover:-translate-x-2">←</span>
-            <span>Return to Portfolio</span>
-          </Link>
-          <div className="h-px flex-grow mx-12 bg-foreground/5 hidden md:block"></div>
-          <p className="text-[12px] uppercase tracking-[0.6em] opacity-40 font-bold">Selected Case</p>
-        </div>
 
-        {/* Hero Section - Massive Title */}
-        <section className="mb-24">
-          <div className="max-w-[1400px] mx-auto">
-            <p className="text-lg md:text-xl uppercase tracking-[0.8em] mb-12 opacity-80 font-medium italic">
-              Project Showcase
+      {/* Top Bar Navigation */}
+      <div className="container mx-auto px-6 pt-32 pb-8">
+        <div className="flex items-center justify-between border-b border-foreground/15 pb-4 text-xs font-mono uppercase tracking-widest opacity-60">
+          <Link to="/" className="hover:opacity-100 transition-opacity flex items-center gap-2">
+            <span>←</span> Return to Showcase
+          </Link>
+          <span>CLIENT WORK ARCHIVE</span>
+        </div>
+      </div>
+
+      {/* 1. FIRST IMAGE: EDGE-TO-EDGE FULL BLEED (Comes First) */}
+      {firstImage && (
+        <section className="w-full overflow-hidden border-y-2 border-foreground bg-foreground/5 mb-16">
+          <ParallaxImage
+            src={firstImage}
+            alt={project.brandName}
+            fullBleed={true}
+            speed={0.15}
+          />
+        </section>
+      )}
+
+      {/* 2. MASSIVE BRAND NAME + WHAT WE DID (SCOPE) */}
+      <section className="container mx-auto px-6 mb-24">
+        <AnimatedSection>
+          <div className="border-b-2 border-foreground pb-12">
+            <p className="text-xs font-mono uppercase tracking-[0.5em] opacity-60 mb-6">
+              [ CASE STUDY // 01 ]
             </p>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-serif leading-[0.9] tracking-tighter mb-16 animate-fade-in uppercase text-center lg:text-left">
+            {/* Massive Brand Name in Big Letters */}
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-serif font-light leading-[0.88] tracking-tight uppercase mb-10">
               {project.brandName}
             </h1>
-          </div>
 
-          {/* Large Hero Image / Carousel - Top visuals */}
-          {images.length > 0 && (
-            <div className="relative group overflow-hidden mb-16">
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {images.map((img: any, idx: number) => (
-                    <CarouselItem key={idx}>
-                      <div className="relative overflow-hidden bg-foreground/5 w-full flex items-center justify-center min-h-[50vh] max-h-[85vh]">
-                        <img
-                          src={img.fields.file.url.startsWith("//") ? `https:${img.fields.file.url}` : img.fields.file.url}
-                          alt={img.fields.title}
-                          className="w-full h-auto max-h-[85vh] object-contain transition-transform duration-[2000ms]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none"></div>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                {images.length > 1 && (
-                  <>
-                    <CarouselPrevious className="left-8 opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 backdrop-blur-md border-0" />
-                    <CarouselNext className="right-8 opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 backdrop-blur-md border-0" />
-                  </>
-                )}
-              </Carousel>
-              <div className="mt-8 overflow-hidden opacity-40">
-                <div className="flex animate-marquee-slow whitespace-nowrap">
-                  <span className="text-[10px] uppercase tracking-[0.4em] pr-4">
-                    Brand Vision & Strategy • Creative Direction • Identity Reveal • Brand Vision & Strategy • Creative Direction • Identity Reveal • 
-                  </span>
-                  <span className="text-[10px] uppercase tracking-[0.4em] pr-4">
-                    Brand Vision & Strategy • Creative Direction • Identity Reveal • Brand Vision & Strategy • Creative Direction • Identity Reveal • 
-                  </span>
+            {/* Below: What We Did For Them (Scope of Work Tags) */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-6 border-t border-foreground/15">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono uppercase tracking-widest opacity-50">
+                  SCOPE:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {(project.scope || ["Visual Identity", "Strategy", "Creative Direction"]).map(
+                    (tag: string, i: number) => (
+                      <span
+                        key={i}
+                        className="text-xs font-mono uppercase tracking-wider px-3 py-1 border border-foreground/30 bg-foreground/5 font-medium"
+                      >
+                        {tag}
+                      </span>
+                    )
+                  )}
                 </div>
               </div>
-            </div>
-          )}
 
-          {/* Scope of Work Banner - Placed AFTER Brand Media thumbnail image */}
-          <div className="max-w-[1400px] mx-auto">
-            <div className="flex flex-wrap gap-x-6 gap-y-4 my-16 opacity-80 border-y border-foreground/10 py-8 justify-center lg:justify-start items-center">
-              <span className="text-xs uppercase tracking-[0.4em] opacity-40 font-mono mr-2">Scope of Work:</span>
-              {(project.scope || ["Branding", "Strategy", "Creative Direction"]).map((tag: string, index: number) => (
-                <div key={index} className="flex items-center gap-x-6">
-                  {index > 0 && <span className="opacity-40 text-lg leading-none">•</span>}
-                  <span className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold">{tag}</span>
-                </div>
-              ))}
+              <div className="text-xs font-mono uppercase tracking-widest opacity-60">
+                CLIENT: {project.client || project.brandName} • YEAR: {project.year || "2025"}
+              </div>
             </div>
           </div>
-        </section>
+        </AnimatedSection>
+      </section>
 
-        {/* Article Section */}
-        <section className="max-w-[1400px] mx-auto">
-          <div className="mb-40 max-w-5xl mx-auto">
-            <div>
-              <div className="pb-8 mb-12 border-b border-foreground/10 text-center">
-                <h2 className="text-4xl md:text-5xl font-serif italic mb-4 tracking-tight">The Evolution</h2>
-                <p className="text-[12px] uppercase tracking-[0.6em] opacity-60 font-bold">Detailed Brand Analysis</p>
+      {/* 3. ASYMMETRIC CONTENT: ARTICLE TEXT ON SIDE (SMALL FONT) + PRIMARY IMAGE FOCUS */}
+      <section className="container mx-auto px-6 mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left / Narrow Column: Text Details (Smaller Font, Minimal, Side-aligned) */}
+          <AnimatedSection direction="right" className="lg:col-span-4 sticky top-28">
+            <div className="border-l-2 border-foreground pl-6 py-2 space-y-6">
+              <div>
+                <p className="text-[10px] font-mono uppercase tracking-[0.3em] opacity-50 mb-2">
+                  THE CONTEXT &amp; MANDATE
+                </p>
+                <h2 className="text-2xl font-serif italic text-foreground">
+                  The Strategic Shift
+                </h2>
               </div>
-              <div className="prose prose-invert prose-lg md:prose-xl max-w-none text-foreground/90 leading-[2.2] font-serif font-light text-center md:text-left">
-                <ReactMarkdown
-                  components={{
-                    img: ({ node, ...props }) => (
-                      <img
-                        {...props}
-                        className="w-full h-auto my-20 shadow-2xl transition-all duration-700 hover:scale-[1.01] border-0 rounded-3xl"
-                      />
-                    ),
-                    p: ({ children }) => <p className="mb-12 text-2xl md:text-3xl leading-relaxed opacity-100">{children}</p>,
-                    h1: ({ children }) => <h3 className="text-5xl font-serif mb-12 mt-24 uppercase tracking-tighter">{children}</h3>,
-                    h2: ({ children }) => <h3 className="text-4xl font-serif mb-8 mt-16 italic">{children}</h3>,
-                  }}
+
+              {/* Reduced size text */}
+              <div className="prose prose-sm max-w-none text-foreground/80 font-sans leading-relaxed text-sm">
+                <ReactMarkdown>{project.brandDescription}</ReactMarkdown>
+              </div>
+
+              <div className="pt-6 border-t border-foreground/15">
+                <button
+                  type="button"
+                  onClick={openBookingModal}
+                  className="w-full py-3.5 bg-foreground text-background text-xs font-mono uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
                 >
-                  {project.brandDescription}
-                </ReactMarkdown>
+                  <span>Inquire for Similar Scope</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
+          </AnimatedSection>
+
+          {/* Right Column: Visual Showcase Gallery (Brutalist wireframes, zero curves) */}
+          <div className="lg:col-span-8 space-y-12">
+            {remainingImages.map((img: any, idx: number) => (
+              <AnimatedSection key={idx} delay={idx * 0.1}>
+                <div className="border-2 border-foreground bg-foreground/5 p-3 shadow-[8px_8px_0px_0px_hsl(var(--foreground))]">
+                  <div className="overflow-hidden bg-background">
+                    <img
+                      src={getImageUrl(img)}
+                      alt={img.fields?.title || `${project.brandName} showcase`}
+                      className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-700"
+                    />
+                  </div>
+                  <div className="pt-3 flex items-center justify-between text-[10px] font-mono opacity-60 uppercase tracking-widest">
+                    <span>ARTIFACT // {String(idx + 1).padStart(2, "0")}</span>
+                    <span>{project.brandName}</span>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. SECOND IMAGE: EDGE-TO-EDGE FULL BLEED (Parallax scroll) */}
+      {secondImage && (
+        <section className="w-full overflow-hidden border-y-2 border-foreground bg-foreground/5 my-24">
+          <ParallaxImage
+            src={secondImage}
+            alt={`${project.brandName} Edge Visual`}
+            fullBleed={true}
+            speed={0.2}
+          />
+        </section>
+      )}
+
+      {/* 5. INSTAGRAM STORYTELLING REELS (Fixed 1x3 Grid) */}
+      {igUrls.length > 0 && (
+        <section className="container mx-auto px-6 mt-32 pt-16 border-t border-foreground/15">
+          <div className="mb-12 text-center">
+            <p className="text-xs font-mono uppercase tracking-[0.4em] opacity-60 mb-2">
+              LIVE ARTIFACTS
+            </p>
+            <h2 className="text-4xl md:text-5xl font-serif italic tracking-tight">
+              Captured in Motion
+            </h2>
           </div>
 
-          {/* IG Reels Section: Fixed 1x3 Grid taking first 3 IGLinks without scrolling */}
-          {igUrls.length > 0 && (
-            <div className="mt-40 pt-24 border-t border-foreground/10 overflow-hidden">
-              <div className="mb-12 text-center">
-                <h2 className="text-5xl md:text-6xl font-serif italic mb-6 tracking-tight">Social Storytelling</h2>
-                <p className="text-[12px] uppercase tracking-[0.6em] opacity-60 font-bold">Creative Direction • Live Reels • Hover to Pause</p>
-              </div>
-              
-              <InstagramReelGrid urls={igUrls} />
-            </div>
-          )}
+          <InstagramReelGrid urls={igUrls} />
         </section>
-      </div>
+      )}
 
       <Footer />
     </main>

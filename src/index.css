@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Italiana&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -44,7 +44,7 @@
     --radius: 0rem;
   }
 
-  /* TheChet&Co Mode - Inverted */
+  /* TheChet&Co Studio Mode - Dark Red Background */
   .mode-studio {
     --background: 0 93% 12%;
     --foreground: 0 0% 100%;
@@ -78,17 +78,28 @@
     @apply bg-foreground/20 text-foreground;
   }
   
-  * {
-    @apply border-border;
+  /* BRUTALISM: Strict 0px corners across entire application */
+  *, *::before, *::after {
+    border-radius: 0 !important;
+    cursor: none;
   }
 
   body {
-    @apply bg-background text-foreground font-serif antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
     transition: background-color 0.5s ease, color 0.5s ease;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
+  }
+
+  /* Restore default cursor on touch/mobile devices */
+  @media (hover: none) and (pointer: coarse) {
+    *, *::before, *::after {
+      cursor: auto !important;
+    }
   }
 }
 
@@ -101,19 +112,41 @@
   .mode-studio .text-stroke {
     -webkit-text-stroke: 1px hsl(var(--foreground));
   }
+
+  /* Vintage paper / montage effect filter */
+  .vintage-paper {
+    filter: sepia(0.18) contrast(1.1) brightness(0.95);
+    box-shadow: 0 8px 0px 0px rgba(0,0,0,0.3);
+  }
+
+  .vintage-stamp {
+    position: relative;
+    border: 2px solid currentColor;
+    outline: 1px dashed currentColor;
+    outline-offset: -5px;
+  }
+
+  /* Brutalist border wireframes */
+  .brutalist-border {
+    border: 1px solid hsl(var(--foreground) / 0.25);
+  }
+
+  .brutalist-border-thick {
+    border: 2px solid hsl(var(--foreground));
+  }
 }
 
 @layer utilities {
   .animate-marquee {
-    animation: marquee 20s linear infinite;
+    animation: marquee 22s linear infinite;
   }
 
   .animate-marquee-slow {
-    animation: marquee 40s linear infinite;
+    animation: marquee 45s linear infinite;
   }
 
   .animate-marquee-reverse {
-    animation: marquee-reverse 20s linear infinite;
+    animation: marquee-reverse 22s linear infinite;
   }
 
   .pause-on-hover:hover {
@@ -121,25 +154,34 @@
   }
 
   @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
   }
 
   @keyframes marquee-reverse {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(0%);
-    }
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
   }
 
   .transition-mode {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
-}
 
+  /* Non-linear noisy gradient for transition from dark red to white */
+  .noisy-gradient-to-light {
+    background: linear-gradient(
+      180deg,
+      hsl(0 93% 12%) 0%,
+      hsl(0 80% 18%) 25%,
+      hsl(0 50% 35%) 50%,
+      hsl(0 30% 65%) 75%,
+      hsl(0 15% 92%) 90%,
+      #ffffff 100%
+    );
+    position: relative;
+  }
+
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  }
+}

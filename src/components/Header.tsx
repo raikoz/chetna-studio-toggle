@@ -4,6 +4,8 @@ import { useBooking } from "@/contexts/BookingContext";
 import { Logo } from "./Logo";
 import { Menu, Calendar } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -15,83 +17,147 @@ export function Header() {
   const { openBookingModal } = useBooking();
   const navigate = useNavigate();
   const location = useLocation();
+  const [hidden, setHidden] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setHidden(currentScrollY > lastScrollY && currentScrollY > 100);
+      setScrolled(currentScrollY > 50);
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const navLinks = [
-    { href: "/#work", label: "Work", id: "work" },
-    { href: "/#about", label: "About", id: "about" },
-    { href: "/#contact", label: "Contact", id: "contact" },
+    { href: "/#work", label: "Work", id: "work", isRoute: false },
+    { href: "/#services", label: "Capabilities", id: "services", isRoute: false },
+    { href: "/about", label: "About Studio", id: "about", isRoute: true },
+    { href: "/#journal", label: "Journal", id: "journal", isRoute: false },
+    { href: "/#faq", label: "FAQ", id: "faq", isRoute: false },
+    { href: "#contact", label: "Contact", id: "contact", isRoute: false },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {
-    e.preventDefault();
-    if (id === "contact") {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
+    if (link.id === "contact") {
+      e.preventDefault();
       openBookingModal();
       return;
     }
+
+    if (link.isRoute) {
+      // Direct page navigation
+      return;
+    }
+
+    e.preventDefault();
     if (location.pathname !== "/") {
-      navigate(href);
+      navigate(link.href);
     } else {
-      const element = document.getElementById(id);
+      const element = document.getElementById(link.id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       } else {
-        navigate(href);
+        navigate(link.href);
       }
     }
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm transition-mode">
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: hidden ? -100 : 0 }}
+      transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+        scrolled
+          ? "bg-background/90 backdrop-blur-xl border-foreground/15 shadow-sm"
+          : "bg-background/40 backdrop-blur-sm border-transparent"
+      }`}
+    >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group hover:opacity-80 transition-opacity">
             <Logo className="h-10 w-auto text-foreground transition-colors" />
-            <span className="text-sm tracking-widest uppercase font-serif hidden sm:inline-block border-l border-foreground/20 pl-3 opacity-80">
+            <span className="text-[11px] tracking-[0.25em] uppercase font-mono hidden sm:inline-block border-l border-foreground/20 pl-3 opacity-80 font-bold">
               {mode === "studio" ? "TheChet&Co" : "Chetna Pattnaik"}
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm tracking-wide">
+          <nav className="hidden lg:flex items-center gap-8 text-xs tracking-widest uppercase font-mono">
             {navLinks.map((link) => (
-              <a 
-                key={link.href} 
-                href={link.href} 
-                onClick={(e) => handleNavClick(e, link.href, link.id)}
-                className="hover:opacity-60 transition-opacity cursor-pointer"
-              >
-                {link.label}
-              </a>
+              link.isRoute ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className="relative group py-1 opacity-70 hover:opacity-100 transition-opacity"
+                >
+                  <span>{link.label}</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300 ease-out" />
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className="relative group py-1 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
+                >
+                  <span>{link.label}</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300 ease-out" />
+                </a>
+              )
             ))}
           </nav>
 
           <div className="flex items-center gap-4">
-            <button
+            <motion.button
               onClick={openBookingModal}
-              className="hidden sm:flex items-center gap-2 text-xs uppercase tracking-widest px-4 py-2 border border-foreground/30 hover:bg-foreground hover:text-background transition-all"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="hidden sm:flex items-center gap-2 text-xs font-mono uppercase tracking-widest px-5 py-2.5 bg-foreground text-background font-bold border border-foreground hover:bg-transparent hover:text-foreground transition-all duration-300 shadow-[3px_3px_0px_0px_hsl(var(--foreground)/0.2)]"
             >
               <Calendar className="w-3.5 h-3.5" /> Book Call
-            </button>
+            </motion.button>
 
             <ModeToggle />
             
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <Sheet>
                 <SheetTrigger asChild>
-                  <button className="p-2 hover:bg-foreground/5 rounded-full transition-colors">
+                  <button className="p-2 border border-foreground/20 hover:bg-foreground/5 transition-colors">
                     <Menu className="w-5 h-5" />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                  <nav className="flex flex-col gap-6 mt-16">
+                <SheetContent side="right" className="w-[320px] bg-background border-l-2 border-foreground p-8">
+                  <div className="border-b border-foreground/15 pb-4 mb-8">
+                    <Logo className="h-8 w-auto text-foreground mb-2" />
+                    <span className="text-[10px] font-mono uppercase tracking-widest opacity-60">
+                      INDEX NAVIGATION
+                    </span>
+                  </div>
+                  <nav className="flex flex-col gap-6">
                     {navLinks.map((link) => (
-                      <a
-                        key={link.href}
-                        href={link.href}
-                        onClick={(e) => handleNavClick(e, link.href, link.id)}
-                        className="text-2xl font-medium tracking-tight hover:opacity-60 transition-opacity cursor-pointer"
-                      >
-                        {link.label}
-                      </a>
+                      link.isRoute ? (
+                        <Link
+                          key={link.href}
+                          to={link.href}
+                          className="text-xl font-serif font-light tracking-tight hover:opacity-60 transition-opacity uppercase"
+                        >
+                          {link.label}
+                        </Link>
+                      ) : (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          onClick={(e) => handleNavClick(e, link)}
+                          className="text-xl font-serif font-light tracking-tight hover:opacity-60 transition-opacity uppercase cursor-pointer"
+                        >
+                          {link.label}
+                        </a>
+                      )
                     ))}
                   </nav>
                 </SheetContent>
@@ -100,7 +166,6 @@ export function Header() {
           </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
-

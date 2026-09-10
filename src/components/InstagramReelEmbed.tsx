@@ -15,19 +15,15 @@ export function extractReelId(url: string): string | null {
 export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedProps) {
   const reelId = extractReelId(url);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true); // Always play on mute to begin with
-  const [isHovered, setIsHovered] = useState(false); // Video pauses on hover
+  const [isMuted, setIsMuted] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   if (!reelId) return null;
 
-  // Pause playback when hovered
   const activePlaying = isPlaying && !isHovered;
-
-  // Instagram embed URL with parameters
   const embedUrl = `https://www.instagram.com/reel/${reelId}/embed/?autoplay=${activePlaying ? 1 : 0}&muted=${isMuted ? 1 : 0}`;
 
   const handleContainerClick = (e: React.MouseEvent) => {
-    // Avoid double trigger when clicking toggle buttons
     const target = e.target as HTMLElement;
     if (target.closest("button")) {
       return;
@@ -50,14 +46,14 @@ export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedPr
       onClick={handleContainerClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative overflow-hidden rounded-[2rem] bg-black cursor-pointer transition-all duration-500 hover:scale-[1.02] shadow-2xl border-0 ${className}`}
+      className={`group relative overflow-hidden bg-black cursor-pointer transition-all duration-500 hover:scale-[1.01] border-2 border-foreground/30 hover:border-foreground shadow-[6px_6px_0px_0px_hsl(var(--foreground)/0.15)] ${className}`}
       title="Click to open Reel on Instagram"
     >
-      {/* Video Container - Cropped framing to hide IG captions/likes */}
-      <div className="relative w-full aspect-[9/16] overflow-hidden rounded-[2rem] bg-black">
+      {/* Video Container */}
+      <div className="relative w-full aspect-[9/16] overflow-hidden bg-black">
         <iframe
           src={embedUrl}
-          className="absolute inset-0 w-full h-[120%] -top-[10%] border-0 outline-none pointer-events-none rounded-[2rem]"
+          className="absolute inset-0 w-full h-[120%] -top-[10%] border-0 outline-none pointer-events-none"
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           allowFullScreen
           scrolling="no"
@@ -65,7 +61,7 @@ export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedPr
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none" />
 
         {/* Interactive Play/Pause & Mute Buttons */}
         <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
@@ -73,7 +69,7 @@ export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedPr
             type="button"
             onClick={togglePlay}
             aria-label={activePlaying ? "Pause Reel" : "Play Reel"}
-            className="p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/90 transition-all border border-white/20 shadow-lg cursor-pointer"
+            className="p-2.5 bg-black/80 backdrop-blur-md text-white hover:bg-black transition-colors border border-white/30 shadow-lg cursor-pointer"
           >
             {activePlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-white" />}
           </button>
@@ -82,19 +78,19 @@ export function InstagramReelEmbed({ url, className = "" }: InstagramReelEmbedPr
             type="button"
             onClick={toggleMute}
             aria-label={isMuted ? "Unmute Reel" : "Mute Reel"}
-            className="p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/90 transition-all border border-white/20 shadow-lg cursor-pointer"
+            className="p-2.5 bg-black/80 backdrop-blur-md text-white hover:bg-black transition-colors border border-white/30 shadow-lg cursor-pointer"
           >
             {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
           </button>
         </div>
 
         {/* Hover overlay indicator */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 backdrop-blur-[2px] pointer-events-none">
-          <span className="px-5 py-2.5 bg-white/90 text-black text-xs uppercase tracking-[0.2em] font-bold rounded-full shadow-2xl flex items-center gap-2 mb-2">
-            View Reel on Instagram <ExternalLink className="w-3.5 h-3.5" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px] pointer-events-none">
+          <span className="px-5 py-2.5 bg-white text-black text-xs font-mono uppercase tracking-[0.2em] font-bold shadow-2xl flex items-center gap-2 mb-2 border border-black">
+            View Reel <ExternalLink className="w-3.5 h-3.5" />
           </span>
-          <span className="text-[10px] text-white/80 uppercase tracking-widest bg-black/60 px-3 py-1 rounded-full">
-            Video Paused on Hover
+          <span className="text-[10px] text-white/80 font-mono uppercase tracking-widest bg-black/80 px-3 py-1 border border-white/20">
+            Paused on Hover
           </span>
         </div>
       </div>

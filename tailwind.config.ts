@@ -14,8 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ["Reckless", "Argent", "Argent CF", "Cormorant Garamond", "Playfair Display", "Georgia", "serif"],
-        sauvage: ["Sauvage", "Sauvage Display", "Alex Brush", "Playfair Display", "cursive", "serif"],
+        sans: ["DM Sans", "system-ui", "sans-serif"],
+        serif: ["Cormorant Garamond", "Georgia", "serif"],
+        display: ["DM Sans", "system-ui", "sans-serif"],
+        mono: ["Space Mono", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",

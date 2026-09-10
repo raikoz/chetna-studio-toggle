@@ -6,7 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ModeProvider } from "@/contexts/ModeContext";
 import { BookingProvider } from "@/contexts/BookingContext";
 import { GetInTouchModal } from "@/components/GetInTouchModal";
+import { CustomCursor } from "@/components/CustomCursor";
 import Index from "./pages/Index";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ProjectPage from "./pages/ProjectPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -18,12 +20,14 @@ const App = () => (
     <TooltipProvider>
       <ModeProvider>
         <BookingProvider>
+          <CustomCursor />
           <Toaster />
           <Sonner />
           <GetInTouchModal />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
               <Route path="/project/:id" element={<ProjectPage />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="*" element={<NotFound />} />

@@ -53,7 +53,7 @@ export function GetInTouchModal() {
   const availableSlots = useMemo(() => {
     if (!formData.date) return WEEKDAY_SLOTS;
     const selectedDate = new Date(formData.date);
-    const isSunday = selectedDate.getDay() === 0; // 0 = Sunday
+    const isSunday = selectedDate.getDay() === 0;
     return isSunday ? SUNDAY_SLOTS : WEEKDAY_SLOTS;
   }, [formData.date]);
 
@@ -85,10 +85,10 @@ export function GetInTouchModal() {
       const randomCode = `${Math.random().toString(36).substring(2, 5)}-${Math.random().toString(36).substring(2, 6)}-${Math.random().toString(36).substring(2, 5)}`;
       const gmeetLink = `https://meet.google.com/${randomCode}`;
 
-      // Build Google Calendar Add Event URL inviting owner
+      // Build Google Calendar Add Event URL inviting owner & guest
       const calendarTitle = encodeURIComponent(`Consultation: ${formData.name} & Chetna Pattnaik`);
       const calendarDetails = encodeURIComponent(
-        `Consultation Session with Chetna Pattnaik (Design Studio & Consultancy)\n\n` +
+        `Consultation Session with Chetna Pattnaik (TheChet&Co Design Studio)\n\n` +
         `Client Name: ${formData.name}\n` +
         `Phone: ${formData.phone}\n` +
         `Email: ${formData.email}\n` +
@@ -98,7 +98,7 @@ export function GetInTouchModal() {
       
       const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calendarTitle}&details=${calendarDetails}&add=${encodeURIComponent(PRIMARY_OWNER_EMAIL)}&add=${encodeURIComponent(CHETNA_EMAIL)}&add=${encodeURIComponent(formData.email)}`;
 
-      // Post payload to backend / Google Script to dispatch email notification to owner & store lead
+      // Post payload to Google Apps Script webhook
       const payload = {
         name: formData.name,
         phone: formData.phone,
@@ -158,107 +158,111 @@ export function GetInTouchModal() {
 
   return (
     <Dialog open={isBookingOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto bg-background text-foreground border border-foreground/20 p-6 md:p-8">
-        <DialogHeader className="mb-4">
-          <DialogTitle className="text-2xl md:text-3xl font-serif font-light tracking-tight text-left">
-            {submittedBooking ? "Consultation Confirmed" : "Get in Touch & Book Call"}
+      <DialogContent className="max-w-2xl max-h-[92vh] overflow-y-auto bg-background text-foreground border-2 border-foreground p-8 md:p-10 shadow-[12px_12px_0px_0px_hsl(var(--foreground))]">
+        <DialogHeader className="mb-8 border-b border-foreground/15 pb-6">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono uppercase tracking-[0.4em] opacity-60">
+              COMMENCE ENGAGEMENT
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-widest opacity-60">
+              CHETNA PATTNAIK
+            </span>
+          </div>
+          <DialogTitle className="text-3xl md:text-4xl font-serif font-light tracking-tight text-left mt-2">
+            {submittedBooking ? "Consultation Confirmed" : "Book a Discovery Call"}
           </DialogTitle>
-          <DialogDescription className="text-xs uppercase tracking-[0.2em] opacity-60 text-left">
-            Design Studio & Consultancy • Chetna Pattnaik
+          <DialogDescription className="text-xs font-mono uppercase tracking-widest opacity-60 text-left mt-1">
+            45-Minute 1-on-1 Session • Google Meet Direct Sync
           </DialogDescription>
         </DialogHeader>
 
         {submittedBooking ? (
-          <div className="space-y-6 animate-fade-in py-2">
-            <div className="flex items-center gap-3 p-4 border border-foreground/20 bg-foreground/5 rounded-none">
-              <CheckCircle2 className="w-6 h-6 text-foreground flex-shrink-0" />
-              <div>
-                <p className="text-sm font-medium">Your Call Has Been Reserved</p>
-                <p className="text-xs opacity-70">
-                  Notification & GMeet details dispatched to <span className="font-semibold">{PRIMARY_OWNER_EMAIL}</span> and CC'd to guest <span className="font-semibold">{CHETNA_EMAIL}</span>
+          <div className="space-y-8 py-2">
+            <div className="flex items-start gap-4 p-5 border-2 border-foreground bg-foreground/5">
+              <CheckCircle2 className="w-6 h-6 text-foreground flex-shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="text-base font-sans font-bold uppercase tracking-wider">
+                  Your Call Has Been Reserved
+                </p>
+                <p className="text-xs font-mono opacity-80 leading-relaxed">
+                  Calendar invites &amp; GMeet link dispatched to{" "}
+                  <span className="font-bold underline">{PRIMARY_OWNER_EMAIL}</span> and CC&apos;d to{" "}
+                  <span className="font-bold underline">{CHETNA_EMAIL}</span>.
                 </p>
               </div>
             </div>
 
-            <div className="space-y-3 border-y border-foreground/10 py-4 text-sm">
-              <div className="flex justify-between">
-                <span className="opacity-50">Client Name</span>
-                <span className="font-medium">{submittedBooking.name}</span>
+            <div className="border border-foreground/20 p-6 space-y-4 text-xs font-mono">
+              <div className="flex justify-between border-b border-foreground/10 pb-2">
+                <span className="opacity-50 uppercase tracking-wider">Client Name</span>
+                <span className="font-bold text-sm uppercase">{submittedBooking.name}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="opacity-50">Contact</span>
+              <div className="flex justify-between border-b border-foreground/10 pb-2">
+                <span className="opacity-50 uppercase tracking-wider">Coordinates</span>
                 <span>{submittedBooking.phone} • {submittedBooking.email}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="opacity-50">Date</span>
-                <span className="font-medium">{submittedBooking.date}</span>
+              <div className="flex justify-between border-b border-foreground/10 pb-2">
+                <span className="opacity-50 uppercase tracking-wider">Date</span>
+                <span className="font-bold">{submittedBooking.date}</span>
               </div>
               <div className="flex justify-between">
-                <span className="opacity-50">Time Slot (45 Mins)</span>
-                <span className="font-medium">{submittedBooking.slot}</span>
+                <span className="opacity-50 uppercase tracking-wider">Slot Duration</span>
+                <span className="font-bold">{submittedBooking.slot} (45 Mins)</span>
               </div>
             </div>
 
             {/* Google Meet Box */}
-            <div className="p-4 border border-foreground/20 bg-foreground/5 space-y-3">
+            <div className="p-6 border-2 border-foreground bg-foreground/5 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-widest font-bold flex items-center gap-2">
-                  <Video className="w-4 h-4" /> Auto-Generated Google Meet
+                <span className="text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2">
+                  <Video className="w-4 h-4" /> Google Meet Link
                 </span>
                 <button
                   type="button"
                   onClick={copyMeetLink}
-                  className="text-xs flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity"
+                  className="text-xs font-mono flex items-center gap-1.5 opacity-70 hover:opacity-100 hover:underline transition-opacity"
                 >
-                  <Copy className="w-3 h-3" /> Copy Link
+                  <Copy className="w-3.5 h-3.5" /> Copy Link
                 </button>
               </div>
-              <p className="text-xs font-mono break-all opacity-90">{submittedBooking.gmeetLink}</p>
-              <div className="pt-2 flex flex-wrap gap-3">
+              <p className="text-xs font-mono break-all p-3 border border-foreground/20 bg-background">
+                {submittedBooking.gmeetLink}
+              </p>
+              <div className="pt-2 flex flex-wrap gap-4">
                 <a
                   href={submittedBooking.gmeetLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-foreground text-background text-xs tracking-widest uppercase font-medium hover:opacity-90 transition-opacity inline-flex items-center gap-2"
+                  className="px-6 py-3 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:opacity-90 transition-opacity inline-flex items-center gap-2"
                 >
-                  Join Google Meet <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Join Google Meet</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </a>
                 <a
                   href={submittedBooking.calendarUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 border border-foreground text-foreground text-xs tracking-widest uppercase font-medium hover:bg-foreground/10 transition-colors inline-flex items-center gap-2"
+                  className="px-6 py-3 border-2 border-foreground text-foreground text-xs font-mono uppercase tracking-widest font-bold hover:bg-foreground hover:text-background transition-colors inline-flex items-center gap-2"
                 >
-                  Add to Google Calendar <Calendar className="w-3.5 h-3.5" />
+                  <span>Add to Google Calendar</span>
+                  <Calendar className="w-3.5 h-3.5" />
                 </a>
               </div>
             </div>
 
             <button
+              type="button"
               onClick={handleClose}
-              className="w-full py-3 border border-foreground text-foreground hover:bg-foreground hover:text-background text-xs tracking-widest uppercase transition-all duration-300"
+              className="w-full py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:opacity-90 transition-opacity"
             >
-              Done
+              Done &amp; Return to Studio
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Consultation Schedule Info Banner */}
-            <div className="p-4 border border-foreground/15 bg-foreground/5 text-xs space-y-2 leading-relaxed">
-              <p className="font-semibold uppercase tracking-widest flex items-center gap-1.5 opacity-90">
-                <Clock className="w-3.5 h-3.5" /> Consultancy Schedule Rules
-              </p>
-              <ul className="space-y-1 opacity-75 list-disc list-inside">
-                <li><strong>Mon – Sat</strong>: Max 4 calls per day</li>
-                <li><strong>Sunday</strong>: Max 6 calls per day</li>
-                <li><strong>Call Duration</strong>: 45 mins per call</li>
-                <li><strong>Buffer</strong>: 15 mins minimum break between calls</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div>
-                <label className="block text-xs uppercase tracking-widest opacity-60 mb-1">
+                <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
                   Full Name *
                 </label>
                 <input
@@ -268,13 +272,13 @@ export function GetInTouchModal() {
                   onChange={handleInputChange}
                   placeholder="e.g. Sarah Jenkins"
                   required
-                  className="w-full bg-transparent border-b border-foreground/20 py-2 outline-none focus:border-foreground text-sm placeholder:text-foreground/30 transition-colors"
+                  className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs uppercase tracking-widest opacity-60 mb-1">
+                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
                     Phone Number *
                   </label>
                   <input
@@ -284,12 +288,12 @@ export function GetInTouchModal() {
                     onChange={handleInputChange}
                     placeholder="+1 (555) 000-0000"
                     required
-                    className="w-full bg-transparent border-b border-foreground/20 py-2 outline-none focus:border-foreground text-sm placeholder:text-foreground/30 transition-colors"
+                    className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-widest opacity-60 mb-1">
+                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
                     Email Address *
                   </label>
                   <input
@@ -299,14 +303,14 @@ export function GetInTouchModal() {
                     onChange={handleInputChange}
                     placeholder="sarah@company.com"
                     required
-                    className="w-full bg-transparent border-b border-foreground/20 py-2 outline-none focus:border-foreground text-sm placeholder:text-foreground/30 transition-colors"
+                    className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs uppercase tracking-widest opacity-60 mb-1">
+                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
                     Select Date *
                   </label>
                   <input
@@ -316,12 +320,12 @@ export function GetInTouchModal() {
                     value={formData.date}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-transparent border-b border-foreground/20 py-2 outline-none focus:border-foreground text-sm transition-colors"
+                    className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-widest opacity-60 mb-1">
+                  <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
                     Select 45-Min Slot *
                   </label>
                   <select
@@ -329,9 +333,11 @@ export function GetInTouchModal() {
                     value={formData.slot}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-background border-b border-foreground/20 py-2 outline-none focus:border-foreground text-sm transition-colors cursor-pointer"
+                    className="w-full bg-background border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-mono transition-colors cursor-pointer"
                   >
-                    <option value="" disabled>Choose a time slot...</option>
+                    <option value="" disabled>
+                      Choose a time slot...
+                    </option>
                     {availableSlots.map((s, i) => (
                       <option key={i} value={s.label} className="bg-background text-foreground">
                         {s.label}
@@ -342,34 +348,34 @@ export function GetInTouchModal() {
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest opacity-60 mb-1">
-                  Project Details / Notes (Optional)
+                <label className="block text-xs font-mono uppercase tracking-widest opacity-60 mb-2">
+                  Project Details / Brief (Optional)
                 </label>
                 <textarea
                   name="notes"
                   rows={2}
                   value={formData.notes}
                   onChange={handleInputChange}
-                  placeholder="Tell us briefly about your brand or design goals..."
-                  className="w-full bg-transparent border-b border-foreground/20 py-2 outline-none focus:border-foreground text-sm placeholder:text-foreground/30 transition-colors resize-none"
+                  placeholder="Tell us briefly about your brand, timeline, or design goals..."
+                  className="w-full bg-transparent border-b-2 border-foreground/30 py-2.5 outline-none focus:border-foreground text-sm font-sans placeholder:text-foreground/30 transition-colors resize-none"
                 />
               </div>
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-4">
+            <div className="pt-4 flex items-center justify-end gap-6 border-t border-foreground/15">
               <button
                 type="button"
                 onClick={handleClose}
-                className="px-6 py-3 text-xs tracking-widest uppercase opacity-60 hover:opacity-100 transition-opacity"
+                className="text-xs font-mono uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-foreground text-background text-xs tracking-widest uppercase font-medium hover:opacity-90 transition-all inline-flex items-center gap-2 disabled:opacity-50"
+                className="px-8 py-4 bg-foreground text-background text-xs font-mono uppercase tracking-widest font-bold hover:opacity-90 transition-all inline-flex items-center gap-2.5 disabled:opacity-50 cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]"
               >
-                {isSubmitting ? "Generating Meet..." : "Confirm & Create GMeet"}
+                <span>{isSubmitting ? "GENERATING GMEET..." : "CONFIRM & CREATE GMEET"}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
