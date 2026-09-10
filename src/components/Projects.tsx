@@ -143,8 +143,8 @@ export function Projects() {
           </div>
         </AnimatedSection>
 
-        {/* Minimal Flat Grid - Logo Only Default, Description Only on Hover */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
+        {/* Minimal Flat Grid - 2 columns on Mobile, 3 columns on Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8 lg:gap-10">
           {projects.map((project: any, index: number) => {
             const isClickable = mode === "studio";
             const logoUrl = project.logo?.fields?.file?.url;
@@ -158,32 +158,32 @@ export function Projects() {
             return (
               <AnimatedSection key={index} delay={index * 0.03}>
                 <div
-                  className={`group relative overflow-hidden rounded-[10px] aspect-square bg-foreground/[0.03] hover:bg-foreground/[0.07] border border-foreground/10 hover:border-foreground/25 transition-all duration-500 ${
+                  className={`group relative overflow-hidden rounded-[8px] sm:rounded-[10px] aspect-square bg-foreground/[0.03] hover:bg-foreground/[0.07] border border-foreground/10 hover:border-foreground/25 transition-all duration-500 ${
                     isClickable ? "cursor-pointer active:scale-[0.98]" : "cursor-default"
                   }`}
                   onClick={() => isClickable && handleProjectClick(project)}
                 >
-                  {/* DEFAULT STATE: Logo Only (Increased by 30%, Middle and Center Aligned, Fades Out on Hover) */}
-                  <div className="absolute inset-0 flex items-center justify-center p-6 sm:p-8 transition-all duration-400 ease-out opacity-100 group-hover:opacity-0 group-hover:scale-95 pointer-events-none">
+                  {/* DEFAULT STATE: Logo Only (Middle and Center Aligned, Fades Out on Hover) */}
+                  <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-8 transition-all duration-400 ease-out opacity-100 group-hover:opacity-0 group-hover:scale-95 pointer-events-none">
                     {fullLogoUrl ? (
                       <img
                         src={fullLogoUrl}
                         alt={`${project.brandName} Logo`}
-                        className={`max-h-28 sm:max-h-32 md:max-h-36 max-w-[85%] sm:max-w-[88%] w-auto object-contain transition-transform duration-400 ${
+                        className={`max-h-16 sm:max-h-24 md:max-h-36 max-w-[85%] sm:max-w-[88%] w-auto object-contain transition-transform duration-400 ${
                           mode === "studio" ? "filter brightness-0 invert" : "filter brightness-0"
                         }`}
                       />
                     ) : (
-                      <span className="text-3xl sm:text-4xl md:text-5xl font-serif tracking-widest uppercase text-center text-foreground font-light">
+                      <span className="text-lg sm:text-2xl md:text-4xl font-serif tracking-wider uppercase text-center text-foreground font-light">
                         {project.brandName || project.title}
                       </span>
                     )}
                   </div>
 
-                  {/* HOVER STATE: Brand Description Only (No Logo, No Other Text, Middle + Center Container, Left-Aligned Text, 2-3 Lines with '...', in font-card) */}
-                  <div className="absolute inset-0 flex items-center justify-center p-8 sm:p-10 transition-all duration-400 ease-out opacity-0 group-hover:opacity-100 pointer-events-none">
-                    <div className="w-full max-w-[85%] mx-auto">
-                      <p className="text-left font-card text-sm sm:text-base md:text-lg font-normal leading-relaxed text-foreground tracking-wide line-clamp-3">
+                  {/* HOVER STATE: Brand Description Only (Middle + Center Container, Left-Aligned Text, in font-card) */}
+                  <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-10 transition-all duration-400 ease-out opacity-0 group-hover:opacity-100 pointer-events-none">
+                    <div className="w-full max-w-[92%] sm:max-w-[85%] mx-auto">
+                      <p className="text-left font-card text-[11px] sm:text-sm md:text-lg font-normal leading-snug sm:leading-relaxed text-foreground tracking-normal sm:tracking-wide line-clamp-3">
                         {descText}
                       </p>
                     </div>
