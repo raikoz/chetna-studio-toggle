@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
+import { useMode } from "@/contexts/ModeContext";
 
 interface Particle {
   id: number;
@@ -8,7 +9,9 @@ interface Particle {
 }
 
 export function CustomCursor() {
+  const { mode } = useMode();
   const [isHovered, setIsHovered] = useState(false);
+  const [isInFooter, setIsInFooter] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -19,6 +22,10 @@ export function CustomCursor() {
   // Smooth responsive spring for the circle
   const mainX = useSpring(cursorX, { stiffness: 800, damping: 35 });
   const mainY = useSpring(cursorY, { stiffness: 800, damping: 35 });
+
+  const isStudio = mode === "studio";
+  // In studio mode: dark red (#3a0201) in footer, pure solid white (#ffffff) on page body. No glitching mix-blend.
+  const cursorColor = isStudio ? (isInFooter ? "#3a0201" : "#ffffff") : "#3a0201";
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -35,6 +42,12 @@ export function CustomCursor() {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
+
+      const target = e.target as HTMLElement;
+      if (target) {
+        const inFooter = Boolean(target.closest("footer") || target.closest("[data-cursor-dark]"));
+        setIsInFooter(inFooter);
+      }
 
       counter++;
       // Stardust effect
@@ -53,6 +66,11 @@ export function CustomCursor() {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      if (!target) return;
+
+      const inFooter = Boolean(target.closest("footer") || target.closest("[data-cursor-dark]"));
+      setIsInFooter(inFooter);
+
       if (
         target.closest("a") ||
         target.closest("button") ||
@@ -107,24 +125,26 @@ export function CustomCursor() {
             top: p.y - 1.5,
             width: 3,
             height: 3,
+            backgroundColor: cursorColor,
           }}
-          className="rounded-full bg-white mix-blend-difference pointer-events-none"
+          className="rounded-full pointer-events-none transition-colors duration-200"
         />
       ))}
 
-      {/* Main clean circle pointer: inverts color automatically on light/dark, shrinks on hover */}
+      {/* Main clean circle pointer: inverts to #3a0201 in footer, white on page, shrinks on hover, no glitch effect */}
       <motion.div
         style={{
           x: mainX,
           y: mainY,
           translateX: "-50%",
           translateY: "-50%",
+          backgroundColor: cursorColor,
         }}
         animate={{
-          scale: isHovered ? 0.45 : 1, // Shrinks on hover as requested
+          scale: isHovered ? 0.45 : 1, // Shrinks on hover
         }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className="fixed w-3 h-3 rounded-full bg-white mix-blend-difference pointer-events-none"
+        className="fixed w-3 h-3 rounded-full pointer-events-none transition-colors duration-200"
       />
     </div>
   );

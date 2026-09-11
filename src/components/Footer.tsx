@@ -60,7 +60,7 @@ export function Footer() {
       <DancingGradient />
 
       {/* Light-Themed Flat & Minimal Footer */}
-      <footer className="relative bg-white text-[#7e0200] pt-16 md:pt-24 pb-12 md:pb-16 px-6 min-h-[460px]">
+      <footer data-cursor-dark className="relative bg-white text-[#7e0200] pt-16 md:pt-24 pb-12 md:pb-16 px-6 min-h-[460px]">
         <div className="container mx-auto">
           {/* Main 3-Column Content */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
