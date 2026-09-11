@@ -66,18 +66,18 @@ export function Footer() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Column: Brand Identity & Studio Statement */}
             <div className="lg:col-span-4 flex flex-col justify-start items-start space-y-4">
-              <Logo tight className="h-14 w-auto text-[#7e0200]" />
+              <Logo tight embossed className="h-[68px] w-auto text-[#7e0200]" />
               <p className="text-xs font-sans uppercase tracking-widest opacity-60">
                 Design Studio &amp; Consultancy • Chetna Pattnaik
               </p>
             </div>
 
-            {/* Middle Column: Embedded Creed Image */}
+            {/* Middle Column: Embedded Creed Image with Paper Emboss */}
             <div className="lg:col-span-4 flex flex-col items-center justify-center my-4 lg:my-0">
               <img
                 src="/images/footer.jpg"
                 alt="It is only delusional until it works"
-                className="w-36 sm:w-44 md:w-48 h-auto object-contain rounded-[8px] transition-transform duration-500 hover:scale-105 select-none"
+                className="w-36 sm:w-44 md:w-48 h-auto object-contain rounded-[8px] shadow-[-1px_-1px_0px_rgba(255,255,255,0.95),2px_3px_10px_rgba(74,1,0,0.14)] border border-[#7e0200]/5 transition-transform duration-500 hover:scale-105 select-none"
               />
             </div>
 
