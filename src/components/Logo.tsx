@@ -3,13 +3,22 @@ import React from "react";
 interface LogoProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
   color?: string;
+  tight?: boolean;
 }
 
-export function Logo({ className = "h-8 w-auto", color = "currentColor", ...props }: LogoProps) {
+export function Logo({
+  className = "h-8 w-auto",
+  color = "currentColor",
+  tight = false,
+  viewBox,
+  ...props
+}: LogoProps) {
+  const actualViewBox = viewBox || (tight ? "126 220 758 565" : "0 0 1024 1024");
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1024 1024"
+      viewBox={actualViewBox}
       fill={color}
       className={className}
       aria-label="The Chet & Co. Logo"

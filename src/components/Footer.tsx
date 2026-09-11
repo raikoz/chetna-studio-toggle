@@ -65,13 +65,10 @@ export function Footer() {
           {/* Main 3-Column Content */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Column: Brand Identity & Studio Statement */}
-            <div className="lg:col-span-4 flex flex-col justify-between space-y-4">
-              <Logo className="h-10 w-auto text-[#7e0200]" />
+            <div className="lg:col-span-4 flex flex-col justify-start items-start space-y-4">
+              <Logo tight className="h-14 w-auto text-[#7e0200]" />
               <p className="text-xs font-sans uppercase tracking-widest opacity-60">
                 Design Studio &amp; Consultancy • Chetna Pattnaik
-              </p>
-              <p className="text-sm font-serif italic opacity-75 max-w-sm leading-relaxed">
-                Crafting visual identities and cultural worlds for those who dare to stand out.
               </p>
             </div>
 
