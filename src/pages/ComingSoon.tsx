@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/Logo";
-import { ArrowUpRight, Mail, Instagram, Linkedin, Sparkles } from "lucide-react";
+import { ArrowUpRight, Mail, Instagram, Linkedin } from "lucide-react";
 
 export default function ComingSoon() {
   return (
@@ -21,7 +21,7 @@ export default function ComingSoon() {
         }}
       />
 
-      {/* Top Navigation Bar */}
+      {/* Top Header Bar */}
       <header className="relative z-10 w-full px-6 md:px-12 py-8 flex items-center justify-between border-b border-white/10">
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
@@ -34,17 +34,6 @@ export default function ComingSoon() {
             TheChet&Co
           </span>
         </motion.div>
-
-        <motion.a
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          href="mailto:hello@thechetandco.com"
-          className="group hidden sm:inline-flex items-center gap-2 text-xs uppercase tracking-widest font-sans font-medium text-white/80 hover:text-white transition-colors duration-200 border border-white/15 px-4 py-2 rounded-full hover:border-white/40 hover:bg-white/[0.04]"
-        >
-          <Mail className="w-3.5 h-3.5 text-white/70 group-hover:text-white transition-colors" />
-          <span>Inquiries</span>
-        </motion.a>
       </header>
 
       {/* Main Content Area */}
@@ -100,29 +89,22 @@ export default function ComingSoon() {
           We craft brand identities, art direction, and bespoke creative solutions.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* Single CTA: Talk to Us -> Instagram */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+          className="flex items-center justify-center w-full"
         >
-          <a
-            href="mailto:hello@thechetandco.com"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#fdfbf7] text-[#3a0201] text-xs uppercase tracking-widest font-sans font-semibold hover:bg-white/90 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] cursor-pointer"
-          >
-            <span>Start a Project</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
-
           <a
             href="https://www.instagram.com/thechetandco/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-white/20 text-white/90 text-xs uppercase tracking-widest font-sans font-medium hover:border-white/50 hover:bg-white/[0.04] transition-all duration-200"
+            data-cursor-dark="true"
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#fdfbf7] text-[#3a0201] text-xs uppercase tracking-widest font-sans font-semibold hover:bg-white transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] cursor-pointer"
           >
-            <Instagram className="w-4 h-4" />
-            <span>Follow on Instagram</span>
+            <span>Talk to Us</span>
+            <ArrowUpRight className="w-4 h-4" />
           </a>
         </motion.div>
       </main>
